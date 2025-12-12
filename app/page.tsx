@@ -456,11 +456,11 @@ export default function App() {
               <div className="mb-8 section-reveal">
                 <h3 className="text-2xl font-bold text-white mb-2 flex items-center">
                   <span className="text-[#00FF41] animate-pulse mr-2">█</span>
-                  RUN_DIAGNOSTIC_TOOL
+                  SCHEDULE_CONSULTATION
                 </h3>
                 <p className="text-gray-400">
-                  Initializing analysis protocol... <br/>
-                  Please provide target parameters.
+                  Let&apos;s discuss your workflow challenges.<br/>
+                  Fill in the details below to get started.
                 </p>
               </div>
 
@@ -494,7 +494,7 @@ export default function App() {
 
                 <div className="pt-6">
                   <button type="button" className="w-full md:w-auto bg-[#00FF41] text-[#121212] font-bold px-8 py-4 hover:bg-[#00CC33] transition-colors flex items-center justify-center uppercase tracking-wider">
-                    [ Execute_Request ] <ChevronRight className="w-5 h-5 ml-2" />
+                    [ Send Inquiry ] <ChevronRight className="w-5 h-5 ml-2" />
                   </button>
                 </div>
               </form>
