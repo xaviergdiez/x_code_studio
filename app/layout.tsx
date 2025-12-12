@@ -16,7 +16,14 @@ export const metadata: Metadata = {
   title: "x-code.studio",
   description: "Technical Director as a Service",
   icons: {
-    icon: "/favicon.svg",
+    icon: "/favicon.ico",
+  },
+  openGraph: {
+    title: "x-code.studio",
+    description: "Technical Director as a Service",
+    url: "https://www.x-code.studio",
+    siteName: "x-code.studio",
+    type: "website",
   },
 };
 
