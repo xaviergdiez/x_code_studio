@@ -107,7 +107,7 @@ export default function GtechCase() {
                   As <strong className="text-white">Lead Developer for Global gTech Display Solutions Team</strong>, I spearheaded technical innovation across AMER, EMEA, and APAC regions, managing 15+ developers across multiple time zones while delivering enterprise-grade solutions at unprecedented scale.
                 </p>
                 <p>
-                  gTech Ads serves as Google's comprehensive support and technical services division for the entire Ad products stack, from small businesses to enterprise customers globally. Our mission encompasses enabling better self-help tools, providing interactive support, setting up complex campaigns, and delivering bespoke technical and measurement solutions.
+                  gTech Ads serves as Google&apos;s comprehensive support and technical services division for the entire Ad products stack, from small businesses to enterprise customers globally. Our mission encompasses enabling better self-help tools, providing interactive support, setting up complex campaigns, and delivering bespoke technical and measurement solutions.
                 </p>
               </div>
             </div>
