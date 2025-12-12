@@ -9,10 +9,12 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Try to import SplitText (bonus plugin)
-let SplitText: any = null;
+let SplitText: unknown = null;
 try {
-  SplitText = require('gsap/SplitText').SplitText;
-} catch (e) {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const splitTextModule = require('gsap/SplitText') as { SplitText: unknown };
+  SplitText = splitTextModule.SplitText;
+} catch {
   // SplitText not available, will use fallback
 } 
 
@@ -44,15 +46,15 @@ export default function App() {
       if (SplitText) {
         // Use SplitText if available for character-by-character animation
         try {
-          const heroSplit = new SplitText(".hero-text-anim", { type: "chars" });
-          tl.from(heroSplit.chars, {
+          const heroSplit = new (SplitText as unknown as new (selector: string, options: Record<string, unknown>) => unknown)(".hero-text-anim", { type: "chars" });
+          tl.from((heroSplit as unknown as { chars: Element[] }).chars, {
             duration: 0.05,
             opacity: 0,
             display: 'none',
             stagger: 0.04,
             ease: "none",
           });
-        } catch (e) {
+        } catch {
           // Fallback if SplitText fails
           tl.from(".hero-text-anim", {
             opacity: 0,
