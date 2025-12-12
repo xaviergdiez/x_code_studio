@@ -138,7 +138,7 @@ export default function HuaweiCase() {
         </svg>
 
         {/* Phones Wrapper */}
-        <div className="absolute top-1/2 h-screen overflow-hidden flex flex-col items-center justify-center"
+        <div className="hidden md:block absolute top-1/2 h-screen overflow-hidden flex flex-col items-center justify-center"
              style={{ right: '-10%', width: '70%', transform: 'translateY(-50%) rotate(25deg) scale(2)' }}>
 
           {/* Front Phone */}
@@ -173,41 +173,41 @@ export default function HuaweiCase() {
         </div>
 
         {/* Text Content Overlay */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen flex items-center">
-          <div className="max-w-xl space-y-6">
-            <div className="flex items-center gap-3 flex-wrap">
-              <div className="hero-text hero-border inline-block px-3 py-1 border text-xs uppercase tracking-widest" style={{ color: '#ffffff', borderColor: '#ffffff' }}>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen flex items-center justify-start md:justify-center">
+          <div className="max-w-2xl md:max-w-xl space-y-4 md:space-y-6 py-20 md:py-0">
+            <div className="flex items-center gap-2 md:gap-3 flex-wrap">
+              <div className="hero-text hero-border inline-block px-2 md:px-3 py-1 border text-xs uppercase tracking-widest" style={{ color: '#ffffff', borderColor: '#ffffff' }}>
                 Case Study
               </div>
-              <div className="hero-text hero-border inline-flex items-center px-3 py-1 bg-white/10 border text-xs uppercase tracking-widest" style={{ color: '#ffffff', borderColor: '#ffffff' }}>
+              <div className="hero-text hero-border inline-flex items-center px-2 md:px-3 py-1 bg-white/10 border text-xs uppercase tracking-widest" style={{ color: '#ffffff', borderColor: '#ffffff' }}>
                 Weborama APTO
               </div>
             </div>
 
-            <h1 className="hero-text text-5xl md:text-7xl font-bold" style={{ color: '#ffffff' }}>
+            <h1 className="hero-text text-4xl md:text-7xl font-bold" style={{ color: '#ffffff' }}>
               HUAWEI
             </h1>
 
-            <h2 className="hero-text text-2xl md:text-4xl font-bold" style={{ color: '#ffffff' }}>
+            <h2 className="hero-text text-xl md:text-4xl font-bold" style={{ color: '#ffffff' }}>
               Color Takes Over
             </h2>
 
-            <p className="hero-text text-lg leading-relaxed" style={{ color: '#ffffff' }}>
+            <p className="hero-text text-base md:text-lg leading-relaxed" style={{ color: '#ffffff' }}>
               Immersive color-interactive experience allowing users to explore device variants with 3D-like rotations and dynamic backgrounds
             </p>
 
-            <div className="flex gap-4 pt-4">
-              <div className="hero-metric bg-white/10 backdrop-blur-sm border px-6 py-4 rounded" style={{ borderColor: '#ffffff' }}>
-                <div className="hero-text text-3xl font-bold" style={{ color: '#ffffff' }}>{'<'}150KB</div>
-                <div className="hero-text text-sm mt-1" style={{ color: '#ffffff' }}>Optimized Size</div>
+            <div className="flex gap-2 md:gap-4 pt-4 flex-col sm:flex-row">
+              <div className="hero-metric bg-white/10 backdrop-blur-sm border px-4 md:px-6 py-3 md:py-4 rounded text-sm md:text-base" style={{ borderColor: '#ffffff' }}>
+                <div className="hero-text text-2xl md:text-3xl font-bold" style={{ color: '#ffffff' }}>{'<'}150KB</div>
+                <div className="hero-text text-xs md:text-sm mt-1" style={{ color: '#ffffff' }}>Optimized Size</div>
               </div>
-              <div className="hero-metric bg-white/10 backdrop-blur-sm border px-6 py-4 rounded" style={{ borderColor: '#ffffff' }}>
-                <div className="hero-text text-3xl font-bold" style={{ color: '#ffffff' }}>52%</div>
-                <div className="hero-text text-sm mt-1" style={{ color: '#ffffff' }}>Engagement Lift</div>
+              <div className="hero-metric bg-white/10 backdrop-blur-sm border px-4 md:px-6 py-3 md:py-4 rounded text-sm md:text-base" style={{ borderColor: '#ffffff' }}>
+                <div className="hero-text text-2xl md:text-3xl font-bold" style={{ color: '#ffffff' }}>52%</div>
+                <div className="hero-text text-xs md:text-sm mt-1" style={{ color: '#ffffff' }}>Engagement Lift</div>
               </div>
-              <div className="hero-metric bg-white/10 backdrop-blur-sm border px-6 py-4 rounded" style={{ borderColor: '#ffffff' }}>
-                <div className="hero-text text-3xl font-bold" style={{ color: '#ffffff' }}>78%</div>
-                <div className="hero-text text-sm mt-1" style={{ color: '#ffffff' }}>Viewability</div>
+              <div className="hero-metric bg-white/10 backdrop-blur-sm border px-4 md:px-6 py-3 md:py-4 rounded text-sm md:text-base" style={{ borderColor: '#ffffff' }}>
+                <div className="hero-text text-2xl md:text-3xl font-bold" style={{ color: '#ffffff' }}>78%</div>
+                <div className="hero-text text-xs md:text-sm mt-1" style={{ color: '#ffffff' }}>Viewability</div>
               </div>
             </div>
           </div>
