@@ -13,17 +13,32 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "x-code.studio",
-  description: "Technical Director as a Service",
+  title: "x-code.studio - Technical Director as a Service",
+  description: "Technical Director as a Service - Bridging the Design-Dev Gap",
   icons: {
     icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
   openGraph: {
     title: "x-code.studio",
-    description: "Technical Director as a Service",
+    description: "Technical Director as a Service - Bridging the Design-Dev Gap",
     url: "https://www.x-code.studio",
     siteName: "x-code.studio",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "x-code.studio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "x-code.studio",
+    description: "Technical Director as a Service",
+    images: ["/og-image.png"],
   },
 };
 
