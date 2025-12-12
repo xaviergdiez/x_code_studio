@@ -265,7 +265,7 @@ export default function App() {
               
               <div className="max-w-2xl text-lg md:text-xl text-gray-400 leading-relaxed hero-sub-anim">
                 <span className="text-[#00FF41]">{'>'}</span> Technical Director as a Service.<br/>
-                Optimization, Automation, and High-Performance Code for Elite Agencies.
+                Optimization, Automation, and High-Performance Code for Elite Agencies & Clients.
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-8 hero-sub-anim">
