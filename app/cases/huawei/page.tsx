@@ -138,8 +138,29 @@ export default function HuaweiCase() {
         </svg>
 
         {/* Phones Wrapper */}
-        <div className="hidden md:block absolute top-1/2 h-screen overflow-hidden flex flex-col items-center justify-center"
-             style={{ right: '-10%', width: '70%', transform: 'translateY(-50%) rotate(25deg) scale(2)' }}>
+        <div className="absolute top-1/2 h-screen overflow-hidden flex flex-col items-center justify-center"
+             style={{ 
+               right: 'var(--phone-right, -10%)', 
+               width: 'var(--phone-width, 70%)', 
+               transform: 'translateY(-50%) rotate(25deg) scale(var(--phone-scale, 2))'
+             }}>
+          
+          <style>{`
+            @media (max-width: 768px) {
+              :root {
+                --phone-right: -30%;
+                --phone-width: 100%;
+                --phone-scale: 0.8;
+              }
+            }
+            @media (min-width: 769px) {
+              :root {
+                --phone-right: -10%;
+                --phone-width: 70%;
+                --phone-scale: 2;
+              }
+            }
+          `}</style>
 
           {/* Front Phone */}
           <svg className="h-screen w-auto mb-8" style={{ transform: 'rotate(180deg)' }} viewBox="0 0 400 840">
@@ -173,8 +194,8 @@ export default function HuaweiCase() {
         </div>
 
         {/* Text Content Overlay */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen flex items-center justify-start md:justify-center">
-          <div className="max-w-2xl md:max-w-xl space-y-4 md:space-y-6 py-20 md:py-0">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen flex items-center justify-start md:justify-start">
+          <div className="max-w-lg md:max-w-xl space-y-4 md:space-y-6 py-20 md:py-0 w-full md:w-auto">
             <div className="flex items-center gap-2 md:gap-3 flex-wrap">
               <div className="hero-text hero-border inline-block px-2 md:px-3 py-1 border text-xs uppercase tracking-widest" style={{ color: '#ffffff', borderColor: '#ffffff' }}>
                 Case Study
@@ -196,17 +217,17 @@ export default function HuaweiCase() {
               Immersive color-interactive experience allowing users to explore device variants with 3D-like rotations and dynamic backgrounds
             </p>
 
-            <div className="flex gap-2 md:gap-4 pt-4 flex-col sm:flex-row">
-              <div className="hero-metric bg-white/10 backdrop-blur-sm border px-4 md:px-6 py-3 md:py-4 rounded text-sm md:text-base" style={{ borderColor: '#ffffff' }}>
-                <div className="hero-text text-2xl md:text-3xl font-bold" style={{ color: '#ffffff' }}>{'<'}150KB</div>
+            <div className="flex gap-2 md:gap-4 pt-4 flex-col">
+              <div className="hero-metric bg-white/10 backdrop-blur-sm border px-3 md:px-6 py-2 md:py-4 rounded text-sm md:text-base" style={{ borderColor: '#ffffff' }}>
+                <div className="hero-text text-xl md:text-3xl font-bold" style={{ color: '#ffffff' }}>{'<'}150KB</div>
                 <div className="hero-text text-xs md:text-sm mt-1" style={{ color: '#ffffff' }}>Optimized Size</div>
               </div>
-              <div className="hero-metric bg-white/10 backdrop-blur-sm border px-4 md:px-6 py-3 md:py-4 rounded text-sm md:text-base" style={{ borderColor: '#ffffff' }}>
-                <div className="hero-text text-2xl md:text-3xl font-bold" style={{ color: '#ffffff' }}>52%</div>
+              <div className="hero-metric bg-white/10 backdrop-blur-sm border px-3 md:px-6 py-2 md:py-4 rounded text-sm md:text-base" style={{ borderColor: '#ffffff' }}>
+                <div className="hero-text text-xl md:text-3xl font-bold" style={{ color: '#ffffff' }}>52%</div>
                 <div className="hero-text text-xs md:text-sm mt-1" style={{ color: '#ffffff' }}>Engagement Lift</div>
               </div>
-              <div className="hero-metric bg-white/10 backdrop-blur-sm border px-4 md:px-6 py-3 md:py-4 rounded text-sm md:text-base" style={{ borderColor: '#ffffff' }}>
-                <div className="hero-text text-2xl md:text-3xl font-bold" style={{ color: '#ffffff' }}>78%</div>
+              <div className="hero-metric bg-white/10 backdrop-blur-sm border px-3 md:px-6 py-2 md:py-4 rounded text-sm md:text-base" style={{ borderColor: '#ffffff' }}>
+                <div className="hero-text text-xl md:text-3xl font-bold" style={{ color: '#ffffff' }}>78%</div>
                 <div className="hero-text text-xs md:text-sm mt-1" style={{ color: '#ffffff' }}>Viewability</div>
               </div>
             </div>
