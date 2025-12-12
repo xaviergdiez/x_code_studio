@@ -5,10 +5,16 @@ import Link from 'next/link';
 import { Terminal, Code, Cpu, Zap, ChevronRight, CheckCircle, Menu, X, ArrowRight, ExternalLink } from 'lucide-react';
 
 // GSAP Imports
-// Note: Ensure 'gsap' and '@gsap/react' are installed via npm
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { SplitText } from 'gsap/SplitText'; 
+
+// Try to import SplitText (bonus plugin)
+let SplitText: any = null;
+try {
+  SplitText = require('gsap/SplitText').SplitText;
+} catch (e) {
+  // SplitText not available, will use fallback
+} 
 
 /**
  * x-code.studio - Technical Director as a Service
@@ -24,49 +30,60 @@ export default function App() {
   // GSAP ANIMATION ENGINE
   // ---------------------------------------------------------------------------
   useLayoutEffect(() => {
-    // Register Plugins safely
-    const plugins: (typeof ScrollTrigger | typeof SplitText)[] = [ScrollTrigger];
-    
-    // Safety check for SplitText in case the environment doesn't have the bonus package
-    if (typeof SplitText !== 'undefined') {
-      plugins.push(SplitText);
+    // Register Plugins - ScrollTrigger always, SplitText if available
+    gsap.registerPlugin(ScrollTrigger);
+    if (SplitText) {
+      gsap.registerPlugin(SplitText);
     }
-    gsap.registerPlugin(...plugins);
 
     const ctx = gsap.context(() => {
       
-      // 1. HERO ANIMATION (SplitText)
-      // Check if SplitText loaded correctly before using
-      if (typeof SplitText !== 'undefined') {
-        const heroSplit = new SplitText(".hero-text-anim", { type: "chars" });
-        
-        const tl = gsap.timeline();
-        
-        // Typing Effect
-        tl.from(heroSplit.chars, {
-          duration: 0.05,
+      // 1. HERO ANIMATION
+      const tl = gsap.timeline();
+      
+      if (SplitText) {
+        // Use SplitText if available for character-by-character animation
+        try {
+          const heroSplit = new SplitText(".hero-text-anim", { type: "chars" });
+          tl.from(heroSplit.chars, {
+            duration: 0.05,
+            opacity: 0,
+            display: 'none',
+            stagger: 0.04,
+            ease: "none",
+          });
+        } catch (e) {
+          // Fallback if SplitText fails
+          tl.from(".hero-text-anim", {
+            opacity: 0,
+            y: 20,
+            duration: 0.8,
+            ease: "power3.out"
+          });
+        }
+      } else {
+        // Fallback animation if SplitText not available
+        tl.from(".hero-text-anim", {
           opacity: 0,
-          display: 'none',
-          stagger: 0.04,
-          ease: "none",
-        })
-        .from(".nav-anim", {
-          y: -20,
-          opacity: 0,
-          stagger: 0.1,
-          duration: 0.5,
-          ease: "power2.out"
-        }, "-=0.5")
-        .from(".hero-sub-anim", {
           y: 20,
-          opacity: 0,
           duration: 0.8,
           ease: "power3.out"
-        }, "-=0.2");
-      } else {
-        // Fallback animation if SplitText is missing in the build
-        gsap.from(".hero-text-anim", { opacity: 0, duration: 1, y: 20, stagger: 0.2 });
+        });
       }
+      
+      tl.from(".nav-anim", {
+        y: -20,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.5,
+        ease: "power2.out"
+      }, "-=0.5")
+      .from(".hero-sub-anim", {
+        y: 20,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out"
+      }, "-=0.2");
 
       // 2. SCROLL TRIGGER: SECTION HEADERS
       gsap.utils.toArray('.section-reveal').forEach((elem: unknown) => {
