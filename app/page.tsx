@@ -2,11 +2,14 @@
 
 import { useState, useRef, useLayoutEffect } from 'react';
 import Link from 'next/link';
-import { Terminal, Code, Cpu, Zap, ChevronRight, CheckCircle, Menu, X, ArrowRight, ExternalLink } from 'lucide-react';
+import { Terminal, Code, Cpu, Zap, CheckCircle, Menu, X, ArrowRight, ExternalLink } from 'lucide-react';
 
 // GSAP Imports
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+// Formspree
+import { useForm } from '@formspree/react';
 
 // Try to import SplitText (bonus plugin)
 let SplitText: unknown = null;
@@ -27,6 +30,7 @@ try {
 export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const appRef = useRef(null);
+  const [state, handleSubmit] = useForm("xyz123"); // Replace with your Formspree form ID
 
   // ---------------------------------------------------------------------------
   // GSAP ANIMATION ENGINE
@@ -450,54 +454,74 @@ export default function App() {
         </section>
 
         {/* --- AUDIT FORM --- */}
-        <section id="audit" className="py-24 bg-[#1E1E1E]">
+       <section id="audit" className="py-24 bg-[#1E1E1E]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-[#121212] border border-[#333] rounded-lg shadow-2xl p-8 md:p-12 font-mono">
-              <div className="mb-8 section-reveal">
-                <h3 className="text-2xl font-bold text-white mb-2 flex items-center">
-                  <span className="text-[#00FF41] animate-pulse mr-2">█</span>
-                  SCHEDULE_CONSULTATION
-                </h3>
-                <p className="text-gray-400">
-                  Let&apos;s discuss your workflow challenges.<br/>
-                  Fill in the details below to get started.
-                </p>
-              </div>
+              
+              {state.succeeded ? (
+                  <div className="text-center py-12">
+                    <CheckCircle className="w-16 h-16 text-[#00FF41] mx-auto mb-4" />
+                    <h3 className="text-2xl font-bold text-white mb-2">REQUEST_RECEIVED</h3>
+                    <p className="text-gray-400">Thank you! We&apos;ll be in touch shortly.</p>
+                  </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="mb-8 section-reveal">
+                    <h3 className="text-2xl font-bold text-white mb-2 flex items-center">
+                      <span className="text-[#00FF41] animate-pulse mr-2">█</span>
+                      SCHEDULE_CONSULTATION
+                    </h3>
+                    <p className="text-gray-400">
+                      Let&apos;s discuss your workflow challenges.<br/>
+                      Fill in the details below to get started.
+                    </p>
+                  </div>
 
-              <form className="space-y-6 text-sm md:text-base">
-                <div className="group">
-                  <label className="block text-[#007ACC] mb-2">{'>'} set_user_identity:</label>
-                  <input 
-                    type="text" 
-                    className="w-full bg-transparent border-b border-[#333] focus:border-[#00FF41] text-white p-2 outline-none transition-colors placeholder-gray-700"
-                    placeholder="John Doe" 
-                  />
-                </div>
+                  <div className="group">
+                    <label className="block text-[#007ACC] mb-2" htmlFor="name">{'>'}  Your Name:</label>
+                    <input 
+                      id="name" 
+                      type="text" 
+                      name="name" 
+                      required 
+                      className="w-full bg-transparent border-b border-[#333] focus:border-[#00FF41] text-white p-2 outline-none transition-colors placeholder-gray-700" 
+                      placeholder="John Doe" 
+                    />
+                  </div>
 
-                <div className="group">
-                  <label className="block text-[#007ACC] mb-2">{'>'} set_target_contact:</label>
-                  <input 
-                    type="email" 
-                    className="w-full bg-transparent border-b border-[#333] focus:border-[#00FF41] text-white p-2 outline-none transition-colors placeholder-gray-700"
-                    placeholder="john@agency.com" 
-                  />
-                </div>
+                  <div className="group">
+                    <label className="block text-[#007ACC] mb-2" htmlFor="email">{'>'}  Email Address:</label>
+                    <input 
+                      id="email" 
+                      type="email" 
+                      name="email" 
+                      required 
+                      className="w-full bg-transparent border-b border-[#333] focus:border-[#00FF41] text-white p-2 outline-none transition-colors placeholder-gray-700" 
+                      placeholder="john@agency.com" 
+                    />
+                  </div>
 
-                <div className="group">
-                  <label className="block text-[#007ACC] mb-2">{'>'} input_stack_trace (Describe the problem):</label>
-                  <textarea 
-                    rows={3}
-                    className="w-full bg-transparent border-b border-[#333] focus:border-[#00FF41] text-white p-2 outline-none transition-colors resize-none placeholder-gray-700"
-                    placeholder="e.g. Handover friction, GSAP performance issues, Creative automation needs..." 
-                  />
-                </div>
+                  <div className="group">
+                    <label className="block text-[#007ACC] mb-2" htmlFor="message">{'>'}  What challenge are we solving?</label>
+                    <textarea 
+                      id="message" 
+                      name="message" 
+                      required 
+                      rows={3} 
+                      className="w-full bg-transparent border-b border-[#333] focus:border-[#00FF41] text-white p-2 outline-none transition-colors resize-none placeholder-gray-700" 
+                      placeholder="e.g. Handover friction, GSAP performance issues, Creative automation needs..." 
+                    />
+                  </div>
 
-                <div className="pt-6">
-                  <button type="button" className="w-full md:w-auto bg-[#00FF41] text-[#121212] font-bold px-8 py-4 hover:bg-[#00CC33] transition-colors flex items-center justify-center uppercase tracking-wider">
-                    [ Send Inquiry ] <ChevronRight className="w-5 h-5 ml-2" />
+                  <button 
+                    type="submit" 
+                    disabled={state.submitting}
+                    className="w-full md:w-auto bg-[#00FF41] text-[#121212] font-bold px-8 py-4 hover:bg-[#00CC33] transition-colors flex items-center justify-center uppercase tracking-wider disabled:opacity-50"
+                  >
+                    {state.submitting ? 'SENDING...' : '[ Send Inquiry ]'}
                   </button>
-                </div>
-              </form>
+                </form>
+              )}
             </div>
           </div>
         </section>
