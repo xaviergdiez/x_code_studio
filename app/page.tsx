@@ -2,7 +2,7 @@
 
 import { useState, useRef, useLayoutEffect } from 'react';
 import Link from 'next/link';
-import { Terminal, Code, Cpu, Zap, CheckCircle, Menu, X, ArrowRight, ExternalLink } from 'lucide-react';
+import { Terminal, Code, Zap, CheckCircle, Menu, X, ArrowRight, ExternalLink, RefreshCw, LayoutTemplate, Globe, Layers, Database, MessageSquare } from 'lucide-react';
 
 // GSAP Imports
 import gsap from 'gsap';
@@ -107,33 +107,7 @@ export default function App() {
         });
       });
 
-      // 3. SCROLL TRIGGER: TERMINAL WINDOWS (Split Screen)
-      // Left Slide In
-      gsap.from(".terminal-left", {
-        scrollTrigger: {
-          trigger: "#methodology",
-          start: "top 70%",
-        },
-        x: -50,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out"
-      });
-
-      // Right Slide In
-      gsap.from(".terminal-right", {
-        scrollTrigger: {
-          trigger: "#methodology",
-          start: "top 70%",
-        },
-        x: 50,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-        delay: 0.2
-      });
-
-      // 4. SCROLL TRIGGER: CASE STUDIES - Individual triggers for each card
+      // 3. SCROLL TRIGGER: CASE STUDIES - Individual triggers for each card
       gsap.utils.toArray('.case-study-card').forEach((card: unknown, index: number) => {
         const element = card as Element;
         gsap.from(element, {
@@ -298,106 +272,78 @@ export default function App() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="section-reveal text-3xl font-bold mb-12 flex items-center">
               <span className="text-[#00FF41] mr-4">{'>'}</span> 
-              AVAILABLE_MODULES
+              SYSTEM_CAPABILITIES
             </h2>
             
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               <ServiceCard 
                 id="01" 
-                title="PRODUCTION.exe" 
-                icon={<Zap className="w-6 h-6 text-[#00FF41]" />}
-                desc="High-end execution. GSAP motion graphics, Dynamic Content Optimization (DCO), and complex frontend architecture. We build what your internal team can't."
+                title="Ad Tech & Programmatic" 
+                icon={<Globe className="w-6 h-6 text-[#00FF41]" />}
+                desc="Building scalable, data-driven ad architectures that serve personalized content globally. Display & Video 360, Campaign Manager 360, DCO Architecture."
               />
               <ServiceCard 
                 id="02" 
-                title="CONSULTANCY.sys" 
-                icon={<Terminal className="w-6 h-6 text-[#007ACC]" />}
-                desc="Workflow Audits. From broken pipelines to profitable systems. We identify the 'Designer-Developer' friction points and script the solution."
+                title="Interactive Animation" 
+                icon={<Zap className="w-6 h-6 text-[#00FF41]" />}
+                desc="High-fidelity motion for web and display. Performance-optimized for all viewports. GSAP, WebGL, HTML5 Rich Media, Interaction Design."
               />
               <ServiceCard 
                 id="03" 
-                title="EDUCATION.lib" 
-                icon={<Code className="w-6 h-6 text-yellow-500" />}
-                desc="Upskilling internal teams. Based on the Master Course curriculum at NEOLAND. Elevate your juniors to architects."
+                title="Web Engineering" 
+                icon={<Code className="w-6 h-6 text-[#00FF41]" />}
+                desc="Modern frontend development focused on Core Web Vitals and component scalability. Next.js, React, TypeScript, Node.js Automation, PWA."
               />
               <ServiceCard 
                 id="04" 
-                title="R&D_LABS.bat" 
-                icon={<Cpu className="w-6 h-6 text-purple-500" />}
-                desc="Proprietary micro-SaaS tools for agency automation. Beta access available for retainer clients."
+                title="Creative Production" 
+                icon={<Layers className="w-6 h-6 text-[#00FF41]" />}
+                desc="From Adobe Creative Suite to code. Bridging the gap between static design and dynamic output. Video Editing, Ad Design, Social Assets."
+              />
+              <ServiceCard 
+                id="05" 
+                title="Data & Localization" 
+                icon={<Database className="w-6 h-6 text-[#00FF41]" />}
+                desc="Managing complex data feeds to power localized campaigns across multiple regions. Feed Management, Geo-Targeting, CRM Integration, EMEA/APAC/AMER."
+              />
+              <ServiceCard 
+                id="06" 
+                title="Technical Direction" 
+                icon={<MessageSquare className="w-6 h-6 text-[#00FF41]" />}
+                desc="End-to-end technical direction. I speak the language of developers and CMOs. HTML5 Email, Consultation, Audits, Vendor Management."
               />
             </div>
           </div>
         </section>
 
-        {/* --- METHODOLOGY / PROBLEM SOLUTION --- */}
-        <section id="methodology" className="py-24 bg-[#121212] border-b border-[#333] overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-2 gap-12 items-stretch">
-              
-              {/* Left Pane: The Problem */}
-              <div className="terminal-left bg-[#1E1E1E] rounded border border-[#333] p-6 relative group hover:border-red-500/50 transition-colors">
-                <div className="absolute top-0 left-0 w-full h-8 bg-[#252526] border-b border-[#333] flex items-center px-4 space-x-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                  <span className="ml-4 text-xs text-gray-500">error.log</span>
-                </div>
-                <div className="mt-8 font-mono text-sm space-y-4">
-                  <div className="text-red-400">
-                    <span className="opacity-50">01</span> [ERROR] Handover_Failed: Design assets do not match implementation.
-                  </div>
-                  <div className="text-red-400">
-                    <span className="opacity-50">02</span> [WARN]  Performance_Critical: Animation frame rate &lt; 30fps.
-                  </div>
-                  <div className="text-red-400">
-                    <span className="opacity-50">03</span> [FATAL] Productivity_Loss: <span className="font-bold underline">98 minutes wasted</span> per dev/week.
-                  </div>
-                  <div className="h-px bg-red-900/30 my-4"></div>
-                  <p className="text-gray-400 italic">
-                    Traditional agencies lack technical architecture. Dev shops lack creative nuance. The chasm is costing you money.
-                  </p>
-                </div>
-              </div>
-
-              {/* Right Pane: The Solution */}
-              <div className="terminal-right bg-[#1E1E1E] rounded border border-[#333] p-6 relative group hover:border-[#00FF41]/50 transition-colors">
-                 <div className="absolute top-0 left-0 w-full h-8 bg-[#252526] border-b border-[#333] flex items-center px-4 space-x-2">
-                  <div className="w-3 h-3 rounded-full bg-gray-600"></div>
-                  <div className="w-3 h-3 rounded-full bg-gray-600"></div>
-                  <div className="w-3 h-3 rounded-full bg-gray-600"></div>
-                  <span className="ml-4 text-xs text-gray-500">success.ts</span>
-                </div>
-                <div className="mt-8 font-mono text-sm space-y-4">
-                  <div className="text-[#00FF41]">
-                    <span className="opacity-50 text-gray-600">01</span> import &#123; HybridExpertise &#125; from &apos;x-code&apos;;
-                  </div>
-                  <div className="text-[#00FF41]">
-                    <span className="opacity-50 text-gray-600">02</span> 
-                  </div>
-                  <div className="text-gray-300">
-                    <span className="opacity-50 text-gray-600">03</span> const result = await Workflow.optimize(&#123;
-                  </div>
-                  <div className="text-gray-300 pl-4">
-                     gsap: true,<br/>
-                     automation: &quot;DCO&quot;,<br/>
-                     overhead: 0
-                  </div>
-                  <div className="text-gray-300">
-                    <span className="opacity-50 text-gray-600">07</span> &#125;);
-                  </div>
-                  <div className="text-[#00FF41]">
-                    <span className="opacity-50 text-gray-600">08</span> {/* Output: Immediate pipeline velocity increase. */}
-                  </div>
-                   <div className="h-px bg-green-900/30 my-4"></div>
-                   <div className="flex items-center text-[#00FF41]">
-                     <CheckCircle className="w-4 h-4 mr-2" />
-                     <span>System Optimized</span>
-                   </div>
-                </div>
-              </div>
-
-            </div>
+        {/* --- EXECUTION PROTOCOL --- */}
+        <section id="protocol" className="py-24 border-b border-[#333] bg-[#1E1E1E]">
+          <div className="max-w-7xl mx-auto px-4">
+             <div className="mb-16 section-reveal text-center">
+                <h2 className="text-3xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> EXECUTION_PROTOCOL</h2>
+                <p className="text-gray-400">How we collaborate. Async. Efficient. Transparent.</p>
+             </div>
+             
+             <div className="grid md:grid-cols-3 gap-8">
+                <ProtocolStep 
+                  num="01" 
+                  title="Ingest & Queue" 
+                  icon={<LayoutTemplate className="w-5 h-5 text-[#00FF41]" />}
+                  desc="Submit requests via your private Trello/Linear board. Queue up DCO scripts, banner sets, or React components. Unlimited backlog."
+                />
+                <ProtocolStep 
+                  num="02" 
+                  title="Sprint & Execute" 
+                  icon={<RefreshCw className="w-5 h-5 text-[#00FF41]" />}
+                  desc="I execute tasks linearly. 15+ years of experience means faster turnaround on complex architectures. Daily commits and async updates."
+                />
+                <ProtocolStep 
+                  num="03" 
+                  title="Deploy & Optimize" 
+                  icon={<CheckCircle className="w-5 h-5 text-[#00FF41]" />}
+                  desc="Previews delivered via Vercel or Ad Verification links. We iterate until the creative meets your strict brand standards."
+                />
+             </div>
           </div>
         </section>
 
@@ -593,6 +539,19 @@ function ServiceCard({ id, title, icon, desc }: { id: string; title: string; ico
       <p className="text-gray-400 leading-relaxed flex-grow">
         {desc}
       </p>
+    </div>
+  );
+}
+
+function ProtocolStep({ num, title, desc, icon }: { num: string; title: string; desc: string; icon: React.ReactNode }) {
+  return (
+    <div className="section-reveal p-6 border border-[#333] bg-[#1a1a1a] hover:border-[#00FF41] transition-colors group">
+      <div className="flex justify-between items-start mb-4">
+        <span className="text-[#007ACC] font-bold text-lg">{num}</span>
+        <div className="text-gray-400 group-hover:text-[#00FF41]">{icon}</div>
+      </div>
+      <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+      <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
     </div>
   );
 }
