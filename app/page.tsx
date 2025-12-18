@@ -2,7 +2,7 @@
 
 import { useState, useRef, useLayoutEffect } from 'react';
 import Link from 'next/link';
-import { Terminal, Code, Zap, CheckCircle, Menu, X, ArrowRight, ExternalLink, RefreshCw, LayoutTemplate, Globe, Layers, Database, MessageSquare, Linkedin } from 'lucide-react';
+import { Code, Zap, CheckCircle, Menu, X, ArrowRight, ExternalLink, RefreshCw, LayoutTemplate, Globe, Linkedin, Cpu, GraduationCap, Figma } from 'lucide-react';
 
 // GSAP Imports
 import gsap from 'gsap';
@@ -217,78 +217,79 @@ export default function App() {
       <main className="pt-16">
         
         {/* --- HERO SECTION --- */}
-        <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden border-b border-[#333]">
-          {/* Background Grid Effect */}
-          <div className="absolute inset-0 z-0 opacity-10" 
-               style={{ 
-                 backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', 
-                 backgroundSize: '40px 40px' 
-               }}>
-          </div>
-
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <section id="home" className="min-h-screen flex items-center justify-center relative border-b border-[#333]">
+          <div className="absolute inset-0 z-0 opacity-10" style={{ backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+          <div className="relative z-10 max-w-7xl mx-auto px-4 w-full">
             <div className="space-y-6">
               <div className="nav-anim inline-block px-3 py-1 border border-[#00FF41] text-[#00FF41] text-xs uppercase tracking-widest mb-4">
-                System Status: Online
+                Creative Technologist | Product Designer | Educator
               </div>
-              
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tighter leading-tight overflow-hidden">
-                <span className="hero-text-anim block">BRIDGING THE</span>
-                <span className="block">
-                    <span className="text-[#007ACC] hero-text-anim">DESIGN</span>-
-                    <span className="text-[#00FF41] hero-text-anim">DEV</span> 
-                    <span className="hero-text-anim"> GAP</span>
-                </span>
+              <h1 className="text-4xl md:text-7xl font-bold text-white tracking-tighter leading-tight hero-text-anim">
+                <div className="block">DESIGN ENGINEERED</div>
+                <div className="block text-[#00FF41]">FOR SCALE</div>
               </h1>
-              
               <div className="max-w-2xl text-lg md:text-xl text-gray-400 leading-relaxed hero-sub-anim">
-                <span className="text-[#00FF41]">{'>'}</span> Technical Director as a Service.<br/>
-                Optimization, Automation, and High-Performance Code for Elite Agencies & Clients.
+                <span className="text-[#00FF41]">{'>'}</span> Bridging the gap between High-Fidelity Design and High-Performance Code.
               </div>
-
               <div className="flex flex-col sm:flex-row gap-4 pt-8 hero-sub-anim">
-                <button 
-                  onClick={() => scrollToSection('audit')}
-                  className="group relative inline-flex items-center justify-center px-8 py-3 text-base font-bold text-[#121212] bg-[#00FF41] hover:bg-[#00CC33] transition-all"
-                >
-                  <Terminal className="w-5 h-5 mr-2" />
-                  ./RUN_AUDIT
+                <button onClick={() => scrollToSection('audit')} className="px-8 py-3 font-bold text-[#121212] bg-[#00FF41] hover:bg-[#00CC33] transition-all">
+                  VIEW_ACCESS_PLANS
                 </button>
-                
-                <button 
-                  onClick={() => scrollToSection('work')}
-                  className="group inline-flex items-center justify-center px-8 py-3 text-base font-bold text-white border border-[#333] hover:border-white transition-all bg-[#1E1E1E]"
-                >
-                  <Code className="w-5 h-5 mr-2" />
-                  ./VIEW_WORK
+                <button onClick={() => scrollToSection('audit')} className="px-8 py-3 font-bold text-white border border-[#333] hover:border-white transition-all bg-[#1E1E1E]">
+                  BOOK_AUDIT
                 </button>
               </div>
             </div>
           </div>
         </section>
 
-        {/* --- OPERATOR PROFILE (SEO Optimized) --- */}
+        {/* --- HUMAN BIO (Updated Authority) --- */}
         <section id="profile" className="py-20 border-b border-[#333] bg-[#1a1a1a]">
           <div className="max-w-5xl mx-auto px-4 section-reveal">
             <div className="flex flex-col md:flex-row gap-8 items-start">
               <div className="w-full md:w-1/3">
-                 <div className="text-[#007ACC] font-bold mb-2 text-sm tracking-widest">SYSTEM_LOG</div>
-                 <h2 className="text-3xl font-bold text-white">15+ YEARS OF TECHNICAL LEADERSHIP</h2>
+                 <div className="text-[#007ACC] font-bold mb-2 text-sm tracking-widest">WHO_AM_I --human_mode</div>
+                 <h2 className="text-3xl font-bold text-white">I SPEAK PIXEL AND I SPEAK LOGIC.</h2>
               </div>
               <div className="w-full md:w-2/3 text-gray-400 leading-relaxed space-y-4">
                 <p>
-                  I bridge the gap between the <span className="text-white">Creative Director{"'"} vision</span> and the <span className="text-white">Ad Server{"'"} logic</span>.
+                  I am a <span className="text-white">Designer</span> who learned to code to protect the integrity of my designs.
                 </p>
                 <p>
-                  My background spans advertising technology, <span className="text-white">DCO (Dynamic Creative Optimization)</span>, and high-performance WebGL/GSAP animation.
-                  I have engineered architectures for <span className="text-white">DV360 and Campaign Manager 360</span> for global clients across AMER, EMEA, and APAC markets.
+                  My career isn&apos;t just about fixing bugs; it&apos;s about architecture. <span className="text-white">As a Product Design Master Course Teacher</span>, I train the next generation of designers to think in systems. I don&apos;t just hand off code; I build the tools (plugins, automations) that empower design teams to work 10x faster.
                 </p>
                 <p>
-                   You don{"'"} need a full-time CTO. You need a Sniper.
+                  I bridge the gap between the <span className="text-white">{`Creative Director's vision`}</span> and the <span className="text-white">{`Ad Server's logic`}</span>.
                 </p>
               </div>
             </div>
           </div>
+        </section>
+
+        {/* BRIDGING LOG (Methodology) */}
+        <section className="py-20 border-b border-[#333] bg-[#121212] font-mono text-xs md:text-sm">
+           <div className="max-w-3xl mx-auto px-4 section-reveal">
+              <div className="bg-[#1E1E1E] p-6 border border-[#333] rounded shadow-2xl overflow-x-auto">
+                 <div className="flex gap-2 mb-4">
+                   <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                   <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                   <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                 </div>
+                 <div className="space-y-2 text-gray-300">
+                   <div className="text-[#007ACC] font-bold mb-2">&gt; BRIDGING.log</div>
+                   <div><span className="text-purple-400">[INPUT]:</span>&nbsp;&nbsp;Pure Design (Figma/Adobe)</div>
+                   <div><span className="text-purple-400">[INPUT]:</span>&nbsp;&nbsp;Pure Engineering (React/Node)</div>
+                   <div className="mt-4"><span className="text-yellow-400">[PROCESS]:</span></div>
+                   <div className="pl-4">if (Design == Static) &#123;</div>
+                   <div className="pl-8 text-[#00FF41]">Inject(GSAP_Timeline); // Make it alive</div>
+                   <div className="pl-4">&#125;</div>
+                   <div className="pl-4">if (Code == Messy) &#123;</div>
+                   <div className="pl-8 text-[#00FF41]">Apply(Design_System_Tokens); // Make it consistent</div>
+                   <div className="pl-4">&#125;</div>
+                   <div className="mt-4"><span className="text-blue-400">[OUTPUT]:</span> A product that feels expensive and works flawlessly.</div>
+                 </div>
+              </div>
+           </div>
         </section>
 
         {/* --- USER REVIEWS / SOCIAL PROOF --- */}
@@ -367,48 +368,61 @@ export default function App() {
         {/* --- SERVICES SECTION --- */}
         <section id="services" className="py-24 border-b border-[#333]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="section-reveal text-3xl font-bold mb-12 flex items-center">
-              <span className="text-[#00FF41] mr-4">{'>'}</span> 
-              SYSTEM_STACK
-            </h2>
-            
+            <div className="mb-16 section-reveal">
+              <h2 className="text-3xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> SYSTEM_CAPABILITIES</h2>
+              <p className="text-gray-400 max-w-2xl">Bridging the Design-Dev gap.</p>
+            </div>
+
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <ServiceCard 
-                id="01" 
-                title="Ad Tech & Programmatic" 
-                icon={<Globe className="w-6 h-6 text-[#00FF41]" />}
-                desc="Building scalable, data-driven ad architectures that serve personalized content globally. Display & Video 360, Campaign Manager 360, DCO Architecture."
-              />
-              <ServiceCard 
-                id="02" 
-                title="Interactive Animation" 
-                icon={<Zap className="w-6 h-6 text-[#00FF41]" />}
-                desc="High-fidelity motion for web and display. Performance-optimized for all viewports. GSAP, WebGL, HTML5 Rich Media, Interaction Design."
-              />
-              <ServiceCard 
-                id="03" 
-                title="Web Engineering" 
-                icon={<Code className="w-6 h-6 text-[#00FF41]" />}
-                desc="Modern frontend development focused on Core Web Vitals and component scalability. Next.js, React, TypeScript, Node.js Automation, PWA."
-              />
-              <ServiceCard 
-                id="04" 
-                title="Creative Production" 
-                icon={<Layers className="w-6 h-6 text-[#00FF41]" />}
-                desc="From Adobe Creative Suite to code. Bridging the gap between static design and dynamic output. Video Editing, Ad Design, Social Assets."
-              />
-              <ServiceCard 
-                id="05" 
-                title="Data & Localization" 
-                icon={<Database className="w-6 h-6 text-[#00FF41]" />}
-                desc="Managing complex data feeds to power localized campaigns across multiple regions. Feed Management, Geo-Targeting, CRM Integration, EMEA/APAC/AMER."
-              />
-              <ServiceCard 
-                id="06" 
-                title="Technical Direction" 
-                icon={<MessageSquare className="w-6 h-6 text-[#00FF41]" />}
-                desc="End-to-end technical direction. I speak the language of developers and CMOs. HTML5 Email, Consultation, Audits, Vendor Management."
-              />
+               
+               {/* 1. MOTION UI (High-Performance) */}
+               <CapabilityCard 
+                  icon={<Zap className="text-[#00FF41]" />}
+                  title="MOTION_UI.run"
+                  skills={["GSAP", "WebGL", "Scrollytelling", "Micro-interactions", "Performance"]}
+                  desc="Standard designers use video; I use code. Leveraging GSAP and WebGL to create physics-based, interaction-driven experiences that load instantly. The fluid feel of a native app, in the browser."
+               />
+
+               {/* 2. DESIGN SYSTEMS (Architect) */}
+               <CapabilityCard 
+                  icon={<Figma className="text-[#00FF41]" />}
+                  title="DESIGN_SYS.config"
+                  skills={["Design Tokens", "Figma Variables", "Component Libraries", "Scalability"]}
+                  desc="Bridging Figma and React. I build Living Style Guides and Token Systems that ensure the design intent survives the development process. From atomic components to dark-mode architecture."
+               />
+
+               {/* 3. AD TECH */}
+               <CapabilityCard 
+                  icon={<Globe className="text-[#00FF41]" />}
+                  title="AD_TECH.sys"
+                  skills={["Display & Video 360", "DCO Architecture", "Dynamic Remarketing", "Campaign Manager 360"]}
+                  desc="Building scalable, data-driven ad architectures that serve personalized content globally."
+               />
+
+               {/* 4. AUTOMATED DESIGN OPS */}
+               <CapabilityCard 
+                  icon={<Cpu className="text-[#00FF41]" />}
+                  title="AUTOMATED_DESIGN_OPS"
+                  skills={["Python Scripting", "Asset Generation Pipelines", "Custom Figma Plugins", "Workflow Automation"]}
+                  desc="I build the tools that let your designers design, not do data entry. Automating the boring stuff."
+               />
+
+               {/* 5. MENTORSHIP */}
+               <CapabilityCard 
+                  icon={<GraduationCap className="text-[#00FF41]" />}
+                  title="MENTORSHIP.edu"
+                  skills={["Product Design Teacher @ NEOLAND", "Dev-Design Bridge", "Team Training", "Workshops"]}
+                  desc="Your designers and devs speak different languages. I teach them a common one. Upskilling teams on both sides."
+               />
+
+               {/* 6. WEB ENGINEERING */}
+               <CapabilityCard 
+                  icon={<Code className="text-[#00FF41]" />}
+                  title="WEB_ENGINEERING.lib"
+                  skills={["Next.js / React", "TypeScript", "Performance Tuning", "PWA Development"]}
+                  desc="Modern frontend development focused on Core Web Vitals and component scalability."
+               />
+
             </div>
           </div>
         </section>
@@ -451,7 +465,7 @@ export default function App() {
                    <p className="text-gray-400">Choose your engagement model.</p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-8 items-start">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 items-start">
                    <OfferingCard 
                      title="WORKFLOW AUDIT"
                      subtitle="€995 one-time"
@@ -467,9 +481,24 @@ export default function App() {
                    />
                    
                    <OfferingCard 
+                     title="DESIGN SYSTEM"
+                     subtitle="€4,500 package"
+                     highlight={true}
+                     desc="Architecting the source of truth."
+                     features={[
+                       "Figma Design System",
+                       "Atomic Design & Tokens",
+                       "Ad Templates (Social, Rich Media, HTML5)",
+                       "UX/UI Web Design",
+                       "Landing Page Animations"
+                     ]}
+                     cta="LEARN_MORE →"
+                     onClick={() => window.location.href = '/offerings/design-system'}
+                   />
+                   
+                   <OfferingCard 
                      title="FRACTIONAL TD"
                      subtitle="€3,500 /month"
-                     highlight={true}
                      desc="Your dedicated technologist."
                      features={[
                        "Unlimited Request Queue",
@@ -617,6 +646,7 @@ export default function App() {
                         >
                            <option value="">-- Select Protocol --</option>
                            <option value="audit">Pipeline Audit (€995) - Fix my workflow</option>
+                           <option value="design-system">Design System (€4.5k) - Build infrastructure</option>
                            <option value="sprint">Dev Sprint (€2.5k) - Critical Firefighting</option>
                            <option value="retainer">Fractional Director (€3.5k) - Ongoing Architecture</option>
                            <option value="education">Education/Workshop - Train my team</option>
@@ -702,27 +732,6 @@ export default function App() {
 // SUB-COMPONENTS
 // ----------------------------------------------------------------------
 
-function ServiceCard({ id, title, icon, desc }: { id: string; title: string; icon: React.ReactNode; desc: string }) {
-  return (
-    <div className="section-reveal bg-[#1E1E1E] border border-[#333] p-8 rounded hover:border-[#00FF41] transition-all duration-300 group cursor-default h-full flex flex-col">
-      <div className="flex items-center justify-between mb-6">
-        <div className="p-3 bg-[#121212] rounded border border-[#333] group-hover:border-[#00FF41] transition-colors">
-          {icon}
-        </div>
-        <span className="text-4xl font-bold text-[#333] group-hover:text-[#00FF41]/20 transition-colors">
-          {id}
-        </span>
-      </div>
-      <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#00FF41] transition-colors">
-        {title}
-      </h3>
-      <p className="text-gray-400 leading-relaxed flex-grow">
-        {desc}
-      </p>
-    </div>
-  );
-}
-
 function ProtocolStep({ num, title, desc, icon }: { num: string; title: string; desc: string; icon: React.ReactNode }) {
   return (
     <div className="section-reveal p-6 border border-[#333] bg-[#1a1a1a] hover:border-[#00FF41] transition-colors group">
@@ -801,4 +810,19 @@ function CaseStudyCard({ client, project, stats, tech, description, slug }: { cl
       </Link>
     </div>
   );
+}
+
+function CapabilityCard({ title, desc, skills, icon }: { title: string; desc: string; skills: string[]; icon: React.ReactNode }) {
+  return (
+    <div className="section-reveal p-6 border border-[#333] bg-[#1a1a1a] hover:border-[#00FF41] transition-colors group h-full flex flex-col">
+       <div className="mb-4">{icon}</div>
+       <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+       <p className="text-gray-400 text-sm mb-4 leading-relaxed">{desc}</p>
+       <div className="mt-auto flex flex-wrap gap-2">
+         {skills.map((s, i) => (
+           <span key={i} className="text-xs border border-[#333] text-gray-300 px-2 py-1 bg-[#121212]">{s}</span>
+         ))}
+       </div>
+    </div>
+  )
 }
