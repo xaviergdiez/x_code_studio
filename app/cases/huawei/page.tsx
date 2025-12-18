@@ -246,7 +246,7 @@ export default function HuaweiCase() {
               </h3>
               <div className="space-y-4 text-gray-400 leading-relaxed">
                 <p>
-                  Huawei wanted to showcase their new P30 Pro smartphone&apos;s vibrant color variants through an immersive digital campaign that would highlight the premium design and color technology.
+                  Huawei wanted to showcase their new P30 Pro smartphone{"'"} vibrant color variants through an immersive digital campaign that would highlight the premium design and color technology.
                 </p>
                 <p>
                   The challenge was to create an engaging, interactive experience that would allow users to explore different color options while maintaining optimal file size for fast loading and high viewability rates across all devices.

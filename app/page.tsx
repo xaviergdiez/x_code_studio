@@ -31,17 +31,6 @@ export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const appRef = useRef(null);
   const [state, handleSubmit] = useForm("xdkqvorr");
-  const [emailInput, setEmailInput] = useState("");
-  const [newsletterStatus, setNewsletterStatus] = useState("idle");
-
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setNewsletterStatus("sending");
-    setTimeout(() => {
-      setNewsletterStatus("success");
-      setEmailInput("");
-    }, 1500);
-  };
 
   // ---------------------------------------------------------------------------
   // GSAP ANIMATION ENGINE
@@ -288,14 +277,14 @@ export default function App() {
               </div>
               <div className="w-full md:w-2/3 text-gray-400 leading-relaxed space-y-4">
                 <p>
-                  I bridge the gap between the <span className="text-white">Creative Director&apos;s vision</span> and the <span className="text-white">Ad Server&apos;s logic</span>.
+                  I bridge the gap between the <span className="text-white">Creative Director{"'"} vision</span> and the <span className="text-white">Ad Server{"'"} logic</span>.
                 </p>
                 <p>
                   My background spans advertising technology, <span className="text-white">DCO (Dynamic Creative Optimization)</span>, and high-performance WebGL/GSAP animation.
                   I have engineered architectures for <span className="text-white">DV360 and Campaign Manager 360</span> for global clients across AMER, EMEA, and APAC markets.
                 </p>
                 <p>
-                   You don&apos;t need a full-time CTO. You need a Sniper.
+                   You don{"'"} need a full-time CTO. You need a Sniper.
                 </p>
               </div>
             </div>
@@ -315,7 +304,7 @@ export default function App() {
                 <div className="section-reveal border border-[#333] bg-[#1a1a1a] p-6 font-mono text-sm relative group hover:border-[#00FF41] transition-colors">
                    <div className="absolute top-4 right-4 text-[#007ACC]"><Linkedin size={16} fill="#007ACC" /></div>
                    <p className="text-gray-300 mb-6 leading-relaxed italic">
-                      &quot;As a cornerstone of our development team... he was instrumental in creating high-quality HTML ads for key LCS and GCS clients (Google). He built new workflows that improved the team&apos;s efficiency... and directly contributed to exceeding client ROI expectations.&quot;
+                      &quot;As a cornerstone of our development team... he was instrumental in creating high-quality HTML ads for key LCS and GCS clients (Google). He built new workflows that improved the team{"'"} efficiency... and directly contributed to exceeding client ROI expectations.&quot;
                    </p>
                    <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-[#333] rounded-full flex items-center justify-center text-[#00FF41] font-bold border border-[#333]">KB</div>
@@ -670,7 +659,7 @@ export default function App() {
                <div>
                   <h4 className="text-2xl font-bold text-white mb-6">Connect_</h4>
                   <p className="text-gray-400 mb-6 max-w-md">
-                    Ready to optimize your pipeline? Whether it&apos;s high-performance motion or structural consultancy, I am ready to integrate.
+                    Ready to optimize your pipeline? Whether it{"'"} high-performance motion or structural consultancy, I am ready to integrate.
                   </p>
                   <a href="mailto:hello@x-code.studio" className="text-[#00FF41] hover:underline text-lg">
                     hello@x-code.studio

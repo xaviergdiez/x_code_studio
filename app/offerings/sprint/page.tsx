@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, CheckCircle, Zap, Calendar, MessageSquare } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Calendar } from 'lucide-react';
 
 export default function SprintPage() {
   return (
@@ -144,7 +144,7 @@ export default function SprintPage() {
             </div>
 
             <div className="border border-[#333] bg-[#121212] p-8">
-              <h3 className="text-xl font-bold text-gray-400 mb-4">✗ DOESN&apos;T FIT</h3>
+              <h3 className="text-xl font-bold text-gray-400 mb-4">✗ DOESN{"'"} FIT</h3>
               <ul className="space-y-2 text-gray-400">
                 <li>{'▪'} Full app rebuild</li>
                 <li>{'▪'} Multi-feature architectural change</li>
@@ -167,7 +167,7 @@ export default function SprintPage() {
           <div className="space-y-6">
             {[
               {
-                q: 'What if my feature isn&apos;t done by Friday?',
+                q: "What if my feature isn't done by Friday?",
                 a: 'I guarantee delivery of the scope we defined Monday morning. If scope grows, we adjust. If I underestimate, I continue until Friday EOD.'
               },
               {
@@ -176,7 +176,7 @@ export default function SprintPage() {
               },
               {
                 q: 'Can I add more features mid-sprint?',
-                a: 'No scope creep. We defined the feature Monday. If you want more, it&apos;s a second sprint or upgrade to a monthly retainer.'
+                a: "No scope creep. We defined the feature Monday. If you want more, it's a second sprint or upgrade to a monthly retainer."
               },
               {
                 q: 'What if I need the sprint to start Wednesday?',

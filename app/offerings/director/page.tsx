@@ -196,7 +196,7 @@ export default function DirectorPage() {
               },
               {
                 q: 'Can I scale up mid-month?',
-                a: 'Yes. Need a sprint on top? That&apos;s a +€2,500 sprint fee. Need to double hours? We can negotiate.'
+                a: "Yes. Need a sprint on top? That's a +€2,500 sprint fee. Need to double hours? We can negotiate."
               },
               {
                 q: 'What if I need to pause?',
@@ -204,7 +204,7 @@ export default function DirectorPage() {
               },
               {
                 q: 'Do you do team meetings/standups?',
-                a: 'I&apos;m async-first. For critical calls, I show up. But most communication is Slack + GitHub PRs.'
+                a: "I'm async-first. For critical calls, I show up. But most communication is Slack + GitHub PRs."
               },
               {
                 q: 'What if the monthly fee is too much?',
@@ -233,7 +233,7 @@ export default function DirectorPage() {
             >
               Start a Conversation (€3,500/month)
             </a>
-            <p className="text-gray-400 mt-6">Let&apos;s discuss your roadmap. No pitch. Just strategy.</p>
+            <p className="text-gray-400 mt-6">Let{"'"} discuss your roadmap. No pitch. Just strategy.</p>
           </div>
         </section>
 

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, CheckCircle, Code, Database, Zap, Globe } from 'lucide-react';
+import { ArrowLeft, CheckCircle } from 'lucide-react';
 
 export default function AuditPage() {
   const [isExpanded, setIsExpanded] = useState<{ [key: string]: boolean }>({});
@@ -171,7 +171,7 @@ export default function AuditPage() {
               },
               {
                 q: 'What if I need ongoing support?',
-                a: 'After the audit, you can upgrade to a Fractional TD retainer (€3.5k/month) and I&apos;ll implement the roadmap async.'
+                a: "After the audit, you can upgrade to a Fractional TD retainer (€3.5k/month) and I'll implement the roadmap async."
               }
             ].map((item, i) => (
               <div key={i} className="border border-[#333] bg-[#1a1a1a] p-6">
