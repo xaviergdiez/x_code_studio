@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- Dark background matching brand -->
-  <rect width="32" height="32" fill="#121212"/>
-  
-  <!-- Neon green ">" symbol -->
-  <text x="16" y="24" font-family="monospace" font-size="28" font-weight="bold" fill="#00FF41" text-anchor="middle" dominant-baseline="middle">&gt;</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#121212"/>
+  <g stroke="#00FF41" stroke-width="6" stroke-linecap="round" fill="none">
+    <polyline points="16,12 48,32 16,52"/>
+  </g>
 </svg>

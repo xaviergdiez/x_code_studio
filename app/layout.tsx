@@ -16,7 +16,16 @@ export const metadata: Metadata = {
   title: "x-code.studio - Technical Director as a Service",
   description: "Technical Director as a Service - Bridging the Design-Dev Gap",
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      {
+        url: "/favicon.svg",
+        type: "image/svg+xml",
+      },
+      {
+        url: "/favicon.ico",
+        sizes: "any",
+      },
+    ],
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
