@@ -550,7 +550,7 @@ export default function App() {
                     <a href="https://github.com/xaviergdiez" className="text-gray-400 hover:text-white flex items-center">
                       GitHub <ExternalLink className="w-4 h-4 ml-2" />
                     </a>
-                    <a href="#" className="text-gray-400 hover:text-white flex items-center">
+                    <a href="https://www.neoland.online//master-product-design" className="text-gray-400 hover:text-white flex items-center">
                       NEOLAND Master Course <ExternalLink className="w-4 h-4 ml-2" />
                     </a>
                   </div>
