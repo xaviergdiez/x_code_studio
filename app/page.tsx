@@ -232,9 +232,9 @@ export default function App() {
                 <span className="text-[#00FF41]">{'>'}</span> Bridging High-Fidelity Design (Figma) and High-Performance Code (GSAP).
               </div>
               <div className="flex flex-col sm:flex-row gap-4 pt-8 hero-sub-anim">
-                <a href="/#methodology" className="px-8 py-3 font-bold text-[#121212] bg-[#00FF41] hover:bg-[#00CC33] transition-all text-center">
+                <Link href="/#methodology" className="px-8 py-3 font-bold text-[#121212] bg-[#00FF41] hover:bg-[#00CC33] transition-all text-center">
                   VIEW_ACCESS_PLANS
-                </a>
+                </Link>
                 <button onClick={() => scrollToSection('contact')} className="px-8 py-3 font-bold text-white border border-[#333] hover:border-white transition-all bg-[#1E1E1E]">
                   CONTACT
                 </button>
