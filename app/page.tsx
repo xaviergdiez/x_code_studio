@@ -470,13 +470,12 @@ export default function App() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="mb-8 section-reveal">
-                    <h3 className="text-2xl font-bold text-white mb-2 flex items-center">
-                      <span className="text-[#00FF41] animate-pulse mr-2">█</span>
-                      SCHEDULE_CONSULTATION
+                    <h3 className="text-lg md:text-2xl font-bold text-white mb-2 flex items-center gap-2">
+                      <span className="text-[#00FF41] animate-pulse">█</span>
+                      <span>LET&apos;S_TALK</span>
                     </h3>
-                    <p className="text-gray-400">
-                      Let&apos;s discuss your workflow challenges.<br/>
-                      Fill in the details below to get started.
+                    <p className="text-gray-400 text-sm md:text-base">
+                      Tell us about your workflow challenges.
                     </p>
                   </div>
 
