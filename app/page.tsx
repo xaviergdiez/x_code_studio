@@ -317,7 +317,7 @@ export default function App() {
         </section>
 
         {/* --- EXECUTION PROTOCOL --- */}
-        <section id="protocol" className="py-24 border-b border-[#333] bg-[#1E1E1E]">
+        <section id="methodology" className="py-24 border-b border-[#333] bg-[#1E1E1E]">
           <div className="max-w-7xl mx-auto px-4">
              <div className="mb-16 section-reveal text-center">
                 <h2 className="text-3xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> EXECUTION_PROTOCOL</h2>
