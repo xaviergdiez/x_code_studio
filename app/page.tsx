@@ -225,11 +225,11 @@ export default function App() {
                 Creative Technologist | Product Designer | Educator
               </div>
               <h1 className="text-4xl md:text-7xl font-bold text-white tracking-tighter leading-tight hero-text-anim">
-                <div className="block">DESIGN ENGINEERED</div>
-                <div className="block text-[#00FF41]">FOR SCALE</div>
+                <div className="block">CREATIVE TECHNOLOGIST</div>
+                <div className="block text-[#00FF41]">& DESIGN SYSTEMS ARCHITECT</div>
               </h1>
               <div className="max-w-2xl text-lg md:text-xl text-gray-400 leading-relaxed hero-sub-anim">
-                <span className="text-[#00FF41]">{'>'}</span> Bridging the gap between High-Fidelity Design and High-Performance Code.
+                <span className="text-[#00FF41]">{'>'}</span> Bridging High-Fidelity Design (Figma) and High-Performance Code (GSAP).
               </div>
               <div className="flex flex-col sm:flex-row gap-4 pt-8 hero-sub-anim">
                 <button onClick={() => scrollToSection('audit')} className="px-8 py-3 font-bold text-[#121212] bg-[#00FF41] hover:bg-[#00CC33] transition-all">
@@ -249,14 +249,14 @@ export default function App() {
             <div className="flex flex-col md:flex-row gap-8 items-start">
               <div className="w-full md:w-1/3">
                  <div className="text-[#007ACC] font-bold mb-2 text-sm tracking-widest">WHO_AM_I --human_mode</div>
-                 <h2 className="text-3xl font-bold text-white">I SPEAK PIXEL AND I SPEAK LOGIC.</h2>
+                 <h2 className="text-3xl font-bold text-white">DESIGNER FIRST.<br/>TECHNOLOGIST ALWAYS.</h2>
               </div>
               <div className="w-full md:w-2/3 text-gray-400 leading-relaxed space-y-4">
                 <p>
-                  I am a <span className="text-white">Designer</span> who learned to code to protect the integrity of my designs.
+                  I am a <span className="text-white">Designer</span> who learned to code to protect the integrity of my work.
                 </p>
                 <p>
-                  My career isn&apos;t just about fixing bugs; it&apos;s about architecture. <span className="text-white">As a Product Design Master Course Teacher</span>, I train the next generation of designers to think in systems. I don&apos;t just hand off code; I build the tools (plugins, automations) that empower design teams to work 10x faster.
+                  As a <span className="text-white">Product Design Master Course Teacher at NEOLAND</span>, I teach the next generation that Design and Development are the same discipline. Whether I&apos;m building a Figma Plugin to save your team 20 hours or architecting a Reactive Design System, my goal is the same: Perfect fidelity, zero friction.
                 </p>
                 <p>
                   I bridge the gap between the <span className="text-white">{`Creative Director's vision`}</span> and the <span className="text-white">{`Ad Server's logic`}</span>.
@@ -290,6 +290,110 @@ export default function App() {
                  </div>
               </div>
            </div>
+        </section>
+
+        {/* --- UX AUDIT LOG --- */}
+        <section className="py-24 border-b border-[#333]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mb-16 section-reveal">
+              <h2 className="text-3xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> UX_AUDIT.log</h2>
+              <p className="text-gray-400 max-w-2xl">Design decisions that ship with purpose, not accident.</p>
+            </div>
+
+            <div className="space-y-8">
+              
+              {/* Audit 1: Mobile Touch Targets */}
+              <div className="bg-[#1E1E1E] border border-[#333] p-8 rounded section-reveal">
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div>
+                    <div className="text-red-400 font-bold text-lg mb-2">PROBLEM</div>
+                    <div className="text-gray-300 text-sm space-y-2">
+                      <div><span className="text-red-400">▸</span> Static design mockups</div>
+                      <div><span className="text-red-400">▸</span> Touch targets 32px below WCAG AA</div>
+                      <div><span className="text-red-400">▸</span> No responsive touch feedback</div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-yellow-400 font-bold text-lg mb-2">ANALYSIS</div>
+                    <div className="text-gray-300 text-sm space-y-2">
+                      <div><span className="text-yellow-400">▸</span> 48×48px minimum for mobile</div>
+                      <div><span className="text-yellow-400">▸</span> Spacing logic in Figma Variables</div>
+                      <div><span className="text-yellow-400">▸</span> CSS Grid for perfect alignment</div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-[#00FF41] font-bold text-lg mb-2">SOLUTION</div>
+                    <div className="text-gray-300 text-sm space-y-2">
+                      <div><span className="text-[#00FF41]">▸</span> Applied Design Tokens system</div>
+                      <div><span className="text-[#00FF41]">▸</span> 100% WCAG AA compliance</div>
+                      <div><span className="text-[#00FF41]">▸</span> Device-agnostic responsive layout</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Audit 2: Design System Consistency */}
+              <div className="bg-[#1E1E1E] border border-[#333] p-8 rounded section-reveal">
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div>
+                    <div className="text-red-400 font-bold text-lg mb-2">PROBLEM</div>
+                    <div className="text-gray-300 text-sm space-y-2">
+                      <div><span className="text-red-400">▸</span> Colors inconsistent across states</div>
+                      <div><span className="text-red-400">▸</span> No component library documentation</div>
+                      <div><span className="text-red-400">▸</span> Figma to React mismatch</div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-yellow-400 font-bold text-lg mb-2">ANALYSIS</div>
+                    <div className="text-gray-300 text-sm space-y-2">
+                      <div><span className="text-yellow-400">▸</span> Built Figma Variables for all tokens</div>
+                      <div><span className="text-yellow-400">▸</span> Exported to Tailwind config</div>
+                      <div><span className="text-yellow-400">▸</span> Atomic design principles</div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-[#00FF41] font-bold text-lg mb-2">SOLUTION</div>
+                    <div className="text-gray-300 text-sm space-y-2">
+                      <div><span className="text-[#00FF41]">▸</span> Single source of truth established</div>
+                      <div><span className="text-[#00FF41]">▸</span> Bi-directional sync (Figma ↔ Code)</div>
+                      <div><span className="text-[#00FF41]">▸</span> 40% faster component creation</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Audit 3: Animation Performance */}
+              <div className="bg-[#1E1E1E] border border-[#333] p-8 rounded section-reveal">
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div>
+                    <div className="text-red-400 font-bold text-lg mb-2">PROBLEM</div>
+                    <div className="text-gray-300 text-sm space-y-2">
+                      <div><span className="text-red-400">▸</span> CSS animations cause jank</div>
+                      <div><span className="text-red-400">▸</span> 45fps instead of 60fps</div>
+                      <div><span className="text-red-400">▸</span> Scrollytelling feels sluggish</div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-yellow-400 font-bold text-lg mb-2">ANALYSIS</div>
+                    <div className="text-gray-300 text-sm space-y-2">
+                      <div><span className="text-yellow-400">▸</span> Switched to GSAP + GPU acceleration</div>
+                      <div><span className="text-yellow-400">▸</span> ScrollTrigger for scroll sync</div>
+                      <div><span className="text-yellow-400">▸</span> Will-change and transform optimization</div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-[#00FF41] font-bold text-lg mb-2">SOLUTION</div>
+                    <div className="text-gray-300 text-sm space-y-2">
+                      <div><span className="text-[#00FF41]">▸</span> Consistent 60fps performance</div>
+                      <div><span className="text-[#00FF41]">▸</span> Core Web Vitals passed</div>
+                      <div><span className="text-[#00FF41]">▸</span> Micro-interactions feel native</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </section>
 
         {/* --- USER REVIEWS / SOCIAL PROOF --- */}

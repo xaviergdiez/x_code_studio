@@ -311,12 +311,12 @@ export default function FBTOCase() {
           </h3>
 
           <div className="flex flex-wrap gap-3">
-            {['HTML5 Canvas', 'GSAP Animation', 'SVG', 'Interactive', 'Video Integration', 'Form Validation', 'Analytics', 'Mobile Optimization', 'Rich Media', 'Cross-browser'].map((tech, index) => (
+            {['Interaction_Design', 'Animation_Systems', 'Form_Design', 'Visual_Hierarchy', 'Scrollytelling', 'User_Experience', 'Micro_Interactions', 'Responsive_UX', 'Accessibility', 'Design_Audit'].map((tech, index) => (
               <span
                 key={index}
                 className="px-4 py-2 bg-[#1E1E1E] border border-[#333] text-gray-300 rounded text-sm font-mono hover:border-[#00FF41] transition-colors"
               >
-                {tech}
+                {`[${tech}]`}
               </span>
             ))}
           </div>

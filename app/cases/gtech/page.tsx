@@ -291,12 +291,12 @@ export default function GtechCase() {
           </h3>
 
           <div className="flex flex-wrap gap-3">
-            {['Machine Learning', 'Google Ads API', 'Node.js', 'Analytics', 'Display & Video 360', 'Studio DCO', 'HTML5', 'Dynamic Remarketing', 'Enterprise Architecture', 'Global Deployment'].map((tech, index) => (
+            {['Campaign_Design', 'Ad_System_Design', 'Figma_API', 'Component_Library', 'Design_Systems', 'Motion_Design', 'Interactive_Prototypes', 'Atomic_Design', 'Performance_Audit', 'Automation_Tools'].map((tech, index) => (
               <span
                 key={index}
                 className="px-4 py-2 bg-[#1E1E1E] border border-[#333] text-gray-300 rounded text-sm font-mono hover:border-[#00FF41] transition-colors"
               >
-                {tech}
+                {`[${tech}]`}
               </span>
             ))}
           </div>

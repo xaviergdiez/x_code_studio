@@ -255,12 +255,12 @@ export default function BMWMiniCase() {
           </h3>
 
           <div className="flex flex-wrap gap-3">
-            {['Adobe Creative Cloud', 'Figma API', 'Automation', 'React', 'Node.js', 'GSAP', 'HTML5 Canvas', 'DCO', 'Analytics', 'Quality Assurance'].map((tech, index) => (
+            {['Design_Tokens', 'Figma_API', 'Micro_Interactions', 'Scrollytelling', 'Responsive_Design', 'Animation_Systems', 'GSAP_Effects', 'Component_Design', 'Brand_Systems', 'Accessibility_Design'].map((tech, index) => (
               <span
                 key={index}
                 className="px-4 py-2 bg-[#1E1E1E] border border-[#333] text-gray-300 rounded text-sm font-mono hover:border-[#00FF41] transition-colors"
               >
-                {tech}
+                {`[${tech}]`}
               </span>
             ))}
           </div>

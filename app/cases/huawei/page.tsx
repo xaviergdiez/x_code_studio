@@ -438,12 +438,12 @@ export default function HuaweiCase() {
           </h3>
 
           <div className="flex flex-wrap gap-3">
-            {['3D CSS Transforms', 'WebGL', 'Color Theory', 'Mobile Optimization', 'SVG Masking', 'GSAP', 'Interactive Design', 'Performance Tuning', 'Cross-browser', 'Touch Controls'].map((tech, index) => (
+            {['Design_Tokens', 'Interaction_Design', 'Micro_Animations', 'Scrollytelling', 'Color_Systems', 'Atomic_Design', 'Motion_UI', 'Performance_Tuning', 'Responsive_Design', 'Touch_Interactions'].map((tech, index) => (
               <span
                 key={index}
                 className="px-4 py-2 bg-[#1E1E1E] border border-[#333] text-gray-300 rounded text-sm font-mono hover:border-[#00FF41] transition-colors"
               >
-                {tech}
+                {`[${tech}]`}
               </span>
             ))}
           </div>
