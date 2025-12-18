@@ -453,7 +453,7 @@ export default function App() {
                 {/* Kristina Brown */}
                 <div className="section-reveal border border-[#333] bg-[#1a1a1a] p-6 font-mono text-sm relative group hover:border-[#00FF41] transition-colors">
                    <div className="absolute top-4 right-4 text-[#007ACC]"><Linkedin size={16} fill="#007ACC" /></div>
-                   <p className="text-gray-300 mb-6 leading-relaxed italic">
+                   <p className="text-gray-300 mb-6 leading-relaxed italic pr-8">
                       &quot;As a cornerstone of our development team... he was instrumental in creating high-quality HTML ads for key LCS and GCS clients (Google). He built new workflows that improved the team{"'"} efficiency... and directly contributed to exceeding client ROI expectations.&quot;
                    </p>
                    <div className="flex items-center gap-3">
@@ -468,7 +468,7 @@ export default function App() {
                 {/* Tim Wolters */}
                 <div className="section-reveal border border-[#333] bg-[#1a1a1a] p-6 font-mono text-sm relative group hover:border-[#00FF41] transition-colors">
                    <div className="absolute top-4 right-4 text-[#007ACC]"><Linkedin size={16} fill="#007ACC" /></div>
-                   <p className="text-gray-300 mb-6 leading-relaxed italic">
+                   <p className="text-gray-300 mb-6 leading-relaxed italic pr-8">
                       &quot;From building automated pipelines and writing smart scripts... Xavier always finds a way to add value. On a large client project his framework allowed us to render assets at massive scale in a fraction of the time, saving the team countless hours.&quot;
                    </p>
                    <div className="flex items-center gap-3">
@@ -483,7 +483,7 @@ export default function App() {
                 {/* Pablo Carreira */}
                 <div className="section-reveal border border-[#333] bg-[#1a1a1a] p-6 font-mono text-sm relative group hover:border-[#00FF41] transition-colors">
                    <div className="absolute top-4 right-4 text-[#007ACC]"><Linkedin size={16} fill="#007ACC" /></div>
-                   <p className="text-gray-300 mb-6 leading-relaxed italic">
+                   <p className="text-gray-300 mb-6 leading-relaxed italic pr-8">
                       &quot;He masterfully organizes and delivers on large-scale projects, ensuring they are built to scale. Beyond excellent technical skills in areas like web animation, Xavi is a natural leader who genuinely supports the development of his colleagues.&quot;
                    </p>
                    <div className="flex items-center gap-3">
@@ -498,7 +498,7 @@ export default function App() {
                 {/* Jordan Maders */}
                 <div className="section-reveal border border-[#333] bg-[#1a1a1a] p-6 font-mono text-sm relative group hover:border-[#00FF41] transition-colors">
                    <div className="absolute top-4 right-4 text-[#007ACC]"><Linkedin size={16} fill="#007ACC" /></div>
-                   <p className="text-gray-300 mb-6 leading-relaxed italic">
+                   <p className="text-gray-300 mb-6 leading-relaxed italic pr-8">
                       &quot;Highly focused professional who seamlessly bridges business objectives with client needs... ensuring that expectations are met with precision. His leadership consistently sets the standard.&quot;
                    </p>
                    <div className="flex items-center gap-3">
