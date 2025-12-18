@@ -2,7 +2,7 @@
 
 import { useState, useRef, useLayoutEffect } from 'react';
 import Link from 'next/link';
-import { Terminal, Code, Zap, CheckCircle, Menu, X, ArrowRight, ExternalLink, RefreshCw, LayoutTemplate, Globe, Layers, Database, MessageSquare } from 'lucide-react';
+import { Terminal, Code, Zap, CheckCircle, Menu, X, ArrowRight, ExternalLink, RefreshCw, LayoutTemplate, Globe, Layers, Database, MessageSquare, Linkedin } from 'lucide-react';
 
 // GSAP Imports
 import gsap from 'gsap';
@@ -31,6 +31,17 @@ export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const appRef = useRef(null);
   const [state, handleSubmit] = useForm("xdkqvorr");
+  const [emailInput, setEmailInput] = useState("");
+  const [newsletterStatus, setNewsletterStatus] = useState("idle");
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setNewsletterStatus("sending");
+    setTimeout(() => {
+      setNewsletterStatus("success");
+      setEmailInput("");
+    }, 1500);
+  };
 
   // ---------------------------------------------------------------------------
   // GSAP ANIMATION ENGINE
@@ -267,6 +278,103 @@ export default function App() {
           </div>
         </section>
 
+        {/* --- OPERATOR PROFILE (SEO Optimized) --- */}
+        <section id="profile" className="py-20 border-b border-[#333] bg-[#1a1a1a]">
+          <div className="max-w-5xl mx-auto px-4 section-reveal">
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              <div className="w-full md:w-1/3">
+                 <div className="text-[#007ACC] font-bold mb-2 text-sm tracking-widest">SYSTEM_LOG</div>
+                 <h2 className="text-3xl font-bold text-white">15+ YEARS OF TECHNICAL LEADERSHIP</h2>
+              </div>
+              <div className="w-full md:w-2/3 text-gray-400 leading-relaxed space-y-4">
+                <p>
+                  I bridge the gap between the <span className="text-white">Creative Director&apos;s vision</span> and the <span className="text-white">Ad Server&apos;s logic</span>.
+                </p>
+                <p>
+                  My background spans advertising technology, <span className="text-white">DCO (Dynamic Creative Optimization)</span>, and high-performance WebGL/GSAP animation.
+                  I have engineered architectures for <span className="text-white">DV360 and Campaign Manager 360</span> for global clients across AMER, EMEA, and APAC markets.
+                </p>
+                <p>
+                   You don&apos;t need a full-time CTO. You need a Sniper.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* --- USER REVIEWS / SOCIAL PROOF --- */}
+        <section id="social_proof" className="py-20 border-b border-[#333] bg-[#121212]">
+          <div className="max-w-7xl mx-auto px-4">
+             <div className="mb-12 section-reveal">
+                <h2 className="text-2xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> PEER_VALIDATION --linkedin_verified</h2>
+             </div>
+             
+             <div className="grid md:grid-cols-2 gap-6">
+                
+                {/* Kristina Brown */}
+                <div className="section-reveal border border-[#333] bg-[#1a1a1a] p-6 font-mono text-sm relative group hover:border-[#00FF41] transition-colors">
+                   <div className="absolute top-4 right-4 text-[#007ACC]"><Linkedin size={16} fill="#007ACC" /></div>
+                   <p className="text-gray-300 mb-6 leading-relaxed italic">
+                      &quot;As a cornerstone of our development team... he was instrumental in creating high-quality HTML ads for key LCS and GCS clients (Google). He built new workflows that improved the team&apos;s efficiency... and directly contributed to exceeding client ROI expectations.&quot;
+                   </p>
+                   <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-[#333] rounded-full flex items-center justify-center text-[#00FF41] font-bold border border-[#333]">KB</div>
+                      <div>
+                         <div className="text-white font-bold">Kristina Brown</div>
+                         <div className="text-gray-500 text-xs">Senior Program Manager @ Monks</div>
+                      </div>
+                   </div>
+                </div>
+
+                {/* Tim Wolters */}
+                <div className="section-reveal border border-[#333] bg-[#1a1a1a] p-6 font-mono text-sm relative group hover:border-[#00FF41] transition-colors">
+                   <div className="absolute top-4 right-4 text-[#007ACC]"><Linkedin size={16} fill="#007ACC" /></div>
+                   <p className="text-gray-300 mb-6 leading-relaxed italic">
+                      &quot;From building automated pipelines and writing smart scripts... Xavier always finds a way to add value. On a large client project his framework allowed us to render assets at massive scale in a fraction of the time, saving the team countless hours.&quot;
+                   </p>
+                   <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-[#333] rounded-full flex items-center justify-center text-[#00FF41] font-bold border border-[#333]">TW</div>
+                      <div>
+                         <div className="text-white font-bold">Tim Wolters</div>
+                         <div className="text-gray-500 text-xs">Design Lead @ Monks</div>
+                      </div>
+                   </div>
+                </div>
+
+                {/* Pablo Carreira */}
+                <div className="section-reveal border border-[#333] bg-[#1a1a1a] p-6 font-mono text-sm relative group hover:border-[#00FF41] transition-colors">
+                   <div className="absolute top-4 right-4 text-[#007ACC]"><Linkedin size={16} fill="#007ACC" /></div>
+                   <p className="text-gray-300 mb-6 leading-relaxed italic">
+                      &quot;He masterfully organizes and delivers on large-scale projects, ensuring they are built to scale. Beyond excellent technical skills in areas like web animation, Xavi is a natural leader who genuinely supports the development of his colleagues.&quot;
+                   </p>
+                   <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-[#333] rounded-full flex items-center justify-center text-[#00FF41] font-bold border border-[#333]">PC</div>
+                      <div>
+                         <div className="text-white font-bold">Pablo Carreira</div>
+                         <div className="text-gray-500 text-xs">Lead Display Developer</div>
+                      </div>
+                   </div>
+                </div>
+
+                {/* Jordan Maders */}
+                <div className="section-reveal border border-[#333] bg-[#1a1a1a] p-6 font-mono text-sm relative group hover:border-[#00FF41] transition-colors">
+                   <div className="absolute top-4 right-4 text-[#007ACC]"><Linkedin size={16} fill="#007ACC" /></div>
+                   <p className="text-gray-300 mb-6 leading-relaxed italic">
+                      &quot;Highly focused professional who seamlessly bridges business objectives with client needs... ensuring that expectations are met with precision. His leadership consistently sets the standard.&quot;
+                   </p>
+                   <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-[#333] rounded-full flex items-center justify-center text-[#00FF41] font-bold border border-[#333]">JM</div>
+                      <div>
+                         <div className="text-white font-bold">Jordan Maders</div>
+                         <div className="text-gray-500 text-xs">Director / Post Production</div>
+                      </div>
+                   </div>
+                </div>
+
+             </div>
+          </div>
+        </section>
+
         {/* --- SERVICES SECTION --- */}
         <section id="services" className="py-24 border-b border-[#333]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -315,7 +423,6 @@ export default function App() {
             </div>
           </div>
         </section>
-``
         {/* --- EXECUTION PROTOCOL & OFFERINGS --- */}
         <section id="methodology" className="py-24 border-b border-[#333] bg-[#1E1E1E]">
           <div className="max-w-7xl mx-auto px-4">
@@ -357,22 +464,22 @@ export default function App() {
 
                 <div className="grid md:grid-cols-3 gap-8 items-start">
                    <OfferingCard 
-                     title="THE AUDIT"
-                     subtitle="one-time"
-                     desc="Diagnostics for your pipeline."
+                     title="WORKFLOW AUDIT"
+                     subtitle="€995 one-time"
+                     desc="Diagnostics for your pipeline. Book instantly."
                      features={[
-                       "Ad Tech Stack Review",
+                       "Codebase Review (Git)",
+                       "DCO Feed Stress Test",
                        "Performance Profiling",
-                       "Workflow Optimization Report",
-                       "1-Hour Strategy Call"
+                       "Strategy PDF Report"
                      ]}
-                     cta="BOOK_AUDIT"
-                     onClick={() => scrollToSection('audit')}
+                     cta="LEARN_MORE →"
+                     onClick={() => window.location.href = '/offerings/audit'}
                    />
                    
                    <OfferingCard 
                      title="FRACTIONAL TD"
-                     subtitle="/month"
+                     subtitle="€3,500 /month"
                      highlight={true}
                      desc="Your dedicated technologist."
                      features={[
@@ -382,22 +489,22 @@ export default function App() {
                        "Direct Slack Access",
                        "Pause/Cancel Anytime"
                      ]}
-                     cta="SUBSCRIBE"
-                     onClick={() => window.open('mailto:hello@x-code.studio?subject=Subscription Inquiry')}
+                     cta="LEARN_MORE →"
+                     onClick={() => window.location.href = '/offerings/director'}
                    />
 
                    <OfferingCard 
                      title="DEV SPRINT"
-                     subtitle="/week"
-                     desc="For critical deadlines."
+                     subtitle="€2,500 /week"
+                     desc="I block my calendar for 5 days."
                      features={[
-                       "Dedicated 5-Day Sprint",
                        "Single Feature Focus",
-                       "Rush Delivery Protocol",
+                       "5-Day Guarantee",
+                       "Friday Delivery",
                        "Daily Async Standups"
                      ]}
-                     cta="BOOK_SPRINT"
-                     onClick={() => scrollToSection('audit')}
+                     cta="LEARN_MORE →"
+                     onClick={() => window.location.href = '/offerings/sprint'}
                    />
                 </div>
              </div>
@@ -462,65 +569,93 @@ export default function App() {
             <div className="bg-[#121212] border border-[#333] rounded-lg shadow-2xl p-8 md:p-12 font-mono">
               
               {state.succeeded ? (
-                  <div className="text-center py-12">
+                  <div className="text-center py-12 border border-[#00FF41]/30 bg-[#00FF41]/5 rounded">
                     <CheckCircle className="w-16 h-16 text-[#00FF41] mx-auto mb-4" />
-                    <h3 className="text-2xl font-bold text-white mb-2">REQUEST_RECEIVED</h3>
-                    <p className="text-gray-400">Thank you! We&apos;ll be in touch shortly.</p>
+                    <h3 className="text-2xl font-bold text-white mb-2">TRANSMISSION_RECEIVED</h3>
+                    <p className="text-gray-400">I will analyze your request and respond shortly.</p>
+                    <button 
+                      onClick={() => window.location.reload()} 
+                      className="mt-6 text-sm text-[#00FF41] hover:underline"
+                    >
+                      [ New_Transmission ]
+                    </button>
                   </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="mb-8 section-reveal">
-                    <h3 className="text-lg md:text-2xl font-bold text-white mb-2 flex items-center gap-2">
-                      <span className="text-[#00FF41] animate-pulse">█</span>
-                      <span>INITIATE_CONTACT</span>
+                    <h3 className="text-2xl font-bold text-white mb-2 flex items-center">
+                      <span className="text-[#00FF41] animate-pulse mr-2">█</span>
+                      INITIATE_CONTACT
                     </h3>
-                    <p className="text-gray-400 text-sm md:text-base">
-                      Describe your technical needs. Brief or detailed—we adapt.
-                    </p>
+                    <p className="text-gray-400">Select your mission profile to route your request.</p>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="group">
+                      <label className="block text-[#007ACC] mb-2" htmlFor="name">{'>'} user_id:</label>
+                      <input 
+                        id="name" 
+                        type="text" 
+                        name="name" 
+                        required 
+                        className="w-full bg-transparent border-b border-[#333] focus:border-[#00FF41] text-white p-2 outline-none transition-colors placeholder-gray-700" 
+                        placeholder="Name / Agency" 
+                      />
+                    </div>
+
+                    <div className="group">
+                      <label className="block text-[#007ACC] mb-2" htmlFor="email">{'>'} target_email:</label>
+                      <input 
+                        id="email" 
+                        type="email" 
+                        name="email" 
+                        required 
+                        className="w-full bg-transparent border-b border-[#333] focus:border-[#00FF41] text-white p-2 outline-none transition-colors placeholder-gray-700" 
+                        placeholder="your@email.com" 
+                      />
+                    </div>
+                  </div>
+
+                  {/* MISSION SELECTOR (Funnel Segmentation) */}
+                  <div className="group">
+                     <label className="block text-[#007ACC] mb-2" htmlFor="mission">{'>'} select_mission_profile:</label>
+                     <div className="relative">
+                        <select 
+                          id="mission" 
+                          name="mission" 
+                          className="w-full bg-[#1a1a1a] border border-[#333] text-white p-3 appearance-none focus:border-[#00FF41] outline-none transition-colors"
+                          required
+                        >
+                           <option value="">-- Select Protocol --</option>
+                           <option value="audit">Pipeline Audit (€995) - Fix my workflow</option>
+                           <option value="sprint">Dev Sprint (€2.5k) - Critical Firefighting</option>
+                           <option value="retainer">Fractional Director (€3.5k) - Ongoing Architecture</option>
+                           <option value="education">Education/Workshop - Train my team</option>
+                        </select>
+                        <div className="absolute right-3 top-3 pointer-events-none text-gray-500">
+                           <ArrowRight className="rotate-90 w-4 h-4" />
+                        </div>
+                     </div>
                   </div>
 
                   <div className="group">
-                    <label className="block text-[#007ACC] mb-2" htmlFor="name">{'>'}  Your Name:</label>
-                    <input 
-                      id="name" 
-                      type="text" 
-                      name="name" 
-                      required 
-                      className="w-full bg-transparent border-b border-[#333] focus:border-[#00FF41] text-white p-2 outline-none transition-colors placeholder-gray-700" 
-                      placeholder="John Doe" 
-                    />
-                  </div>
-
-                  <div className="group">
-                    <label className="block text-[#007ACC] mb-2" htmlFor="email">{'>'}  Email Address:</label>
-                    <input 
-                      id="email" 
-                      type="email" 
-                      name="email" 
-                      required 
-                      className="w-full bg-transparent border-b border-[#333] focus:border-[#00FF41] text-white p-2 outline-none transition-colors placeholder-gray-700" 
-                      placeholder="john@agency.com" 
-                    />
-                  </div>
-
-                  <div className="group">
-                    <label className="block text-[#007ACC] mb-2" htmlFor="message">{'>'}  What challenge are we solving?</label>
+                    <label className="block text-[#007ACC] mb-2" htmlFor="message">{'>'} message_payload:</label>
                     <textarea 
                       id="message" 
                       name="message" 
                       required 
                       rows={3} 
-                      className="w-full bg-transparent border-b border-[#333] focus:border-[#00FF41] text-white p-2 outline-none transition-colors resize-none placeholder-gray-700" 
-                      placeholder="e.g. Handover friction, GSAP performance issues, Creative automation needs..." 
+                      className="w-full bg-transparent border-b border-[#333] focus:border-[#00FF41] text-white p-2 outline-none resize-none transition-colors placeholder-gray-700" 
+                      placeholder="Context: We are launching a global DCO campaign in 2 weeks..." 
                     />
                   </div>
 
                   <button 
                     type="submit" 
-                    disabled={state.submitting}
+                    disabled={state.submitting} 
                     className="w-full md:w-auto bg-[#00FF41] text-[#121212] font-bold px-8 py-4 hover:bg-[#00CC33] transition-colors flex items-center justify-center uppercase tracking-wider disabled:opacity-50"
                   >
-                    {state.submitting ? 'SENDING...' : '[ Send Inquiry ]'}
+                    {state.submitting ? 'TRANSMITTING...' : '[ TRANSMIT_REQUEST ]'}
                   </button>
                 </form>
               )}
