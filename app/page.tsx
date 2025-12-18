@@ -232,11 +232,11 @@ export default function App() {
                 <span className="text-[#00FF41]">{'>'}</span> Bridging High-Fidelity Design (Figma) and High-Performance Code (GSAP).
               </div>
               <div className="flex flex-col sm:flex-row gap-4 pt-8 hero-sub-anim">
-                <button onClick={() => scrollToSection('audit')} className="px-8 py-3 font-bold text-[#121212] bg-[#00FF41] hover:bg-[#00CC33] transition-all">
+                <a href="/#methodology" className="px-8 py-3 font-bold text-[#121212] bg-[#00FF41] hover:bg-[#00CC33] transition-all text-center">
                   VIEW_ACCESS_PLANS
-                </button>
-                <button onClick={() => scrollToSection('audit')} className="px-8 py-3 font-bold text-white border border-[#333] hover:border-white transition-all bg-[#1E1E1E]">
-                  BOOK_AUDIT
+                </a>
+                <button onClick={() => scrollToSection('contact')} className="px-8 py-3 font-bold text-white border border-[#333] hover:border-white transition-all bg-[#1E1E1E]">
+                  CONTACT
                 </button>
               </div>
             </div>
@@ -563,73 +563,7 @@ export default function App() {
              </div>
 
              {/* OFFERINGS */}
-             <div className="border-t border-[#333] pt-24">
-                <div className="mb-16 text-center section-reveal">
-                   <h2 className="text-3xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> OFFERINGS</h2>
-                   <p className="text-gray-400">Choose your engagement model.</p>
-                </div>
-
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 items-start">
-                   <OfferingCard 
-                     title="WORKFLOW AUDIT"
-                     subtitle="€995 one-time"
-                     desc="Diagnostics for your pipeline. Book instantly."
-                     features={[
-                       "Codebase Review (Git)",
-                       "DCO Feed Stress Test",
-                       "Performance Profiling",
-                       "Strategy PDF Report"
-                     ]}
-                     cta="LEARN_MORE →"
-                     onClick={() => window.location.href = '/offerings/audit'}
-                   />
-                   
-                   <OfferingCard 
-                     title="DESIGN SYSTEM"
-                     subtitle="€4,500 package"
-                     highlight={true}
-                     desc="Architecting the source of truth."
-                     features={[
-                       "Figma Design System",
-                       "Atomic Design & Tokens",
-                       "Ad Templates (Social, Rich Media, HTML5)",
-                       "UX/UI Web Design",
-                       "Landing Page Animations"
-                     ]}
-                     cta="LEARN_MORE →"
-                     onClick={() => window.location.href = '/offerings/design-system'}
-                   />
-                   
-                   <OfferingCard 
-                     title="FRACTIONAL TD"
-                     subtitle="€3,500 /month"
-                     desc="Your dedicated technologist."
-                     features={[
-                       "Unlimited Request Queue",
-                       "One active task at a time",
-                       "Full Stack & Ad Tech Access",
-                       "Direct Slack Access",
-                       "Pause/Cancel Anytime"
-                     ]}
-                     cta="LEARN_MORE →"
-                     onClick={() => window.location.href = '/offerings/director'}
-                   />
-
-                   <OfferingCard 
-                     title="DEV SPRINT"
-                     subtitle="€2,500 /week"
-                     desc="I block my calendar for 5 days."
-                     features={[
-                       "Single Feature Focus",
-                       "5-Day Guarantee",
-                       "Friday Delivery",
-                       "Daily Async Standups"
-                     ]}
-                     cta="LEARN_MORE →"
-                     onClick={() => window.location.href = '/offerings/sprint'}
-                   />
-                </div>
-             </div>
+             <OfferingsSection />
           </div>
         </section>
 
@@ -849,9 +783,91 @@ function ProtocolStep({ num, title, desc, icon }: { num: string; title: string; 
   );
 }
 
-function OfferingCard({ title, subtitle, desc, features, cta, highlight, onClick }: { title: string; subtitle: string; desc: string; features: string[]; cta: string; highlight?: boolean; onClick: () => void }) {
+function OfferingsSection() {
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+
+  const offerings = [
+    {
+      id: 'audit',
+      title: 'WORKFLOW AUDIT',
+      subtitle: '€995 one-time',
+      desc: 'Diagnostics for your pipeline. Book instantly.',
+      features: ['Codebase Review (Git)', 'DCO Feed Stress Test', 'Performance Profiling', 'Strategy PDF Report'],
+      cta: 'LEARN_MORE →',
+      onClick: () => window.location.href = '/offerings/audit',
+      highlight: false
+    },
+    {
+      id: 'design-system',
+      title: 'DESIGN SYSTEM',
+      subtitle: '€4,500 package',
+      desc: 'Architecting the source of truth.',
+      features: ['Figma Design System', 'Atomic Design & Tokens', 'Ad Templates (Social, Rich Media, HTML5)', 'UX/UI Web Design', 'Landing Page Animations'],
+      cta: 'LEARN_MORE →',
+      onClick: () => window.location.href = '/offerings/design-system',
+      highlight: true
+    },
+    {
+      id: 'director',
+      title: 'FRACTIONAL TD',
+      subtitle: '€3,500 /month',
+      desc: 'Your dedicated technologist.',
+      features: ['Unlimited Request Queue', 'One active task at a time', 'Full Stack & Ad Tech Access', 'Direct Slack Access', 'Pause/Cancel Anytime'],
+      cta: 'LEARN_MORE →',
+      onClick: () => window.location.href = '/offerings/director',
+      highlight: false
+    },
+    {
+      id: 'sprint',
+      title: 'DEV SPRINT',
+      subtitle: '€2,500 /week',
+      desc: 'I block my calendar for 5 days.',
+      features: ['Single Feature Focus', '5-Day Guarantee', 'Friday Delivery', 'Daily Async Standups'],
+      cta: 'LEARN_MORE →',
+      onClick: () => window.location.href = '/offerings/sprint',
+      highlight: false
+    }
+  ];
+
   return (
-    <div className={`section-reveal relative p-8 border ${highlight ? 'border-[#00FF41] bg-[#1a1a1a]' : 'border-[#333] bg-[#121212]'} flex flex-col h-full`}>
+    <div className="border-t border-[#333] pt-24">
+      <div className="mb-16 text-center section-reveal">
+        <h2 className="text-3xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> OFFERINGS</h2>
+        <p className="text-gray-400">Choose your engagement model.</p>
+      </div>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 items-start">
+        {offerings.map((offering) => {
+          const isHovered = hoveredCard === offering.id;
+          const shouldShowGreen = hoveredCard === null ? offering.highlight : isHovered;
+
+          return (
+            <OfferingCard
+              key={offering.id}
+              title={offering.title}
+              subtitle={offering.subtitle}
+              desc={offering.desc}
+              features={offering.features}
+              cta={offering.cta}
+              highlight={offering.highlight}
+              showGreen={shouldShowGreen}
+              onMouseEnter={() => setHoveredCard(offering.id)}
+              onMouseLeave={() => setHoveredCard(null)}
+              onClick={offering.onClick}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function OfferingCard({ title, subtitle, desc, features, cta, highlight, showGreen, onMouseEnter, onMouseLeave, onClick }: { title: string; subtitle: string; desc: string; features: string[]; cta: string; highlight?: boolean; showGreen: boolean; onMouseEnter: () => void; onMouseLeave: () => void; onClick: () => void }) {
+  return (
+    <div 
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className={`section-reveal relative p-8 border ${showGreen ? 'border-[#00FF41] bg-[#1a1a1a]' : 'border-[#333] bg-[#121212]'} flex flex-col h-full transition-colors duration-300`}>
       {highlight && <div className="absolute top-0 right-0 bg-[#00FF41] text-[#121212] text-xs font-bold px-2 py-1">RECOMMENDED</div>}
       <h3 className="text-xl font-bold text-white mb-1">{title}</h3>
       <div className="text-sm text-gray-500 font-mono mb-4">{subtitle}</div>
@@ -864,7 +880,7 @@ function OfferingCard({ title, subtitle, desc, features, cta, highlight, onClick
            </li>
         ))}
       </ul>
-      <button onClick={onClick} className={`w-full py-3 font-bold uppercase tracking-wider border text-sm ${highlight ? 'bg-[#00FF41] text-[#121212] border-[#00FF41] hover:bg-[#00CC33]' : 'border-[#333] text-white hover:bg-[#333]'} transition-colors`}>
+      <button onClick={onClick} className={`w-full py-3 font-bold uppercase tracking-wider border text-sm transition-colors duration-300 ${showGreen ? 'bg-[#00FF41] text-[#121212] border-[#00FF41] hover:bg-[#00CC33]' : 'border-[#333] text-white hover:bg-[#333]'}`}>
         {cta}
       </button>
     </div>
