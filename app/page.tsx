@@ -272,7 +272,7 @@ export default function App() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="section-reveal text-3xl font-bold mb-12 flex items-center">
               <span className="text-[#00FF41] mr-4">{'>'}</span> 
-              SYSTEM_CAPABILITIES
+              ARSENAL
             </h2>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
