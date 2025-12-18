@@ -315,34 +315,91 @@ export default function App() {
             </div>
           </div>
         </section>
-
-        {/* --- EXECUTION PROTOCOL --- */}
+``
+        {/* --- EXECUTION PROTOCOL & OFFERINGS --- */}
         <section id="methodology" className="py-24 border-b border-[#333] bg-[#1E1E1E]">
           <div className="max-w-7xl mx-auto px-4">
-             <div className="mb-16 section-reveal text-center">
-                <h2 className="text-3xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> EXECUTION_PROTOCOL</h2>
-                <p className="text-gray-400">How we collaborate. Async. Efficient. Transparent.</p>
+             {/* EXECUTION PROTOCOL */}
+             <div className="mb-24">
+                <div className="mb-16 section-reveal text-center">
+                   <h2 className="text-3xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> EXECUTION_PROTOCOL</h2>
+                   <p className="text-gray-400">How we collaborate. Async. Efficient. Transparent.</p>
+                </div>
+                
+                <div className="grid md:grid-cols-3 gap-8">
+                   <ProtocolStep 
+                     num="01" 
+                     title="Ingest & Queue" 
+                     icon={<LayoutTemplate className="w-5 h-5 text-[#00FF41]" />}
+                     desc="Submit requests via your private Trello/Linear board. Queue up DCO scripts, banner sets, or React components. Unlimited backlog."
+                   />
+                   <ProtocolStep 
+                     num="02" 
+                     title="Sprint & Execute" 
+                     icon={<RefreshCw className="w-5 h-5 text-[#00FF41]" />}
+                     desc="I execute tasks linearly. 15+ years of experience means faster turnaround on complex architectures. Daily commits and async updates."
+                   />
+                   <ProtocolStep 
+                     num="03" 
+                     title="Deploy & Optimize" 
+                     icon={<CheckCircle className="w-5 h-5 text-[#00FF41]" />}
+                     desc="Previews delivered via Vercel or Ad Verification links. We iterate until the creative meets your strict brand standards."
+                   />
+                </div>
              </div>
-             
-             <div className="grid md:grid-cols-3 gap-8">
-                <ProtocolStep 
-                  num="01" 
-                  title="Ingest & Queue" 
-                  icon={<LayoutTemplate className="w-5 h-5 text-[#00FF41]" />}
-                  desc="Submit requests via your private Trello/Linear board. Queue up DCO scripts, banner sets, or React components. Unlimited backlog."
-                />
-                <ProtocolStep 
-                  num="02" 
-                  title="Sprint & Execute" 
-                  icon={<RefreshCw className="w-5 h-5 text-[#00FF41]" />}
-                  desc="I execute tasks linearly. 15+ years of experience means faster turnaround on complex architectures. Daily commits and async updates."
-                />
-                <ProtocolStep 
-                  num="03" 
-                  title="Deploy & Optimize" 
-                  icon={<CheckCircle className="w-5 h-5 text-[#00FF41]" />}
-                  desc="Previews delivered via Vercel or Ad Verification links. We iterate until the creative meets your strict brand standards."
-                />
+
+             {/* OFFERINGS */}
+             <div className="border-t border-[#333] pt-24">
+                <div className="mb-16 text-center section-reveal">
+                   <h2 className="text-3xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> OFFERINGS</h2>
+                   <p className="text-gray-400">Choose your engagement model.</p>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-8 items-start">
+                   <OfferingCard 
+                     title="THE AUDIT"
+                     subtitle="one-time"
+                     desc="Diagnostics for your pipeline."
+                     features={[
+                       "Ad Tech Stack Review",
+                       "Performance Profiling",
+                       "Workflow Optimization Report",
+                       "1-Hour Strategy Call"
+                     ]}
+                     cta="BOOK_AUDIT"
+                     onClick={() => scrollToSection('audit')}
+                   />
+                   
+                   <OfferingCard 
+                     title="FRACTIONAL TD"
+                     subtitle="/month"
+                     highlight={true}
+                     desc="Your dedicated technologist."
+                     features={[
+                       "Unlimited Request Queue",
+                       "One active task at a time",
+                       "Full Stack & Ad Tech Access",
+                       "Direct Slack Access",
+                       "Pause/Cancel Anytime"
+                     ]}
+                     cta="SUBSCRIBE"
+                     onClick={() => window.open('mailto:hello@x-code.studio?subject=Subscription Inquiry')}
+                   />
+
+                   <OfferingCard 
+                     title="DEV SPRINT"
+                     subtitle="/week"
+                     desc="For critical deadlines."
+                     features={[
+                       "Dedicated 5-Day Sprint",
+                       "Single Feature Focus",
+                       "Rush Delivery Protocol",
+                       "Daily Async Standups"
+                     ]}
+                     cta="BOOK_SPRINT"
+                     onClick={() => scrollToSection('audit')}
+                   />
+                </div>
              </div>
           </div>
         </section>
@@ -552,6 +609,28 @@ function ProtocolStep({ num, title, desc, icon }: { num: string; title: string; 
       </div>
       <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
       <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
+    </div>
+  );
+}
+
+function OfferingCard({ title, subtitle, desc, features, cta, highlight, onClick }: { title: string; subtitle: string; desc: string; features: string[]; cta: string; highlight?: boolean; onClick: () => void }) {
+  return (
+    <div className={`section-reveal relative p-8 border ${highlight ? 'border-[#00FF41] bg-[#1a1a1a]' : 'border-[#333] bg-[#121212]'} flex flex-col h-full`}>
+      {highlight && <div className="absolute top-0 right-0 bg-[#00FF41] text-[#121212] text-xs font-bold px-2 py-1">RECOMMENDED</div>}
+      <h3 className="text-xl font-bold text-white mb-1">{title}</h3>
+      <div className="text-sm text-gray-500 font-mono mb-4">{subtitle}</div>
+      <p className="text-gray-400 text-sm mb-6 border-b border-[#333] pb-6">{desc}</p>
+      <ul className="space-y-3 mb-8 flex-grow">
+        {features.map((f: string, i: number) => (
+           <li key={i} className="flex items-start text-sm text-gray-300">
+             <CheckCircle className="w-4 h-4 text-[#007ACC] mr-2 mt-0.5 shrink-0" />
+             {f}
+           </li>
+        ))}
+      </ul>
+      <button onClick={onClick} className={`w-full py-3 font-bold uppercase tracking-wider border text-sm ${highlight ? 'bg-[#00FF41] text-[#121212] border-[#00FF41] hover:bg-[#00CC33]' : 'border-[#333] text-white hover:bg-[#333]'} transition-colors`}>
+        {cta}
+      </button>
     </div>
   );
 }
