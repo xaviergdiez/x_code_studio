@@ -2,7 +2,7 @@
 
 import { useState, useRef, useLayoutEffect } from 'react';
 import Link from 'next/link';
-import { Code, Zap, CheckCircle, Menu, X, ArrowRight, ExternalLink, RefreshCw, LayoutTemplate, Globe, Linkedin, Cpu, GraduationCap, Figma } from 'lucide-react';
+import { Code, Zap, CheckCircle, Menu, X, ArrowRight, ExternalLink, RefreshCw, LayoutTemplate, Globe, Linkedin, Cpu, GraduationCap, Figma, Play, Command, ChevronRight } from 'lucide-react';
 
 // GSAP Imports
 import gsap from 'gsap';
@@ -243,27 +243,72 @@ export default function App() {
           </div>
         </section>
 
-        {/* --- HUMAN BIO (Updated Authority) --- */}
+        {/* --- HUMAN BIO (Hard Truth Update - Outcomes, not Capabilities) --- */}
         <section id="profile" className="py-20 border-b border-[#333] bg-[#1a1a1a]">
           <div className="max-w-5xl mx-auto px-4 section-reveal">
             <div className="flex flex-col md:flex-row gap-8 items-start">
               <div className="w-full md:w-1/3">
                  <div className="text-[#007ACC] font-bold mb-2 text-sm tracking-widest">WHO_AM_I --human_mode</div>
-                 <h2 className="text-3xl font-bold text-white">DESIGNER FIRST.<br/>TECHNOLOGIST ALWAYS.</h2>
+                 <h2 className="text-3xl font-bold text-white">I SPEAK PIXEL<br/>AND I SPEAK LOGIC.</h2>
               </div>
               <div className="w-full md:w-2/3 text-gray-400 leading-relaxed space-y-4">
                 <p>
-                  I am a <span className="text-white">Designer</span> who learned to code to protect the integrity of my work.
+                  I am a <span className="text-white">Designer</span> who learned to code to protect the integrity of my designs.
                 </p>
                 <p>
-                  As a <span className="text-white">Product Design Master Course Teacher at NEOLAND</span>, I teach the next generation that Design and Development are the same discipline. Whether I&apos;m building a Figma Plugin to save your team 20 hours or architecting a Reactive Design System, my goal is the same: Perfect fidelity, zero friction.
+                  I don&apos;t just hand off code; I build the internal tools (plugins, automations) that save agencies <span className="text-[#00FF41]">€50k/year in manual labor</span>. My mission is to automate the boring stuff so your creative team can actually create.
                 </p>
                 <p>
-                  I bridge the gap between the <span className="text-white">{`Creative Director's vision`}</span> and the <span className="text-white">{`Ad Server's logic`}</span>.
+                  As a <span className="text-white">Teacher at NEOLAND</span>, I train designers to think in systems. I bridge the gap between the <span className="text-white">Creative Director&apos;s vision</span> and the <span className="text-white">Ad Server&apos;s logic</span>.
                 </p>
               </div>
             </div>
           </div>
+        </section>
+
+        {/* --- VISUAL GALLERY (New Section - Show the Stripes) --- */}
+        <section id="gallery" className="py-20 border-b border-[#333] bg-[#121212]">
+           <div className="max-w-7xl mx-auto px-4 section-reveal">
+              <div className="flex items-center gap-2 mb-8">
+                 <Command className="text-[#00FF41]" size={20} />
+                 <h2 className="text-xl font-bold text-white font-mono">view_gallery --render</h2>
+              </div>
+              
+              <div className="grid md:grid-cols-3 gap-4">
+                 {/* Item 1: Design Systems */}
+                 <div className="group relative aspect-video bg-[#1E1E1E] border border-[#333] overflow-hidden hover:border-[#00FF41] transition-colors cursor-pointer">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                       <Figma size={48} className="text-[#333] group-hover:text-white transition-colors" />
+                    </div>
+                    <div className="absolute bottom-0 left-0 w-full bg-black/80 p-3 border-t border-[#333]">
+                       <div className="text-[#00FF41] font-mono text-xs">DESIGN_SYS.config</div>
+                       <div className="text-gray-400 text-xs">Atomic Architecture</div>
+                    </div>
+                 </div>
+
+                 {/* Item 2: Motion UI */}
+                 <div className="group relative aspect-video bg-[#1E1E1E] border border-[#333] overflow-hidden hover:border-[#00FF41] transition-colors cursor-pointer">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                       <Play size={48} className="text-[#333] group-hover:text-white transition-colors" />
+                    </div>
+                    <div className="absolute bottom-0 left-0 w-full bg-black/80 p-3 border-t border-[#333]">
+                       <div className="text-[#00FF41] font-mono text-xs">VISUAL_ENG.exe</div>
+                       <div className="text-gray-400 text-xs">60fps GSAP Physics</div>
+                    </div>
+                 </div>
+
+                 {/* Item 3: Automation */}
+                 <div className="group relative aspect-video bg-[#1E1E1E] border border-[#333] overflow-hidden hover:border-[#00FF41] transition-colors cursor-pointer">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                       <Cpu size={48} className="text-[#333] group-hover:text-white transition-colors" />
+                    </div>
+                    <div className="absolute bottom-0 left-0 w-full bg-black/80 p-3 border-t border-[#333]">
+                       <div className="text-[#00FF41] font-mono text-xs">WORKFLOW_OPS.bat</div>
+                       <div className="text-gray-400 text-xs">Auto-Resize Scripts</div>
+                    </div>
+                 </div>
+              </div>
+           </div>
         </section>
 
         {/* BRIDGING LOG (Methodology) */}
@@ -479,12 +524,12 @@ export default function App() {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                
-               {/* 1. MOTION UI (High-Performance) */}
+               {/* 1. VISUAL ENGINEERING (Renamed from MOTION_UI) */}
                <CapabilityCard 
                   icon={<Zap className="text-[#00FF41]" />}
-                  title="MOTION_UI.run"
+                  title="VISUAL_ENG.exe"
                   skills={["GSAP", "WebGL", "Scrollytelling", "Micro-interactions", "Performance"]}
-                  desc="Standard designers use video; I use code. Leveraging GSAP and WebGL to create physics-based, interaction-driven experiences that load instantly. The fluid feel of a native app, in the browser."
+                  desc="Standard designers use video; I use code. Leveraging GSAP/WebGL to create physics-based, interaction-driven experiences that load instantly."
                />
 
                {/* 2. DESIGN SYSTEMS (Architect) */}
@@ -503,12 +548,12 @@ export default function App() {
                   desc="Building scalable, data-driven ad architectures that serve personalized content globally."
                />
 
-               {/* 4. AUTOMATED DESIGN OPS */}
+               {/* 4. WORKFLOW OPS (Renamed - Sell Outcomes) */}
                <CapabilityCard 
                   icon={<Cpu className="text-[#00FF41]" />}
-                  title="AUTOMATED_DESIGN_OPS"
+                  title="WORKFLOW_OPS.bat"
                   skills={["Python Scripting", "Asset Generation Pipelines", "Custom Figma Plugins", "Workflow Automation"]}
-                  desc="I build the tools that let your designers design, not do data entry. Automating the boring stuff."
+                  desc="The 20-Hour Week Saver. I build custom scripts and plugins that automate your grunt work so your team can focus on what matters."
                />
 
                {/* 5. MENTORSHIP */}
@@ -683,14 +728,13 @@ export default function App() {
                           required
                         >
                            <option value="">-- Select Protocol --</option>
-                           <option value="audit">Pipeline Audit (€995) - Fix my workflow</option>
-                           <option value="design-system">Design System (€4.5k) - Build infrastructure</option>
-                           <option value="sprint">Dev Sprint (€2.5k) - Critical Firefighting</option>
-                           <option value="retainer">Fractional Director (€3.5k) - Ongoing Architecture</option>
-                           <option value="education">Education/Workshop - Train my team</option>
+                           <option value="audit">Pipeline Audit (€995) - Tripwire</option>
+                           <option value="rescue">System Rescue (€2,950) - Fix Design/Dev</option>
+                           <option value="retainer">Fractional Architect (€3.5k) - Retainer</option>
+                           <option value="education">Bridge Workshop (€1,500) - Team Training</option>
                         </select>
                         <div className="absolute right-3 top-3 pointer-events-none text-gray-500">
-                           <ArrowRight className="rotate-90 w-4 h-4" />
+                           <ChevronRight className="rotate-90 w-4 h-4" />
                         </div>
                      </div>
                   </div>
@@ -791,40 +835,40 @@ function OfferingsSection() {
       id: 'audit',
       title: 'WORKFLOW AUDIT',
       subtitle: '€995 one-time',
-      desc: 'Diagnostics for your pipeline. Book instantly.',
+      desc: 'The Tripwire. Identify the bottlenecks costing you money.',
       features: ['Codebase Review (Git)', 'DCO Feed Stress Test', 'Performance Profiling', 'Strategy PDF Report'],
-      cta: 'LEARN_MORE →',
+      cta: 'BOOK_AUDIT →',
       onClick: () => window.location.href = '/offerings/audit',
       highlight: false
     },
     {
-      id: 'design-system',
-      title: 'DESIGN SYSTEM',
-      subtitle: '€4,500 package',
-      desc: 'Architecting the source of truth.',
-      features: ['Figma Design System', 'Atomic Design & Tokens', 'Ad Templates (Social, Rich Media, HTML5)', 'UX/UI Web Design', 'Landing Page Animations'],
-      cta: 'LEARN_MORE →',
+      id: 'system-reboot',
+      title: 'SYSTEM REBOOT',
+      subtitle: '€2,950 package',
+      desc: 'The "Figma Rescue" Package.',
+      features: ['Design System Audit & Refactor', 'Figma Variables & Tokens Setup', 'Ready-to-Dev Handover Guide', 'Ad Template Standardization', '1-Week Sprint Delivery'],
+      cta: 'RESCUE_SYSTEM →',
       onClick: () => window.location.href = '/offerings/design-system',
       highlight: true
     },
     {
       id: 'director',
-      title: 'FRACTIONAL TD',
+      title: 'FRACTIONAL ARCHITECT',
       subtitle: '€3,500 /month',
-      desc: 'Your dedicated technologist.',
-      features: ['Unlimited Request Queue', 'One active task at a time', 'Full Stack & Ad Tech Access', 'Direct Slack Access', 'Pause/Cancel Anytime'],
-      cta: 'LEARN_MORE →',
+      desc: 'Ongoing Leadership & Architecture.',
+      features: ['Unlimited Request Queue', 'Async Trello/Linear Workflow', 'Direct Slack Access', 'Pause/Cancel Anytime', 'Full Stack & Ad Tech Access'],
+      cta: 'SUBSCRIBE →',
       onClick: () => window.location.href = '/offerings/director',
       highlight: false
     },
     {
-      id: 'sprint',
-      title: 'DEV SPRINT',
-      subtitle: '€2,500 /week',
-      desc: 'I block my calendar for 5 days.',
-      features: ['Single Feature Focus', '5-Day Guarantee', 'Friday Delivery', 'Daily Async Standups'],
-      cta: 'LEARN_MORE →',
-      onClick: () => window.location.href = '/offerings/sprint',
+      id: 'workshop',
+      title: 'BRIDGE WORKSHOP',
+      subtitle: '€1,500 half-day',
+      desc: 'Design for Devs / Dev for Designers.',
+      features: ['Team Training Session', 'Dev-Design Communication', 'Figma for Developers', 'Code for Designers', 'NEOLAND Certified'],
+      cta: 'BOOK_SESSION →',
+      onClick: () => { document.getElementById('audit')?.scrollIntoView({ behavior: 'smooth' }); },
       highlight: false
     }
   ];
@@ -832,8 +876,8 @@ function OfferingsSection() {
   return (
     <div className="border-t border-[#333] pt-24">
       <div className="mb-16 text-center section-reveal">
-        <h2 className="text-3xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> OFFERINGS</h2>
-        <p className="text-gray-400">Choose your engagement model.</p>
+        <h2 className="text-3xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> COMMERCIAL_PACKAGES</h2>
+        <p className="text-gray-400">Fixed outcomes. No hourly surprises.</p>
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 items-start">
