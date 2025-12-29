@@ -229,11 +229,8 @@ const LeadCommandCenter = () => {
   };
 
   const generateLinkedInUrl = () => {
-    // Advanced Boolean Search Construction
-    const roles = `("${searchParams.role}" OR "Design Ops" OR "Creative Operations")`;
-    const loc = `"${searchParams.location}"`;
-    const keywords = `(Automation OR DCO OR "Digital Production")`;
-    const query = `${roles} AND ${keywords} AND ${loc}`;
+    // Simplified search that works with LinkedIn's current syntax
+    const query = `${searchParams.role} ${searchParams.location}`;
     return `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(query)}`;
   };
 
