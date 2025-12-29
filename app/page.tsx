@@ -2,7 +2,7 @@
 
 import { useState, useRef, useLayoutEffect } from 'react';
 import Link from 'next/link';
-import { Code, Zap, CheckCircle, Menu, X, ArrowRight, ExternalLink, RefreshCw, LayoutTemplate, Globe, Linkedin, Cpu, GraduationCap, Figma, Play, Command, ChevronRight } from 'lucide-react';
+import { Code, Zap, CheckCircle, Menu, X, ArrowRight, ExternalLink, RefreshCw, LayoutTemplate, Globe, Linkedin, Cpu, GraduationCap, Figma, ChevronRight, Activity } from 'lucide-react';
 
 // GSAP Imports
 import gsap from 'gsap';
@@ -146,7 +146,7 @@ export default function App() {
 
   return (
     <div ref={appRef} className="min-h-screen bg-[#121212] text-[#E0E0E0] font-mono selection:bg-[#00FF41] selection:text-[#121212] overflow-x-hidden">
-      
+
       {/* ---------------------------------------------------------------------------
           NAVIGATION BAR
          --------------------------------------------------------------------------- */}
@@ -266,77 +266,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* --- VISUAL GALLERY (New Section - Show the Stripes) --- */}
-        <section id="gallery" className="py-20 border-b border-[#333] bg-[#121212]">
-           <div className="max-w-7xl mx-auto px-4 section-reveal">
-              <div className="flex items-center gap-2 mb-8">
-                 <Command className="text-[#00FF41]" size={20} />
-                 <h2 className="text-xl font-bold text-white font-mono">view_gallery --render</h2>
-              </div>
-              
-              <div className="grid md:grid-cols-3 gap-4">
-                 {/* Item 1: Design Systems */}
-                 <div className="group relative aspect-video bg-[#1E1E1E] border border-[#333] overflow-hidden hover:border-[#00FF41] transition-colors cursor-pointer">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                       <Figma size={48} className="text-[#333] group-hover:text-white transition-colors" />
-                    </div>
-                    <div className="absolute bottom-0 left-0 w-full bg-black/80 p-3 border-t border-[#333]">
-                       <div className="text-[#00FF41] font-mono text-xs">DESIGN_SYS.config</div>
-                       <div className="text-gray-400 text-xs">Atomic Architecture</div>
-                    </div>
-                 </div>
-
-                 {/* Item 2: Motion UI */}
-                 <div className="group relative aspect-video bg-[#1E1E1E] border border-[#333] overflow-hidden hover:border-[#00FF41] transition-colors cursor-pointer">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                       <Play size={48} className="text-[#333] group-hover:text-white transition-colors" />
-                    </div>
-                    <div className="absolute bottom-0 left-0 w-full bg-black/80 p-3 border-t border-[#333]">
-                       <div className="text-[#00FF41] font-mono text-xs">VISUAL_ENG.exe</div>
-                       <div className="text-gray-400 text-xs">60fps GSAP Physics</div>
-                    </div>
-                 </div>
-
-                 {/* Item 3: Automation */}
-                 <div className="group relative aspect-video bg-[#1E1E1E] border border-[#333] overflow-hidden hover:border-[#00FF41] transition-colors cursor-pointer">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                       <Cpu size={48} className="text-[#333] group-hover:text-white transition-colors" />
-                    </div>
-                    <div className="absolute bottom-0 left-0 w-full bg-black/80 p-3 border-t border-[#333]">
-                       <div className="text-[#00FF41] font-mono text-xs">WORKFLOW_OPS.bat</div>
-                       <div className="text-gray-400 text-xs">Auto-Resize Scripts</div>
-                    </div>
-                 </div>
-              </div>
-           </div>
-        </section>
-
-        {/* BRIDGING LOG (Methodology) */}
-        <section className="py-20 border-b border-[#333] bg-[#121212] font-mono text-xs md:text-sm">
-           <div className="max-w-3xl mx-auto px-4 section-reveal">
-              <div className="bg-[#1E1E1E] p-6 border border-[#333] rounded shadow-2xl overflow-x-auto">
-                 <div className="flex gap-2 mb-4">
-                   <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                   <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                   <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                 </div>
-                 <div className="space-y-2 text-gray-300">
-                   <div className="text-[#007ACC] font-bold mb-2">&gt; BRIDGING.log</div>
-                   <div><span className="text-purple-400">[INPUT]:</span>&nbsp;&nbsp;Pure Design (Figma/Adobe)</div>
-                   <div><span className="text-purple-400">[INPUT]:</span>&nbsp;&nbsp;Pure Engineering (React/Node)</div>
-                   <div className="mt-4"><span className="text-yellow-400">[PROCESS]:</span></div>
-                   <div className="pl-4">if (Design == Static) &#123;</div>
-                   <div className="pl-8 text-[#00FF41]">Inject(GSAP_Timeline); // Make it alive</div>
-                   <div className="pl-4">&#125;</div>
-                   <div className="pl-4">if (Code == Messy) &#123;</div>
-                   <div className="pl-8 text-[#00FF41]">Apply(Design_System_Tokens); // Make it consistent</div>
-                   <div className="pl-4">&#125;</div>
-                   <div className="mt-4"><span className="text-blue-400">[OUTPUT]:</span> A product that feels expensive and works flawlessly.</div>
-                 </div>
-              </div>
-           </div>
-        </section>
-
         {/* --- UX AUDIT LOG --- */}
         <section className="py-24 border-b border-[#333]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -438,6 +367,10 @@ export default function App() {
               </div>
 
             </div>
+
+            {/* --- EFFICIENCY ESTIMATOR MODULE --- */}
+            <EfficiencyEstimator />
+
           </div>
         </section>
 
@@ -989,4 +922,143 @@ function CapabilityCard({ title, desc, skills, icon }: { title: string; desc: st
        </div>
     </div>
   )
+}
+
+function EfficiencyEstimator() {
+  const [banners, setBanners] = useState(50);
+  const [timePerBanner, setTimePerBanner] = useState(2); // hours
+  const [hourlyRate, setHourlyRate] = useState(85); // euros
+
+  // Logic: Automated pipeline takes ~6 mins (0.1 hours) per asset
+  const manualCost = banners * timePerBanner * hourlyRate;
+  const automatedTime = banners * 0.1;
+  const automatedCost = automatedTime * hourlyRate;
+  const savings = manualCost - automatedCost;
+
+  const scrollToContact = () => {
+    const element = document.getElementById('audit');
+    if (element) {
+      const yOffset = -80;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <div className="mt-16 bg-[#1E1E1E] border border-[#333] p-8 rounded section-reveal">
+      <div className="grid md:grid-cols-2 gap-8">
+        {/* Left Side: Explainer */}
+        <div>
+          <div className="mb-6">
+            <div className="flex items-center gap-2 text-[#007ACC] font-mono text-xs mb-3">
+              <Activity size={12} />
+              <span>EFFICIENCY_ESTIMATOR</span>
+            </div>
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Are you burning budget on manual versioning?</h3>
+            <div className="h-px w-16 bg-gradient-to-r from-[#00FF41] to-transparent mb-6" />
+          </div>
+          <p className="text-gray-400 mb-6 leading-relaxed font-mono text-sm">
+            Agencies bleed profit in the &quot;Versioning Phase.&quot; Use this calculator to see how much manual HTML/Design production is costing you per campaign vs. an Automated Pipeline.
+          </p>
+          <ul className="space-y-3 mb-8">
+            <li className="flex items-start gap-3">
+              <div className="p-1 bg-red-400/10 text-red-400 rounded mt-0.5">
+                <Activity size={12} />
+              </div>
+              <span className="text-gray-300 text-sm font-mono">Designers copy-pasting text into 50 Figma frames.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="p-1 bg-red-400/10 text-red-400 rounded mt-0.5">
+                <Activity size={12} />
+              </div>
+              <span className="text-gray-300 text-sm font-mono">Developers manually tweaking CSS for every language.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="p-1 bg-red-400/10 text-red-400 rounded mt-0.5">
+                <Activity size={12} />
+              </div>
+              <span className="text-gray-300 text-sm font-mono">QA team checking every banner size manually.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="p-1 bg-red-400/10 text-red-400 rounded mt-0.5">
+                <Activity size={12} />
+              </div>
+              <span className="text-gray-300 text-sm font-mono">Project managers tracking versions in spreadsheets.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="p-1 bg-red-400/10 text-red-400 rounded mt-0.5">
+                <Activity size={12} />
+              </div>
+              <span className="text-gray-300 text-sm font-mono">Back-and-forth revisions eating days of billable hours.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="p-1 bg-red-400/10 text-red-400 rounded mt-0.5">
+                <Activity size={12} />
+              </div>
+              <span className="text-gray-300 text-sm font-mono">Exporting assets one-by-one from design tools.</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Right Side: The Calculator */}
+        <div className="bg-[#121212] border border-[#333] p-6 rounded relative">
+          <div className="absolute top-0 right-0 px-3 py-1 bg-[#00FF41]/20 text-[#00FF41] font-mono text-xs border-b border-l border-[#00FF41]/30">
+            INTERACTIVE
+          </div>
+
+          <div className="space-y-6 mt-4">
+            {/* Input: Campaign Volume */}
+            <div>
+              <label className="block text-xs font-mono text-gray-500 mb-3 uppercase tracking-wider">Campaign Volume (Assets)</label>
+              <input
+                type="range" min="10" max="500" value={banners}
+                onChange={(e) => setBanners(Number(e.target.value))}
+                className="w-full h-2 bg-[#333] rounded-lg appearance-none cursor-pointer accent-[#00FF41]"
+              />
+              <div className="text-right text-white font-mono text-lg mt-2">{banners} <span className="text-gray-500 text-sm">assets</span></div>
+            </div>
+
+            {/* Input: Manual Time */}
+            <div>
+              <label className="block text-xs font-mono text-gray-500 mb-3 uppercase tracking-wider">Manual Time Per Asset (Hours)</label>
+              <input
+                type="range" min="0.5" max="5" step="0.5" value={timePerBanner}
+                onChange={(e) => setTimePerBanner(Number(e.target.value))}
+                className="w-full h-2 bg-[#333] rounded-lg appearance-none cursor-pointer accent-[#00FF41]"
+              />
+              <div className="text-right text-white font-mono text-lg mt-2">{timePerBanner} <span className="text-gray-500 text-sm">hrs</span></div>
+            </div>
+
+            {/* Input: Hourly Rate */}
+            <div>
+              <label className="block text-xs font-mono text-gray-500 mb-3 uppercase tracking-wider">Hourly Rate (€)</label>
+              <input
+                type="range" min="40" max="200" step="5" value={hourlyRate}
+                onChange={(e) => setHourlyRate(Number(e.target.value))}
+                className="w-full h-2 bg-[#333] rounded-lg appearance-none cursor-pointer accent-[#00FF41]"
+              />
+              <div className="text-right text-white font-mono text-lg mt-2">€{hourlyRate}<span className="text-gray-500 text-sm">/hr</span></div>
+            </div>
+
+            {/* Results Display */}
+            <div className="pt-6 border-t border-[#333]">
+              <div className="mb-2">
+                <div className="text-gray-500 font-mono text-xs uppercase tracking-wider mb-2">Potential Savings:</div>
+                <div className="text-5xl font-bold text-[#00FF41]">€{savings.toLocaleString(undefined, {maximumFractionDigits: 0})}</div>
+                <div className="text-xs text-gray-500 mt-2 font-mono uppercase tracking-wider">Per Campaign</div>
+              </div>
+
+              {/* CTA Button */}
+              <button
+                onClick={scrollToContact}
+                className="w-full mt-6 bg-[#00FF41] text-[#121212] font-bold px-6 py-3 hover:bg-[#00CC33] transition-all uppercase tracking-wider text-sm font-mono flex items-center justify-center gap-2"
+              >
+                CLAIM_SAVINGS <ArrowRight size={16} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
