@@ -172,6 +172,67 @@ const getStatusColor = (status: string) => {
   }
 };
 
+// Scout View Component (extracted to prevent re-renders)
+const ScoutViewComponent = ({ searchParams, setSearchParams, generateLinkedInUrl, setActiveTab, setShowAddModal }: any) => (
+  <div className="max-w-4xl mx-auto">
+    <div className="bg-slate-900 border border-slate-800 rounded-lg p-8 mb-8">
+      <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+        <Search className="text-green-500" /> LEAD_SCOUT_PROTOCOL
+      </h2>
+      <p className="text-slate-400 mb-6">Generate advanced Boolean search strings to find hidden decision makers.</p>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div>
+          <label className="block text-xs font-mono text-slate-500 mb-2">TARGET LOCATION</label>
+          <input
+            value={searchParams.location}
+            onChange={(e) => setSearchParams({...searchParams, location: e.target.value})}
+            className="w-full bg-black border border-slate-700 text-white p-3 rounded focus:border-green-500 outline-none"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-mono text-slate-500 mb-2">TARGET ROLE</label>
+          <select
+            value={searchParams.role}
+            onChange={(e) => setSearchParams({...searchParams, role: e.target.value})}
+            className="w-full bg-black border border-slate-700 text-white p-3 rounded focus:border-green-500 outline-none appearance-none"
+          >
+            <option>Head of Digital Production</option>
+            <option>Head of Creative Operations</option>
+            <option>Design Ops Lead</option>
+            <option>Marketing Technology Director</option>
+            <option>Programmatic Lead</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-xs font-mono text-slate-500 mb-2">SECTOR KEYWORD</label>
+          <input
+            value={searchParams.sector}
+            onChange={(e) => setSearchParams({...searchParams, sector: e.target.value})}
+            className="w-full bg-black border border-slate-700 text-white p-3 rounded focus:border-green-500 outline-none"
+          />
+        </div>
+      </div>
+
+      <a
+        href={generateLinkedInUrl()}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="w-full bg-green-600/10 border border-green-500 text-green-400 font-mono font-bold py-4 rounded flex items-center justify-center gap-2 hover:bg-green-500 hover:text-black transition-all"
+      >
+        <ExternalLink size={18} /> INITIATE LINKEDIN SCAN
+      </a>
+    </div>
+
+    <div className="text-center text-slate-500 text-sm font-mono">
+      <p>Found a target? Add them to the dashboard manually.</p>
+      <button onClick={() => { setActiveTab('dashboard'); setShowAddModal(true); }} className="text-green-400 underline mt-2">
+        Open Manual Entry Form
+      </button>
+    </div>
+  </div>
+);
+
 const LeadCommandCenter = () => {
   // State
   const [leads, setLeads] = useState(() => {
@@ -414,66 +475,6 @@ const LeadCommandCenter = () => {
     );
   };
 
-  const ScoutView = () => (
-    <div className="max-w-4xl mx-auto">
-      <div className="bg-slate-900 border border-slate-800 rounded-lg p-8 mb-8">
-        <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
-          <Search className="text-green-500" /> LEAD_SCOUT_PROTOCOL
-        </h2>
-        <p className="text-slate-400 mb-6">Generate advanced Boolean search strings to find hidden decision makers.</p>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div>
-            <label className="block text-xs font-mono text-slate-500 mb-2">TARGET LOCATION</label>
-            <input
-              value={searchParams.location}
-              onChange={(e) => setSearchParams({...searchParams, location: e.target.value})}
-              className="w-full bg-black border border-slate-700 text-white p-3 rounded focus:border-green-500 outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-xs font-mono text-slate-500 mb-2">TARGET ROLE</label>
-            <select
-              value={searchParams.role}
-              onChange={(e) => setSearchParams({...searchParams, role: e.target.value})}
-              className="w-full bg-black border border-slate-700 text-white p-3 rounded focus:border-green-500 outline-none appearance-none"
-            >
-              <option>Head of Digital Production</option>
-              <option>Head of Creative Operations</option>
-              <option>Design Ops Lead</option>
-              <option>Marketing Technology Director</option>
-              <option>Programmatic Lead</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-xs font-mono text-slate-500 mb-2">SECTOR KEYWORD</label>
-             <input
-              value={searchParams.sector}
-              onChange={(e) => setSearchParams({...searchParams, sector: e.target.value})}
-              className="w-full bg-black border border-slate-700 text-white p-3 rounded focus:border-green-500 outline-none"
-            />
-          </div>
-        </div>
-
-        <a
-          href={generateLinkedInUrl()}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full bg-green-600/10 border border-green-500 text-green-400 font-mono font-bold py-4 rounded flex items-center justify-center gap-2 hover:bg-green-500 hover:text-black transition-all"
-        >
-          <ExternalLink size={18} /> INITIATE LINKEDIN SCAN
-        </a>
-      </div>
-
-      <div className="text-center text-slate-500 text-sm font-mono">
-        <p>Found a target? Add them to the dashboard manually.</p>
-        <button onClick={() => { setActiveTab('dashboard'); setShowAddModal(true); }} className="text-green-400 underline mt-2">
-          Open Manual Entry Form
-        </button>
-      </div>
-    </div>
-  );
-
   return (
     <div className="min-h-screen bg-black text-slate-200 font-sans selection:bg-green-900 selection:text-green-100">
       {/* Header */}
@@ -502,7 +503,7 @@ const LeadCommandCenter = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto p-6">
-        {activeTab === 'dashboard' ? <DashboardView /> : <ScoutView />}
+        {activeTab === 'dashboard' ? <DashboardView /> : <ScoutViewComponent searchParams={searchParams} setSearchParams={setSearchParams} generateLinkedInUrl={generateLinkedInUrl} setActiveTab={setActiveTab} setShowAddModal={setShowAddModal} />}
       </main>
 
       {/* Manual Add Modal */}
