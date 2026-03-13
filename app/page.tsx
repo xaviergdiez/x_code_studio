@@ -516,7 +516,7 @@ export default function App() {
           <div className="absolute inset-0 grid-bg-dense opacity-30" />
           <div className="max-w-7xl mx-auto px-4 relative z-10">
             <div className="mb-16 reveal-up">
-              <h2 className="text-3xl font-bold mb-3">
+              <h2 className="text-2xl md:text-3xl font-bold mb-3 break-all">
                 <span className="text-[#00FF41] neon-glow glitch glitch-trigger" data-text=">">{'>'}</span> ARCHITECTURE_AUDIT<span className="text-[#007ACC]">.log</span>
               </h2>
               <p className="text-gray-500 max-w-2xl">Real problems diagnosed. Real solutions delivered. Result-based.</p>
@@ -603,7 +603,7 @@ export default function App() {
           <div className="absolute inset-0 grid-bg opacity-30" />
           <div className="max-w-7xl mx-auto px-4 relative z-10">
             <div className="mb-16 reveal-up">
-              <h2 className="text-3xl font-bold mb-3">
+              <h2 className="text-2xl md:text-3xl font-bold mb-3 break-all">
                 <span className="text-[#00FF41] neon-glow glitch glitch-trigger" data-text=">">{'>'}</span> SERVICE_ARCHITECTURE
               </h2>
               <p className="text-gray-500 max-w-2xl">Six specialized service pillars. Each delivers a defined result — not hours.</p>
@@ -640,7 +640,7 @@ export default function App() {
             {/* Protocol */}
             <div className="mb-24">
               <div className="mb-16 text-center reveal-up">
-                <h2 className="text-3xl font-bold mb-3">
+                <h2 className="text-2xl md:text-3xl font-bold mb-3 break-all">
                   <span className="text-[#00FF41] neon-glow glitch glitch-trigger" data-text=">">{'>'}</span> EXECUTION_PROTOCOL
                 </h2>
                 <p className="text-gray-500">Project-based. Result-oriented. Async-first.</p>
@@ -687,7 +687,7 @@ export default function App() {
           <div className="absolute inset-0 grid-bg opacity-30" />
           <div className="max-w-7xl mx-auto px-4 relative z-10">
             <div className="reveal-up mb-12">
-              <h2 className="text-3xl font-bold mb-3">
+              <h2 className="text-2xl md:text-3xl font-bold mb-3 break-all">
                 <span className="text-[#00FF41] neon-glow glitch glitch-trigger" data-text=">">{'>'}</span> PROBLEMS_I&apos;VE_SOLVED
               </h2>
               <p className="text-gray-500 max-w-2xl mt-2">Every client project taught me something that became a reusable tool.</p>
@@ -866,7 +866,7 @@ function OfferingsSection() {
   return (
     <div className="border-t border-[#333] pt-24">
       <div className="mb-16 text-center reveal-up">
-        <h2 className="text-3xl font-bold mb-3">
+        <h2 className="text-2xl md:text-3xl font-bold mb-3 break-all">
           <span className="text-[#00FF41] neon-glow glitch glitch-trigger" data-text=">">{'>'}</span> THE_TOOLBOX
         </h2>
         <p className="text-gray-500">Tools, blueprints & workshops. Buy once, use forever. No retainers.</p>
@@ -943,18 +943,21 @@ function EfficiencyEstimator() {
           <div className="space-y-6 mt-4">
             <div>
               <label className="block text-[10px] text-gray-600 mb-3 uppercase tracking-widest">Campaign Volume (Assets)</label>
-              <input type="range" min="10" max="500" value={banners} onChange={(e) => setBanners(Number(e.target.value))} />
-              <div className="text-right text-white text-lg mt-2">{banners} <span className="text-gray-600 text-sm">assets</span></div>
+              <input type="range" min="10" max="500" value={banners} onChange={(e) => setBanners(Number(e.target.value))}
+                style={{ background: `linear-gradient(to right, #00FF41 ${((banners - 10) / (500 - 10)) * 100}%, #444 ${((banners - 10) / (500 - 10)) * 100}%)` }} />
+              <div className="text-right text-white text-lg mt-3">{banners} <span className="text-gray-600 text-sm">assets</span></div>
             </div>
             <div>
               <label className="block text-[10px] text-gray-600 mb-3 uppercase tracking-widest">Manual Time Per Asset (Hours)</label>
-              <input type="range" min="0.5" max="5" step="0.5" value={timePerBanner} onChange={(e) => setTimePerBanner(Number(e.target.value))} />
-              <div className="text-right text-white text-lg mt-2">{timePerBanner} <span className="text-gray-600 text-sm">hrs</span></div>
+              <input type="range" min="0.5" max="5" step="0.5" value={timePerBanner} onChange={(e) => setTimePerBanner(Number(e.target.value))}
+                style={{ background: `linear-gradient(to right, #00FF41 ${((timePerBanner - 0.5) / (5 - 0.5)) * 100}%, #444 ${((timePerBanner - 0.5) / (5 - 0.5)) * 100}%)` }} />
+              <div className="text-right text-white text-lg mt-3">{timePerBanner} <span className="text-gray-600 text-sm">hrs</span></div>
             </div>
             <div>
               <label className="block text-[10px] text-gray-600 mb-3 uppercase tracking-widest">Hourly Rate (€)</label>
-              <input type="range" min="40" max="200" step="5" value={hourlyRate} onChange={(e) => setHourlyRate(Number(e.target.value))} />
-              <div className="text-right text-white text-lg mt-2">€{hourlyRate}<span className="text-gray-600 text-sm">/hr</span></div>
+              <input type="range" min="40" max="200" step="5" value={hourlyRate} onChange={(e) => setHourlyRate(Number(e.target.value))}
+                style={{ background: `linear-gradient(to right, #00FF41 ${((hourlyRate - 40) / (200 - 40)) * 100}%, #444 ${((hourlyRate - 40) / (200 - 40)) * 100}%)` }} />
+              <div className="text-right text-white text-lg mt-3">€{hourlyRate}<span className="text-gray-600 text-sm">/hr</span></div>
             </div>
 
             <div className="pt-6 border-t border-[#333]">
