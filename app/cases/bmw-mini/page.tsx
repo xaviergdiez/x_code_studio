@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowLeft, CheckCircle, ExternalLink } from 'lucide-react';
+import { ArrowLeft, CheckCircle, ExternalLink, Layout, Code, Layers, Server } from 'lucide-react';
+import CaseStudyBlueprint from '@/components/CaseStudyBlueprint';
 
 export default function BMWMiniCase() {
   return (
@@ -247,7 +248,7 @@ export default function BMWMiniCase() {
       </section>
 
       {/* Tech Stack */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-24 border-b border-[#333]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-2xl font-bold text-white mb-12 flex items-center">
             <span className="text-[#00FF41] mr-4">{'>'}</span>
@@ -264,8 +265,61 @@ export default function BMWMiniCase() {
               </span>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="mt-16 text-center">
+      {/* Technical Deep Dive Blueprint */}
+      <CaseStudyBlueprint
+        architecture={{
+          nodes: [
+            {
+              stage: "INPUT SOURCE",
+              icon: Layout,
+              label: "Figma Master",
+              subtext: "Designers update 1 master frame. Variables mapped to JSON."
+            },
+            {
+              stage: "MIDDLEWARE",
+              icon: Code,
+              label: "Sanitizer Script",
+              subtext: "Node.js script fetches Figma API, optimizes images, generates copy deck.",
+              active: true
+            },
+            {
+              stage: "GENERATION",
+              icon: Layers,
+              label: "GSAP Engine",
+              subtext: "Single HTML template injects data. GSAP Timeline adjusts timing automatically."
+            },
+            {
+              stage: "DEPLOYMENT",
+              icon: Server,
+              label: "DoubleClick",
+              subtext: "Bundles zipped & validated via API. Push to CM360."
+            }
+          ]
+        }}
+        codeExample={{
+          filename: "PerformancePatch.js",
+          size: "154kb",
+          code: `const preloadNextScene = (sceneIndex) => {
+  // Trigger 500ms before current scene ends
+  let assets = manifest[sceneIndex + 1];
+  assets.forEach(img => {
+    new Image().src = img.url;
+  });
+  // Force GPU layer promotion
+  gsap.set(nextContainer, { willChange: 'transform' });
+}`
+        }}
+        artifactDescription="I don't just hand off banners. I hand off the <strong>CLI Tool</strong> that built them. This script allows the BMW internal team to regenerate the entire campaign in 30 seconds if a price changes."
+        artifactPlaceholder="CLI Tool Demo: Regenerate 540 assets in 30 seconds"
+      />
+
+      {/* Back to Home */}
+      <section className="py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
             <Link
               href="/"
               className="inline-flex items-center justify-center px-8 py-3 text-base font-bold text-[#121212] bg-[#00FF41] hover:bg-[#00CC33] transition-all"

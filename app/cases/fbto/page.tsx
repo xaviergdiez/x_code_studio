@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowLeft, CheckCircle, Award, TrendingUp } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Award, TrendingUp, Layout, Code, Zap, Server } from 'lucide-react';
+import CaseStudyBlueprint from '@/components/CaseStudyBlueprint';
 
 export default function FBTOCase() {
   return (
@@ -303,7 +304,7 @@ export default function FBTOCase() {
       </section>
 
       {/* Tech Stack */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-24 border-b border-[#333]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-2xl font-bold text-white mb-12 flex items-center">
             <span className="text-[#00FF41] mr-4">{'>'}</span>
@@ -320,8 +321,70 @@ export default function FBTOCase() {
               </span>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="mt-16 text-center">
+      {/* Technical Deep Dive Blueprint */}
+      <CaseStudyBlueprint
+        architecture={{
+          nodes: [
+            {
+              stage: "USER INPUT",
+              icon: Layout,
+              label: "Interactive Form",
+              subtext: "User enters age, coverage type, and deductible preferences via animated sliders."
+            },
+            {
+              stage: "CALCULATION",
+              icon: Code,
+              label: "Quote Engine",
+              subtext: "JavaScript pricing logic calculates personalized quote in real-time (no server calls).",
+              active: true
+            },
+            {
+              stage: "VISUALIZATION",
+              icon: Zap,
+              label: "GSAP + SVG",
+              subtext: "Animated storytelling sequences explain coverage using morphing SVG illustrations."
+            },
+            {
+              stage: "CONVERSION",
+              icon: Server,
+              label: "Lead Capture",
+              subtext: "Form submission sends data to CRM with analytics tracking via Google Tag Manager."
+            }
+          ]
+        }}
+        codeExample={{
+          filename: "QuoteCalculator.js",
+          size: "2.8kb",
+          code: `// Real-time insurance quote calculation
+function calculateQuote(age, coverage, deductible) {
+  const baseRate = insuranceRates[coverage];
+  const ageFactor = getAgeFactor(age);
+  const deductibleDiscount = (deductible / 1000) * 0.15;
+
+  const monthlyPremium = baseRate * ageFactor * (1 - deductibleDiscount);
+
+  // Animate the price transition with GSAP
+  gsap.to('.price-display', {
+    innerText: Math.round(monthlyPremium),
+    duration: 0.8,
+    ease: 'power2.out',
+    snap: { innerText: 1 }
+  });
+
+  return monthlyPremium;
+}`
+        }}
+        artifactDescription="This wasn't just a banner—it was a <strong>mini web app</strong>. The interactive calculator reduced FBTO's cost-per-lead by 40% because users qualified themselves before clicking. They only converted when genuinely interested, resulting in higher-quality leads."
+        artifactPlaceholder="Interactive Banner Demo: Live calculator with animated transitions"
+      />
+
+      {/* Back to Home */}
+      <section className="py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
             <Link
               href="/"
               className="inline-flex items-center justify-center px-8 py-3 text-base font-bold text-[#121212] bg-[#00FF41] hover:bg-[#00CC33] transition-all"

@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "x-code.studio - Technical Director as a Service",
-  description: "Technical Director as a Service - Bridging the Design-Dev Gap",
+  title: "x-code.studio — Tools, Teaching & Automation for Ad-Tech",
+  description: "Automation tools, GSAP libraries, DCO blueprints and workshops for agencies. Built by a NEOLAND teacher with 18+ years in ad-tech.",
   icons: {
     icon: [
       {
@@ -29,8 +29,8 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "x-code.studio",
-    description: "Technical Director as a Service - Bridging the Design-Dev Gap",
+    title: "x-code.studio — Tools, Teaching & Automation for Ad-Tech",
+    description: "Automation tools, GSAP libraries, DCO blueprints and workshops for agencies. Built by a NEOLAND teacher with 18+ years in ad-tech.",
     url: "https://www.x-code.studio",
     siteName: "x-code.studio",
     type: "website",
@@ -39,14 +39,14 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "x-code.studio",
+        alt: "x-code.studio — Strategic AdTech Consultancy",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "x-code.studio",
-    description: "Technical Director as a Service",
+    title: "x-code.studio — Tools, Teaching & Automation for Ad-Tech",
+    description: "Automation tools, GSAP libraries, DCO blueprints and workshops. Not a consultancy — just tools that solve real production problems.",
     images: ["/og-image.png"],
   },
 };
@@ -60,6 +60,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
         {children}
       </body>

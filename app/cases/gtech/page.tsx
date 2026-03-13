@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowLeft, CheckCircle, Globe, Users, TrendingUp } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Globe, Users, TrendingUp, Database, Code, Cpu, Server } from 'lucide-react';
+import CaseStudyBlueprint from '@/components/CaseStudyBlueprint';
 
 export default function GtechCase() {
   return (
@@ -283,7 +284,7 @@ export default function GtechCase() {
       </section>
 
       {/* Tech Stack */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-24 border-b border-[#333]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-2xl font-bold text-white mb-12 flex items-center">
             <span className="text-[#00FF41] mr-4">{'>'}</span>
@@ -300,8 +301,71 @@ export default function GtechCase() {
               </span>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="mt-16 text-center">
+      {/* Technical Deep Dive Blueprint */}
+      <CaseStudyBlueprint
+        architecture={{
+          nodes: [
+            {
+              stage: "DATA SOURCE",
+              icon: Database,
+              label: "User Signals",
+              subtext: "Search queries, browsing history, location data fed into ML model."
+            },
+            {
+              stage: "ML PROCESSING",
+              icon: Cpu,
+              label: "ML Engine",
+              subtext: "Node.js + TensorFlow analyzes user intent and predicts optimal creative.",
+              active: true
+            },
+            {
+              stage: "GENERATION",
+              icon: Code,
+              label: "DCO Builder",
+              subtext: "Google Ads API + Studio DCO generates personalized variants in real-time."
+            },
+            {
+              stage: "DEPLOYMENT",
+              icon: Server,
+              label: "DV360 / CM360",
+              subtext: "Ads served via Display & Video 360 with performance tracking."
+            }
+          ]
+        }}
+        codeExample={{
+          filename: "MLPipeline.js",
+          size: "3.2kb",
+          code: `// Predict optimal creative variant based on user signals
+async function generateAdVariant(userSignals) {
+  const prediction = await mlModel.predict({
+    searchQuery: userSignals.query,
+    location: userSignals.geo,
+    deviceType: userSignals.device
+  });
+
+  // Fetch product data from feed
+  const product = await getProductBySKU(prediction.topSKU);
+
+  // Generate DCO creative via Google Ads API
+  return await googleAds.createResponsiveAd({
+    headlines: generateHeadlines(product, userSignals),
+    descriptions: generateDescriptions(product),
+    images: product.assets,
+    trackingParams: { mlScore: prediction.confidence }
+  });
+}`
+        }}
+        artifactDescription="The system I built wasn't just a campaign—it was a <strong>platform</strong>. gTech teams can now launch complex DCO campaigns in hours instead of weeks, with the ML engine continuously optimizing creative performance based on real user behavior."
+        artifactPlaceholder="ML Pipeline Dashboard: Real-time performance metrics and creative optimization"
+      />
+
+      {/* Back to Home */}
+      <section className="py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
             <Link
               href="/"
               className="inline-flex items-center justify-center px-8 py-3 text-base font-bold text-[#121212] bg-[#00FF41] hover:bg-[#00CC33] transition-all"

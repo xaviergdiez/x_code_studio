@@ -5,7 +5,7 @@ import {
   Users, Target, Copy, Check, ExternalLink,
   Search, Plus, Save, Trash2, Edit3,
   Briefcase, MessageSquare, AlertCircle,
-  ChevronRight, X, Terminal, Filter
+  ChevronRight, X, Terminal, Filter, Zap
 } from 'lucide-react';
 
 // --- Initial Data: The "Gold" Leads ---
@@ -173,7 +173,7 @@ const getStatusColor = (status: string) => {
 };
 
 // Scout View Component (extracted to prevent re-renders)
-const ScoutViewComponent = ({ searchParams, setSearchParams, generateLinkedInUrl, setActiveTab, setShowAddModal }: any) => (
+const ScoutViewComponent = ({ searchParams, setSearchParams, generateLinkedInUrl, setActiveTab, setShowAddModal, connectNote, generateConnectNote, handleCopy }: any) => (
   <div className="max-w-4xl mx-auto">
     <div className="bg-slate-900 border border-slate-800 rounded-lg p-8 mb-8">
       <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
@@ -214,14 +214,56 @@ const ScoutViewComponent = ({ searchParams, setSearchParams, generateLinkedInUrl
         </div>
       </div>
 
-      <a
-        href={generateLinkedInUrl()}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="w-full bg-green-600/10 border border-green-500 text-green-400 font-mono font-bold py-4 rounded flex items-center justify-center gap-2 hover:bg-green-500 hover:text-black transition-all"
-      >
-        <ExternalLink size={18} /> INITIATE LINKEDIN SCAN
-      </a>
+      <div className="flex flex-col gap-4">
+        <a
+          href={generateLinkedInUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full bg-green-600/10 border border-green-500 text-green-400 font-mono font-bold py-4 rounded flex items-center justify-center gap-2 hover:bg-green-500 hover:text-black transition-all"
+        >
+          <ExternalLink size={18} /> INITIATE LINKEDIN SCAN
+        </a>
+
+        {/* New Connect Note Feature */}
+        <div className="border border-slate-800 bg-black/50 p-4 rounded mt-2">
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+              <Zap size={14} className="text-yellow-500" /> CONNECT_NOTE_GENERATOR (300 CHAR)
+            </h3>
+            <button
+              onClick={generateConnectNote}
+              className="text-xs bg-slate-800 text-white px-3 py-1 rounded hover:bg-slate-700 font-mono border border-slate-700"
+            >
+              GENERATE_NOTE
+            </button>
+          </div>
+
+          {connectNote && (
+            <div className="relative group">
+              <textarea
+                readOnly
+                value={connectNote}
+                className="w-full bg-slate-900 text-slate-300 p-3 text-xs font-mono rounded border border-slate-800 outline-none h-20 resize-none"
+              />
+              <button
+                onClick={() => handleCopy(connectNote)}
+                className="absolute top-2 right-2 p-1.5 bg-green-900/50 text-green-400 rounded hover:bg-green-600 hover:text-white transition-colors"
+                title="Copy to Clipboard"
+              >
+                <Copy size={12} />
+              </button>
+              <div className="text-[10px] text-slate-500 text-right mt-1">
+                Chars: {connectNote.length} / 300
+              </div>
+            </div>
+          )}
+          {!connectNote && (
+            <p className="text-xs text-slate-600 italic">
+              Click generate to create a 300-char limited connect note for this target profile.
+            </p>
+          )}
+        </div>
+      </div>
     </div>
 
     <div className="text-center text-slate-500 text-sm font-mono">
@@ -258,6 +300,9 @@ const LeadCommandCenter = () => {
     sector: 'Agency'
   });
 
+  // Connect Note State
+  const [connectNote, setConnectNote] = useState('');
+
   // Persistence
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -277,9 +322,26 @@ const LeadCommandCenter = () => {
     }
   };
 
-  const handleCopy = (text: string) => {
-    navigator.clipboard.writeText(text);
-    // Visual feedback could be added here
+  const handleCopy = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      // Visual feedback could be added here (toast notification)
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+      } catch (e) {
+        console.error('Fallback copy failed: ', e);
+      }
+      document.body.removeChild(textArea);
+    }
   };
 
   const addNewLead = () => {
@@ -293,6 +355,35 @@ const LeadCommandCenter = () => {
     // Simplified search that works with LinkedIn's current syntax
     const query = `${searchParams.role} ${searchParams.location}`;
     return `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(query)}`;
+  };
+
+  const generateConnectNote = () => {
+    // Advanced Message Generation based on Pain Points
+    const role = searchParams.role;
+    let msg = "";
+
+    // 1. HEAD OF DIGITAL PRODUCTION (Focus: Margins / Versioning Hell)
+    if (role === 'Head of Digital Production') {
+      msg = `Hi [Name], I build custom Figma-to-HTML pipelines for production teams in ${searchParams.location}. I help Heads of Production stop burning budget on manual versioning, saving ~15hrs/week per campaign. Thought this might protect your margins. - Xavier`;
+    }
+    // 2. HEAD OF CREATIVE OPERATIONS (Focus: Workflow / Design-Dev Gap)
+    else if (role === 'Head of Creative Operations') {
+      msg = `Hi [Name], I noticed you lead Ops at [Company]. I specialize in 'Design Systems for Ad Tech'—automating the handoff so designers stay in Figma and production code generates itself. Saves hours of back-and-forth friction. Open to connecting? - Xavier`;
+    }
+    // 3. MARKETING TECH DIRECTOR (Focus: Scale / QA / Brand Safety)
+    else if (role === 'Marketing Technology Director') {
+      msg = `Hi [Name], I engineer 'Creative Guardrails' for global brands—middleware that ensures every DCO asset meets strict brand/weight specs before trafficking. I help teams scale production without breaking the brand. Would love to share my protocols. - Xavier`;
+    }
+    // 4. PROGRAMMATIC LEAD (Focus: Performance / Dynamic capabilities)
+    else if (role === 'Programmatic Lead') {
+      msg = `Hi [Name], I help programmatic teams utilize the full power of DV360 by building GSAP-optimized rich media templates. No more running static assets on dynamic buys. Let's upgrade your creative performance. - Xavier`;
+    }
+    // 5. GENERIC FALLBACK (Focus: Automation)
+    else {
+      msg = `Hi [Name], I specialize in creative automation for ${searchParams.sector} teams. I help ops leaders reduce manual production time by ~30% using custom Figma pipelines. Thought it might be relevant to your workflow. - Xavier`;
+    }
+
+    setConnectNote(msg);
   };
 
   // --- Views ---
@@ -503,7 +594,7 @@ const LeadCommandCenter = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto p-6">
-        {activeTab === 'dashboard' ? <DashboardView /> : <ScoutViewComponent searchParams={searchParams} setSearchParams={setSearchParams} generateLinkedInUrl={generateLinkedInUrl} setActiveTab={setActiveTab} setShowAddModal={setShowAddModal} />}
+        {activeTab === 'dashboard' ? <DashboardView /> : <ScoutViewComponent searchParams={searchParams} setSearchParams={setSearchParams} generateLinkedInUrl={generateLinkedInUrl} setActiveTab={setActiveTab} setShowAddModal={setShowAddModal} connectNote={connectNote} generateConnectNote={generateConnectNote} handleCopy={handleCopy} />}
       </main>
 
       {/* Manual Add Modal */}

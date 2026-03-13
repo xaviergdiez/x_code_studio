@@ -255,7 +255,7 @@ export default function DesignSystemPage() {
               />
               <FAQItem
                 q="Do you offer ongoing support?"
-                a="Yes. After delivery, you can add me as your Fractional TD (€3,500/month) to maintain and evolve the system as your product grows."
+                a="After delivery, your team owns the system with full documentation. For future evolution, you can book a follow-up Workshop (€500) or another scoped project — no ongoing retainer needed."
               />
               <FAQItem
                 q="What design tool do you use?"

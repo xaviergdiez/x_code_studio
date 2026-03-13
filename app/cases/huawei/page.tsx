@@ -2,8 +2,10 @@
 
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, CheckCircle, Smartphone, Palette } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Smartphone, Palette, Layout, Code, Layers, Server } from 'lucide-react';
 import gsap from 'gsap';
+import CaseStudyBlueprint from '@/components/CaseStudyBlueprint';
+import HuaweiGradientExperiment from '@/components/HuaweiGradientExperiment';
 
 export default function HuaweiCase() {
   const heroRef = useRef(null);
@@ -430,7 +432,7 @@ export default function HuaweiCase() {
       </section>
 
       {/* Tech Stack */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-24 border-b border-[#333]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-2xl font-bold text-white mb-12 flex items-center">
             <span className="text-[#00FF41] mr-4">{'>'}</span>
@@ -447,8 +449,88 @@ export default function HuaweiCase() {
               </span>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="mt-16 text-center">
+      {/* Technical Deep Dive Blueprint */}
+      <CaseStudyBlueprint
+        architecture={{
+          nodes: [
+            {
+              stage: "ASSET PREP",
+              icon: Layout,
+              label: "SVG Patterns",
+              subtext: "Phone images embedded as SVG patterns. CSS masks define visibility regions."
+            },
+            {
+              stage: "ANIMATION",
+              icon: Code,
+              label: "GSAP Timeline",
+              subtext: "Orchestrates color transitions, gradient shifts, and opacity changes in sync.",
+              active: true
+            },
+            {
+              stage: "INTERACTION",
+              icon: Layers,
+              label: "User Controls",
+              subtext: "Mouse movement triggers dynamic gradient shifts and 3D phone rotations."
+            },
+            {
+              stage: "RENDERING",
+              icon: Server,
+              label: "GPU Acceleration",
+              subtext: "CSS transforms (rotate, scale) offloaded to GPU for 60fps performance."
+            }
+          ]
+        }}
+        codeExample={{
+          filename: "GradientAnimation.js",
+          size: "2.1kb",
+          code: `// GSAP3 Timeline with dynamic gradient shifts
+const tl = gsap.timeline({ delay: 0.5 });
+
+// Animate gradient stops with stagger
+tl.to("#phone_gradient stop", {
+  duration: 1.6,
+  stopColor: (i) => {
+    const colors = [
+      'hsl(212, 30%, 8%)',
+      'hsl(219, 29%, 9%)',
+      'hsl(237, 30%, 12%)',
+      'hsl(248, 38%, 16%)',
+      'hsl(253, 45%, 22%)',
+      'hsl(240, 51%, 48%)',
+      'hsl(204, 95%, 60%)',
+      'hsl(197, 94%, 79%)'
+    ];
+    return colors[i] || colors[0];
+  },
+  stagger: 0.2,
+  ease: "sine.inOut"
+});
+
+// Mouse interaction with 3D transforms
+const handleMouseMove = (e) => {
+  const xPos = (e.clientX / banner.clientWidth) - 0.5;
+  const yPos = (e.clientY / banner.clientHeight) - 0.5;
+
+  gsap.to("#phone_back", {
+    duration: 0.3,
+    rotationY: 10 * xPos,
+    rotationX: 10 * yPos,
+    ease: "power2.inOut",
+    transformPerspective: 600
+  });
+};`
+        }}
+        artifactDescription="The whole concept for interactive color started with this little experiment. I wanted to capture the <strong>iridescence quality of Huawei's phones</strong>, and to see what was possible with SVG in terms of masking, color and performance. It turns out you can do <strong>a LOT</strong>. Making use of SVG's masking properties, I was able to use <strong>optimized jpg images as transparent</strong>, add gradients with blending modes that shift colors, and finally, make the phone <strong>interact with the mouse</strong>."
+        artifactPlaceholder={<HuaweiGradientExperiment />}
+      />
+
+      {/* Back to Home */}
+      <section className="py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
             <Link
               href="/"
               className="inline-flex items-center justify-center px-8 py-3 text-base font-bold text-[#121212] bg-[#00FF41] hover:bg-[#00CC33] transition-all"

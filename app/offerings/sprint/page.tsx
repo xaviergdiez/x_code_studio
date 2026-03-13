@@ -184,7 +184,7 @@ export default function SprintPage() {
               },
               {
                 q: 'Can I extend into the next week?',
-                a: 'Yes. The sprint ends Friday EOD. If you want continued work, book another sprint or upgrade to a monthly Fractional TD.'
+                a: 'Yes. The sprint ends Friday EOD. If you want continued work, simply book another sprint — same fixed price, same deliverable-based model.'
               }
             ].map((item, i) => (
               <div key={i} className="border border-[#333] bg-[#1a1a1a] p-6">
