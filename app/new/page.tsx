@@ -1,0 +1,785 @@
+'use client';
+
+import { useState, useRef, useEffect, useCallback } from 'react';
+import Link from 'next/link';
+import { ArrowRight, CheckCircle, ChevronDown, ExternalLink, Linkedin, Menu, X } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useForm } from '@formspree/react';
+import { Button } from '@/components/ui/Button';
+import { Section, SectionHeading, Card } from '@/components/ui/Section';
+
+/**
+ * x-code.studio — homepage
+ *
+ * One promise: manual ad production becomes an automated pipeline,
+ * and the team can run it without me. Everything below is a tier
+ * of that promise.
+ *
+ * Copy rules for this file:
+ *   - Sentence case headings. The terminal motif is the hero and
+ *     the boot sequence only.
+ *   - Every price on this page must have a real destination. If
+ *     something cannot be bought yet it says so and collects an
+ *     email instead.
+ *   - Colour, type and spacing come from tokens in globals.css.
+ *     No raw hex.
+ */
+
+// ─── Business facts. Update in one place. ────────────────────────
+const BUSINESS = {
+  kvk: null as string | null,   // set once registered, e.g. '12345678'
+  btw: null as string | null,   // set once issued, e.g. 'NL001234567B01'
+  email: 'hello@x-code.studio',
+  city: 'Amsterdam, NL',
+};
+
+// Products have no checkout yet. Until they do, the toolbox
+// collects a waitlist rather than promising an instant download.
+const TOOLBOX_STATUS: 'waitlist' | 'live' = 'waitlist';
+
+// ═════════════════════════════════════════════════════════════════
+// MATRIX RAIN
+// ═════════════════════════════════════════════════════════════════
+function MatrixRain() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const resize = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*<>/|';
+    const fontSize = 14;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops: number[] = Array(columns).fill(1).map(() => Math.random() * -100);
+
+    const draw = () => {
+      ctx.fillStyle = 'rgba(18, 18, 18, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#00FF41';
+      ctx.font = `${fontSize}px monospace`;
+      for (let i = 0; i < drops.length; i++) {
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        ctx.globalAlpha = Math.random() * 0.5 + 0.1;
+        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i] += 0.5 + Math.random() * 0.5;
+      }
+    };
+
+    const interval = setInterval(draw, 50);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('resize', resize);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="matrix-canvas" aria-hidden="true" />;
+}
+
+// ═════════════════════════════════════════════════════════════════
+// ANIMATED LOGO
+// ═════════════════════════════════════════════════════════════════
+function AnimatedLogo({ size = 28 }: { size?: number }) {
+  const h = size * (1029 / 1235);
+  return (
+    <svg width={size} height={h} viewBox="0 0 1235 1029" fill="none" aria-hidden="true">
+      <path d="M218.067 1029L726.89 512.587L218.067 0H0.000162074L504.997 506.849V518.325L0.000162074 1029H218.067Z" fill="currentColor" />
+      <path d="M1016.93 1029L508.11 512.587L1016.93 0H1235L730.003 506.849V518.325L1235 1029H1016.93Z" fill="var(--color-neon)" />
+    </svg>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════
+// BOOT SEQUENCE
+// Four lines, skippable, once per session, and skipped entirely
+// under prefers-reduced-motion. It is personality, not a toll gate.
+// ═════════════════════════════════════════════════════════════════
+const BOOT_LINES = [
+  { text: 'x-code.studio · ad-tech production tooling', cls: 'dim' },
+  { text: 'loading: automation · DCO · GSAP ............ ok', cls: '' },
+  { text: 'operator: Javier Garcia Diez, Amsterdam NL', cls: 'accent' },
+  { text: 'ready.', cls: '' },
+];
+
+function BootSequence({ onComplete }: { onComplete: () => void }) {
+  const bootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!bootRef.current) return;
+    const lines = bootRef.current.querySelectorAll('.boot-line');
+    const tl = gsap.timeline({
+      onComplete: () => {
+        gsap.to(bootRef.current, { opacity: 0, duration: 0.35, delay: 0.2, onComplete });
+      },
+    });
+    lines.forEach((line, i) => tl.to(line, { opacity: 1, duration: 0.02 }, i * 0.14));
+    return () => { tl.kill(); };
+  }, [onComplete]);
+
+  return (
+    <div ref={bootRef} className="boot-screen" role="status" aria-label="Loading">
+      <div className="mx-auto w-full max-w-3xl">
+        {BOOT_LINES.map((line, i) => (
+          <div key={i} className={`boot-line ${line.cls}`}>{line.text}</div>
+        ))}
+        <button
+          onClick={onComplete}
+          className="mt-8 text-label uppercase tracking-label text-fg-subtle hover:text-neon"
+        >
+          Skip
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════
+// COST ESTIMATOR
+//
+// The old model compared 2 hours per asset against 0.1 hours and
+// produced a 95% saving, which no buyer believes. This one bills
+// the pipeline build as real work and assumes automation removes
+// 75% of per-asset handling rather than all of it. Defaults land
+// around 65%, and the assumptions are printed under the number.
+// ═════════════════════════════════════════════════════════════════
+const PIPELINE_SETUP_HOURS = 8;
+const PER_ASSET_REDUCTION = 0.75;
+
+function CostEstimator() {
+  const [assets, setAssets] = useState(50);
+  const [hoursPerAsset, setHoursPerAsset] = useState(2);
+  const [rate, setRate] = useState(85);
+
+  const manualCost = assets * hoursPerAsset * rate;
+  const automatedHours = PIPELINE_SETUP_HOURS + assets * hoursPerAsset * (1 - PER_ASSET_REDUCTION);
+  const automatedCost = automatedHours * rate;
+  const saving = Math.max(0, manualCost - automatedCost);
+  const percent = manualCost > 0 ? Math.round((saving / manualCost) * 100) : 0;
+
+  const fill = (v: number, min: number, max: number) => {
+    const pct = ((v - min) / (max - min)) * 100;
+    return `linear-gradient(to right, var(--color-neon) ${pct}%, var(--color-line-strong) ${pct}%)`;
+  };
+
+  const sliders = [
+    { id: 'assets', label: 'Assets per campaign', value: assets, set: setAssets, min: 10, max: 500, step: 1, suffix: '' },
+    { id: 'hours', label: 'Manual hours per asset', value: hoursPerAsset, set: setHoursPerAsset, min: 0.5, max: 5, step: 0.5, suffix: 'hrs' },
+    { id: 'rate', label: 'Blended hourly rate', value: rate, set: setRate, min: 40, max: 200, step: 5, suffix: '€/hr' },
+  ];
+
+  return (
+    <div className="grid gap-10 md:grid-cols-2">
+      <div>
+        <p className="text-body text-fg-muted">
+          Move the sliders. The number on the right is your campaign, not a case study.
+        </p>
+        <dl className="mt-8 space-y-4 border-t border-line pt-6">
+          <div className="flex justify-between text-small">
+            <dt className="text-fg-subtle">Manual cost</dt>
+            <dd className="text-fg">€{manualCost.toLocaleString('en-GB', { maximumFractionDigits: 0 })}</dd>
+          </div>
+          <div className="flex justify-between text-small">
+            <dt className="text-fg-subtle">With a pipeline</dt>
+            <dd className="text-fg">€{automatedCost.toLocaleString('en-GB', { maximumFractionDigits: 0 })}</dd>
+          </div>
+        </dl>
+        <p className="mt-6 text-small text-fg-subtle">
+          Assumes a one-off pipeline build of {PIPELINE_SETUP_HOURS} hours, billed at your own
+          rate, and a {PER_ASSET_REDUCTION * 100}% cut in per-asset handling after that. It does
+          not assume the manual work disappears, because it does not.
+        </p>
+      </div>
+
+      <Card highlighted>
+        <div className="space-y-7">
+          {sliders.map((s) => (
+            <div key={s.id}>
+              <label
+                htmlFor={s.id}
+                className="mb-3 block text-label uppercase tracking-label text-fg-subtle"
+              >
+                {s.label}
+              </label>
+              <input
+                id={s.id}
+                type="range"
+                min={s.min}
+                max={s.max}
+                step={s.step}
+                value={s.value}
+                onChange={(e) => s.set(Number(e.target.value))}
+                style={{ background: fill(s.value, s.min, s.max) }}
+              />
+              <output htmlFor={s.id} className="mt-3 block text-right text-h3 text-fg">
+                {s.value} <span className="text-small text-fg-subtle">{s.suffix}</span>
+              </output>
+            </div>
+          ))}
+
+          <div className="border-t border-line pt-6" aria-live="polite">
+            <p className="text-label uppercase tracking-label text-fg-subtle">
+              Estimated saving per campaign
+            </p>
+            <p className="mt-2 text-display font-bold text-neon neon-glow-strong">
+              €{saving.toLocaleString('en-GB', { maximumFractionDigits: 0 })}
+            </p>
+            <p className="mt-2 text-small text-fg-muted">
+              {percent}% of what you spend now.
+            </p>
+            <Button href="#toolbox" size="md" className="mt-6 w-full">
+              See what fixes this <ArrowRight size={16} aria-hidden="true" />
+            </Button>
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════
+// DATA
+// ═════════════════════════════════════════════════════════════════
+const TIERS = [
+  {
+    id: 'tools',
+    name: 'Tools you download',
+    price: 'From €100',
+    body: 'Automation scripts, GSAP templates and DCO blueprints, packaged with setup docs. Buy once, use forever.',
+    includes: ['Banner automation kit', 'GSAP animation library', 'DCO implementation blueprint'],
+    cta: TOOLBOX_STATUS === 'waitlist' ? 'Join the waitlist' : 'Browse the toolbox',
+    href: TOOLBOX_STATUS === 'waitlist' ? '#contact' : '/toolbox',
+    status: TOOLBOX_STATUS === 'waitlist' ? 'In build' : null,
+    highlighted: false,
+  },
+  {
+    id: 'audit',
+    name: 'Workflow audit',
+    price: '€995 fixed',
+    body: 'One week inside your production process. You get a written report naming the bottlenecks and a roadmap ordered by payback.',
+    includes: ['Written audit report', 'Roadmap ordered by payback', 'No retainer, no hourly'],
+    cta: 'See what is included',
+    href: '/offerings/audit',
+    status: null,
+    highlighted: true,
+  },
+  {
+    id: 'sprint',
+    name: 'Build sprint',
+    price: '€2,950 fixed',
+    body: 'One week, one deliverable. A working pipeline, a rebuilt design system, or a DCO setup, with documentation and handover.',
+    includes: ['Working deliverable, not a deck', 'Full documentation', 'Your team owns the result'],
+    cta: 'See what is included',
+    href: '/offerings/design-system',
+    status: null,
+    highlighted: false,
+  },
+];
+
+const TESTIMONIALS = [
+  { quote: 'As a cornerstone of our development team he was instrumental in creating high-quality HTML ads for key Google clients. He built new workflows that improved the team\u2019s efficiency and directly contributed to exceeding client ROI expectations.', name: 'Kristina Brown', role: 'Senior Program Manager, Monks', initials: 'KB' },
+  { quote: 'From building automated pipelines to writing smart scripts, Xavier always finds a way to add value. On a large client project his framework let us render assets at massive scale in a fraction of the time.', name: 'Tim Wolters', role: 'Design Lead, Monks', initials: 'TW' },
+  { quote: 'He organises and delivers large-scale projects so they are built to scale. Beyond the technical skill in areas like web animation, Xavi is a natural leader who supports the development of his colleagues.', name: 'Pablo Carreira', role: 'Lead Display Developer', initials: 'PC' },
+  { quote: 'A focused professional who bridges business objectives with client needs, making sure expectations are met with precision. His leadership sets the standard.', name: 'Jordan Maders', role: 'Director, Post Production', initials: 'JM' },
+];
+
+const CASES = [
+  { client: 'BMW / MINI', project: 'Global asset scale', stat: 'One master build served more than 40 markets.', slug: 'bmw-mini' },
+  { client: 'GTECH', project: 'Data-to-creative pipeline', stat: 'Automated variant generation lifted click-through by 45%.', slug: 'gtech' },
+  { client: 'FBTO', project: 'Rich media storytelling', stat: 'Complex insurance products explained inside a single ad unit.', slug: 'fbto' },
+  { client: 'Huawei', project: 'Colour takes over', stat: 'Device exploration in 3D, with no WebGL fallback needed.', slug: 'huawei' },
+];
+
+// ═════════════════════════════════════════════════════════════════
+// PAGE
+// ═════════════════════════════════════════════════════════════════
+export default function Home() {
+  const [booted, setBooted] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const [state, handleSubmit] = useForm('xdkqvorr');
+
+  const finishBoot = useCallback(() => {
+    setBooted(true);
+    try { sessionStorage.setItem('xcs-booted', '1'); } catch { /* private mode */ }
+  }, []);
+
+  // Boot only on a first visit this session, and never when the
+  // visitor has asked for reduced motion.
+  useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let seen = true;
+    try { seen = sessionStorage.getItem('xcs-booted') === '1'; } catch { /* private mode */ }
+    if (!reduced && !seen) setBooted(false);
+  }, []);
+
+  // ─── Animation. Wrapped in matchMedia so the reduced-motion
+  //     branch never creates the tweens at all. ─────────────────
+  useEffect(() => {
+    if (!booted) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
+
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        if (progressRef.current) {
+          gsap.set(progressRef.current, { scaleX: 0 });
+          gsap.to(progressRef.current, {
+            scaleX: 1,
+            ease: 'none',
+            scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 },
+          });
+        }
+
+        gsap.timeline({ delay: 0.1 })
+          .from('.hero-eyebrow', { y: -20, opacity: 0, duration: 0.5, ease: 'power2.out' })
+          .from('.hero-title', { y: 40, opacity: 0, duration: 0.7, ease: 'power3.out' }, '-=0.25')
+          .from('.hero-sub', { y: 30, opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
+          .from('.hero-cta', { y: 20, opacity: 0, stagger: 0.1, duration: 0.5, ease: 'power2.out' }, '-=0.3');
+
+        if (heroRef.current) {
+          gsap.to('.hero-content', {
+            y: -80,
+            opacity: 0,
+            ease: 'none',
+            scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: true },
+          });
+        }
+
+        gsap.utils.toArray<Element>('.reveal').forEach((el) => {
+          gsap.from(el, {
+            y: 40,
+            opacity: 0,
+            duration: 0.7,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+          });
+        });
+      });
+
+      return () => mm.revert();
+    }, rootRef);
+
+    return () => ctx.revert();
+  }, [booted]);
+
+  const goTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({
+      top: el.getBoundingClientRect().top + window.scrollY - 80,
+      behavior: reduced ? 'auto' : 'smooth',
+    });
+    setMenuOpen(false);
+  };
+
+  const NAV = [
+    { label: 'The cost', id: 'cost' },
+    { label: 'Ways to work', id: 'toolbox' },
+    { label: 'Work', id: 'work' },
+    { label: 'Contact', id: 'contact' },
+  ];
+
+  return (
+    <div ref={rootRef} className="min-h-screen overflow-x-hidden bg-ink-800 text-fg-muted noise-overlay">
+      {!booted && <BootSequence onComplete={finishBoot} />}
+      <div className="crt-overlay" aria-hidden="true" />
+      <div ref={progressRef} className="scroll-progress w-full" aria-hidden="true" />
+
+      <a
+        href="#main"
+        className="sr-only-focusable absolute left-4 top-4 z-[80] bg-neon px-4 py-2 text-on-neon"
+      >
+        Skip to content
+      </a>
+
+      {/* ─── NAV ─── */}
+      <nav className="fixed inset-x-0 top-0 z-50 border-b border-line bg-ink-800/90 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
+          <button onClick={() => goTo('top')} className="flex items-center gap-3 text-fg">
+            <AnimatedLogo size={24} />
+            <span className="terminal text-h3 font-bold">x-code.studio</span>
+          </button>
+
+          <div className="hidden items-center gap-6 md:flex">
+            {NAV.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => goTo(item.id)}
+                className="text-small text-fg-muted transition-colors hover:text-neon"
+              >
+                {item.label}
+              </button>
+            ))}
+            <Button onClick={() => goTo('cost')} size="sm">
+              Check your numbers
+            </Button>
+          </div>
+
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="p-2 text-fg-muted md:hidden"
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {menuOpen && (
+          <div className="border-b border-line bg-ink-600 md:hidden">
+            <div className="space-y-1 px-5 py-3">
+              {NAV.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => goTo(item.id)}
+                  className="block w-full py-3 text-left text-body text-fg-muted hover:text-neon"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </nav>
+
+      <main id="main" className="pt-16">
+        {/* ─── HERO ─── */}
+        <section
+          ref={heroRef}
+          id="top"
+          className="relative flex min-h-[88vh] items-center overflow-hidden border-b border-line"
+        >
+          <MatrixRain />
+          <div className="absolute inset-0 z-[1] grid-bg" aria-hidden="true" />
+
+          <div className="hero-content relative z-10 mx-auto w-full max-w-6xl px-5 sm:px-8">
+            <p className="hero-eyebrow terminal mb-6 inline-block border border-neon/50 px-3 py-1 text-label uppercase tracking-label text-neon">
+              Ad-tech production tooling
+            </p>
+
+            <h1 className="hero-title max-w-4xl text-h1 font-bold tracking-hero text-fg md:text-display lg:text-[4.5rem]">
+              Stop rebuilding the same banner fifty times.
+            </h1>
+
+            <p className="hero-sub mt-6 max-w-2xl text-body text-fg-muted md:text-h3">
+              I build the scripts, templates and pipelines that turn manual ad production into
+              an automated one, then teach your team to run it. Eighteen years shipping campaigns
+              for BMW, Google and Huawei at Monks.
+            </p>
+
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+              <Button onClick={() => goTo('cost')} size="lg" className="hero-cta">
+                See what manual production costs you
+              </Button>
+              <Button onClick={() => goTo('toolbox')} variant="secondary" size="lg" className="hero-cta">
+                Ways to work together
+              </Button>
+            </div>
+          </div>
+
+          <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center text-fg-subtle" aria-hidden="true">
+            <span className="mb-2 text-label uppercase tracking-label">Scroll</span>
+            <ChevronDown size={16} className="scroll-indicator" />
+          </div>
+        </section>
+
+        {/* ─── COST ─── */}
+        <Section id="cost" tone="raised">
+          <div className="reveal">
+            <SectionHeading
+              eyebrow="Start here"
+              lede="Agencies lose most of their production margin in the versioning phase, and almost nobody measures it."
+            >
+              What manual versioning costs you
+            </SectionHeading>
+            <CostEstimator />
+          </div>
+        </Section>
+
+        {/* ─── PROOF ─── */}
+        <Section id="proof">
+          <div className="reveal">
+            <SectionHeading lede="Four colleagues from Monks, quoted from LinkedIn.">
+              What the people I built this with say
+            </SectionHeading>
+
+            <ul className="grid gap-6 md:grid-cols-2">
+              {TESTIMONIALS.map((t) => (
+                <li key={t.name}>
+                  <Card interactive>
+                    <Linkedin size={16} className="absolute right-5 top-5 text-signal" aria-hidden="true" />
+                    <blockquote className="pr-8 text-small leading-relaxed text-fg-muted">
+                      {t.quote}
+                    </blockquote>
+                    <footer className="mt-6 flex items-center gap-3">
+                      <span
+                        className="flex h-10 w-10 items-center justify-center rounded-full border border-line-strong bg-ink-700 text-label font-bold text-neon"
+                        aria-hidden="true"
+                      >
+                        {t.initials}
+                      </span>
+                      <span>
+                        <span className="block text-small font-bold text-fg">{t.name}</span>
+                        <span className="block text-label text-fg-subtle">{t.role}</span>
+                      </span>
+                    </footer>
+                  </Card>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Section>
+
+        {/* ─── TIERS ─── */}
+        <Section id="toolbox" tone="raised">
+          <div className="reveal">
+            <SectionHeading lede="One promise underneath all three: manual ad production becomes an automated pipeline, and your team can run it without me.">
+              Three ways to work with this
+            </SectionHeading>
+
+            <ul className="grid gap-6 md:grid-cols-3">
+              {TIERS.map((tier) => (
+                <li key={tier.id}>
+                  <Card highlighted={tier.highlighted} interactive={!tier.highlighted}>
+                    {tier.status && (
+                      <span className="absolute right-0 top-0 bg-signal px-2 py-0.5 text-label font-bold uppercase tracking-label text-ink-800">
+                        {tier.status}
+                      </span>
+                    )}
+                    <h3 className="text-h3 font-bold text-fg">{tier.name}</h3>
+                    <p className="mt-1 text-small text-fg-subtle">{tier.price}</p>
+                    <p className="mt-4 border-b border-line pb-5 text-small text-fg-muted">
+                      {tier.body}
+                    </p>
+                    <ul className="my-6 flex-grow space-y-2">
+                      {tier.includes.map((item) => (
+                        <li key={item} className="flex items-start gap-2 text-small text-fg-muted">
+                          <CheckCircle size={14} className="mt-1 shrink-0 text-signal" aria-hidden="true" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                    <Button
+                      href={tier.href}
+                      variant={tier.highlighted ? 'primary' : 'secondary'}
+                      size="sm"
+                      className="w-full"
+                    >
+                      {tier.cta}
+                    </Button>
+                  </Card>
+                </li>
+              ))}
+            </ul>
+
+            {TOOLBOX_STATUS === 'waitlist' && (
+              <p className="mt-6 text-small text-fg-subtle">
+                The downloadable tools are still being packaged. Rather than take your money for
+                something I cannot deliver today, the button collects an email and you hear from me
+                when it ships.
+              </p>
+            )}
+          </div>
+        </Section>
+
+        {/* ─── WORK ─── */}
+        <Section id="work">
+          <div className="reveal">
+            <SectionHeading lede="Delivered as part of the team at Monks. The tools I package now came out of this work.">
+              Selected work
+            </SectionHeading>
+
+            <ul className="grid gap-6 md:grid-cols-2">
+              {CASES.map((c) => (
+                <li key={c.slug}>
+                  <Link href={`/cases/${c.slug}`} className="group block h-full">
+                    <Card interactive>
+                      <p className="text-label uppercase tracking-label text-signal">{c.client}</p>
+                      <h3 className="mt-2 text-h3 font-bold text-fg">{c.project}</h3>
+                      <p className="mt-4 flex-grow text-small text-fg-muted">{c.stat}</p>
+                      <span className="mt-6 flex items-center gap-2 text-small font-bold text-neon">
+                        Read the case
+                        <ArrowRight
+                          size={14}
+                          className="transition-transform group-hover:translate-x-1"
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </Card>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Section>
+
+        {/* ─── CONTACT ─── */}
+        <Section id="contact" tone="raised" width="prose">
+          <div className="reveal">
+            {state.succeeded ? (
+              <div className="rounded-card border border-neon/40 bg-neon/5 p-10 text-center">
+                <CheckCircle size={48} className="mx-auto mb-4 text-neon" aria-hidden="true" />
+                <h2 className="text-h2 font-bold text-fg">Got it</h2>
+                <p className="mt-2 text-body text-fg-muted">
+                  You will hear back from me within two working days.
+                </p>
+              </div>
+            ) : (
+              <>
+                <SectionHeading lede="One reply from me within two working days. If it is not something I can fix, I will say so.">
+                  Tell me what is broken
+                </SectionHeading>
+
+                <form onSubmit={handleSubmit} className="space-y-8">
+                  <div className="grid gap-6 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="name" className="mb-2 block text-small font-medium text-fg">
+                        Your name
+                      </label>
+                      <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        required
+                        autoComplete="name"
+                        placeholder="Jane Doe"
+                        className="w-full rounded-card border border-line-strong bg-ink-800 p-3 text-small text-fg placeholder:text-fg-placeholder focus:border-neon"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="mb-2 block text-small font-medium text-fg">
+                        Work email
+                      </label>
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        required
+                        autoComplete="email"
+                        placeholder="jane@agency.com"
+                        className="w-full rounded-card border border-line-strong bg-ink-800 p-3 text-small text-fg placeholder:text-fg-placeholder focus:border-neon"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="need" className="mb-2 block text-small font-medium text-fg">
+                      What do you need
+                    </label>
+                    <select
+                      id="need"
+                      name="need"
+                      required
+                      defaultValue=""
+                      className="w-full rounded-card border border-line-strong bg-ink-800 p-3 text-small text-fg focus:border-neon"
+                    >
+                      <option value="" disabled>Choose one</option>
+                      <option value="waitlist">Tell me when the tools launch</option>
+                      <option value="audit">A workflow audit (€995)</option>
+                      <option value="sprint">A build sprint (€2,950)</option>
+                      <option value="workshop">Team training</option>
+                      <option value="other">Something else</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="message" className="mb-2 block text-small font-medium text-fg">
+                      What is the situation
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={4}
+                      required
+                      placeholder="Roughly how many assets per campaign, and where it currently gets stuck."
+                      className="w-full resize-y rounded-card border border-line-strong bg-ink-800 p-3 text-small text-fg placeholder:text-fg-placeholder focus:border-neon"
+                    />
+                  </div>
+
+                  <Button type="submit" size="lg" loading={state.submitting}>
+                    Send
+                  </Button>
+                </form>
+              </>
+            )}
+          </div>
+        </Section>
+
+        {/* ─── FOOTER ─── */}
+        <footer className="bg-ink-800 pb-28 pt-20">
+          <div className="mx-auto max-w-6xl px-5 sm:px-8">
+            <div className="mb-12 grid gap-12 md:grid-cols-2">
+              <div>
+                <div className="mb-5 flex items-center gap-3 text-fg">
+                  <AnimatedLogo size={28} />
+                  <span className="terminal text-h2 font-bold">x-code.studio</span>
+                </div>
+                <p className="max-w-md text-small text-fg-muted">
+                  Ad-tech production tooling. I turn manual ad production into automated
+                  pipelines, and teach teams to run them.
+                </p>
+                <a
+                  href={`mailto:${BUSINESS.email}`}
+                  className="mt-5 inline-block text-small text-neon hover:underline"
+                >
+                  {BUSINESS.email}
+                </a>
+              </div>
+
+              <nav aria-label="Footer" className="md:text-right">
+                <h2 className="mb-5 text-h3 font-bold text-fg">Elsewhere</h2>
+                <ul className="flex flex-col gap-3 md:items-end">
+                  <li>
+                    <a
+                      href="https://linkedin.com/in/xavier-garcia-diez"
+                      className="inline-flex items-center gap-2 text-small text-fg-muted hover:text-fg"
+                    >
+                      LinkedIn <ExternalLink size={12} aria-hidden="true" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://github.com/xaviergdiez"
+                      className="inline-flex items-center gap-2 text-small text-fg-muted hover:text-fg"
+                    >
+                      GitHub <ExternalLink size={12} aria-hidden="true" />
+                    </a>
+                  </li>
+                  {BUSINESS.kvk && (
+                    <li className="mt-3 text-label text-fg-subtle">
+                      KVK {BUSINESS.kvk}
+                      {BUSINESS.btw ? ` · BTW ${BUSINESS.btw}` : ''}
+                    </li>
+                  )}
+                </ul>
+              </nav>
+            </div>
+
+            <div className="flex flex-col gap-4 border-t border-line pt-8 text-label text-fg-subtle sm:flex-row sm:justify-between">
+              <p>© {new Date().getFullYear()} x-code.studio · {BUSINESS.city}</p>
+              <ul className="flex gap-6">
+                <li><Link href="/privacy" className="hover:text-neon">Privacy</Link></li>
+                <li><Link href="/terms" className="hover:text-neon">Terms</Link></li>
+              </ul>
+            </div>
+          </div>
+        </footer>
+      </main>
+    </div>
+  );
+}
