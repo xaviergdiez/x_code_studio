@@ -461,7 +461,7 @@ export default function App() {
               </h1>
 
               <p className="hero-subtitle max-w-2xl text-base md:text-lg text-gray-500 leading-relaxed font-mono">
-                <span className="text-[#00FF41] neon-glow">{'>'}</span> I teach product design at NEOLAND and build workflow automation tools for agencies tired of manually resizing 500 banners per campaign. Not a consultancy. Not an agency. Just: here&apos;s the tool I built, here&apos;s how to use it, now you&apos;re unblocked.
+                <span className="text-[#00FF41] neon-glow">{'>'}</span> I build workflow automation tools for agencies tired of manually resizing 500 banners per campaign. Not a consultancy. Not an agency. Just: here&apos;s the tool I built, here&apos;s how to use it, now you&apos;re unblocked.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-6">
@@ -498,7 +498,7 @@ export default function App() {
               </div>
               <div className="w-full md:w-2/3 text-gray-400 leading-relaxed space-y-5 reveal-right">
                 <p>
-                  I teach <span className="text-white">Product Design at NEOLAND</span> during the week. On weekends, I build automation tools that solve problems I keep hearing about from agencies: banner production bottlenecks, manual resizing hell, DCO implementations that take months, Figma-to-code handoff disasters.
+                  I build automation tools that solve problems I keep hearing about from agencies: banner production bottlenecks, manual resizing hell, DCO implementations that take months, Figma-to-code handoff disasters.
                 </p>
                 <p>
                   So I formalized the weekend hacking into <span className="text-[#00FF41] neon-glow">x-code.studio</span>. Scripts. Templates. Plugins. Documentation. Now available as <span className="text-white">pre-built tools you can download and use today</span>.
@@ -617,7 +617,7 @@ export default function App() {
                 { icon: <Globe className="text-[#00FF41]" />, title: 'DCO_EXECUTION', skills: ['DV360', 'Dynamic Remarketing', 'CM360', 'Feed Architecture'], desc: 'Data-Driven Creative feeds into high-fidelity ad experiences. Deliverable: fully functional DCO pipeline at scale.' },
                 { icon: <Zap className="text-[#00FF41]" />, title: 'VISUAL_ENGINEERING', skills: ['GSAP', 'WebGL', 'Scrollytelling', '60fps', 'Micro-interactions'], desc: 'Code-based motion and interaction design. Deliverable: GPU-accelerated interactive experiences with broadcast-quality animation.' },
                 { icon: <Figma className="text-[#00FF41]" />, title: 'DESIGN_SYSTEMS', skills: ['Design Tokens', 'Figma Variables', 'Component Libs', 'Bi-Directional Sync'], desc: 'Bridging Figma and React with living style guides. Deliverable: production-grade design system ensuring intent survives handoff.' },
-                { icon: <GraduationCap className="text-[#00FF41]" />, title: 'CORPORATE_TRAINING', skills: ['NEOLAND Master', 'Dev-Design Bridge', 'Workshops', '2-Day Programs'], desc: 'Up-skilling agency teams to bridge the design-dev gap. Deliverable: intensive workshops with certified curriculum.' },
+                { icon: <GraduationCap className="text-[#00FF41]" />, title: 'CORPORATE_TRAINING', skills: ['Dev-Design Bridge', 'Workshops', '2-Day Programs'], desc: 'Up-skilling agency teams to bridge the design-dev gap. Deliverable: intensive workshops with a defined curriculum.' },
               ].map((s, i) => (
                 <div key={i} className="service-card tilt-card p-6 border border-[#333] bg-[#1a1a1a] hover:border-[#00FF41]/50 transition-all h-full flex flex-col group">
                   <div className="mb-4 group-hover:scale-110 transition-transform">{s.icon}</div>
@@ -829,7 +829,6 @@ export default function App() {
                 <div className="flex flex-col md:items-end space-y-3">
                   <a href="https://linkedin.com/in/xavier-garcia-diez" className="text-gray-500 hover:text-white flex items-center text-sm transition-colors">LinkedIn <ExternalLink className="w-3 h-3 ml-2" /></a>
                   <a href="https://github.com/xaviergdiez" className="text-gray-500 hover:text-white flex items-center text-sm transition-colors">GitHub <ExternalLink className="w-3 h-3 ml-2" /></a>
-                  <a href="https://www.neoland.online//master-product-design" className="text-gray-500 hover:text-white flex items-center text-sm transition-colors">NEOLAND Master Course <ExternalLink className="w-3 h-3 ml-2" /></a>
                   <span className="text-gray-700 text-xs mt-4">KVK: Pending | BTW-id: Pending</span>
                 </div>
               </div>
@@ -860,7 +859,7 @@ function OfferingsSection() {
     { id: 'dco', title: 'DCO IMPLEMENTATION BLUEPRINT', sub: '€500 — one-time', desc: '50-page guide covering DCO architecture from feed design to platform integration. Includes 1-hour walkthrough call.', features: ['50-page PDF guide', 'Feed validation scripts', 'Google & Meta integration', 'Architecture diagrams', '1-hour Zoom walkthrough'], cta: 'GET_BLUEPRINT →', link: '#audit', hl: true },
     { id: 'audit', title: 'WORKFLOW AUDIT', sub: '€995 fixed-price', desc: '1-week deep dive into your production workflow. Written report + implementation roadmap. No ongoing commitment.', features: ['1-week analysis sprint', 'Written audit report', 'Implementation roadmap', 'Deliverable-based', 'No retainer required'], cta: 'BOOK_AUDIT →', link: '/offerings/audit', hl: false },
     { id: 'system', title: 'DESIGN SYSTEM RESCUE', sub: '€2,950 fixed-price', desc: 'Fix your broken Figma system. 1-week sprint, deliverable-based. Clean design system + dev handoff guide.', features: ['System audit & refactor', 'Figma Variables & Tokens', 'Dev handover package', 'Style guide documentation', 'Async delivery'], cta: 'SCOPE_PROJECT →', link: '/offerings/design-system', hl: false },
-    { id: 'workshop', title: 'TEAM WORKSHOP', sub: '€500/session', desc: '2-hour live team training. Banner production, DCO basics, or design-to-dev bridge. NEOLAND certified curriculum.', features: ['2-hour live session', 'Live coding included', 'Q&A included', 'NEOLAND certified', 'Remote or on-site'], cta: 'BOOK_WORKSHOP →', link: '#audit', hl: false },
+    { id: 'workshop', title: 'TEAM WORKSHOP', sub: '€500/session', desc: '2-hour live team training. Banner production, DCO basics, or design-to-dev bridge.', features: ['2-hour live session', 'Live coding included', 'Q&A included', 'Remote or on-site'], cta: 'BOOK_WORKSHOP →', link: '#audit', hl: false },
   ];
 
   return (
