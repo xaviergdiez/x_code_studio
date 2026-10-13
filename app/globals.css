@@ -49,6 +49,17 @@
   --color-warn: #f5c451;
   --color-on-neon: #121212;  /* text on a neon fill, 13.7:1 */
 
+  /* ---------- PER-CASE ACCENT ----------
+     Each case study carries one accent, set on the page root via
+     data-accent. The portfolio used a different hue per client
+     (BMW blue, FBTO pink, Google blue). That idea is kept; the
+     hues are not. Every value below is picked to clear 4.5:1 on
+     ink-800 so an accent can carry text, which the old hardcoded
+     #007ACC (4.15:1) could not.
+     Default is neon, so a case that sets nothing still matches
+     the rest of the site. */
+  --color-accent: var(--color-neon);
+
   /* ---------- TYPE ---------- */
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), 'SF Mono', 'Fira Code', monospace;
@@ -508,3 +519,13 @@ input[type="range"]::-moz-range-thumb {
 /* The old homepage sets font-mono on its own root, but any legacy
    page that relied on the inherited monospace body needs this. */
 .legacy-mono { font-family: var(--font-mono); }
+
+/* ============================================================
+   PER-CASE ACCENT
+   Usage: <main data-accent="bmw"> ... </main>
+   Verified contrast on ink-800 noted per value.
+   ============================================================ */
+[data-accent="bmw"]    { --color-accent: #6cb6ff; } /* 8.72:1 */
+[data-accent="gtech"]  { --color-accent: #8ab4f8; } /* 8.89:1 */
+[data-accent="fbto"]   { --color-accent: #ff8fab; } /* 8.71:1 */
+[data-accent="huawei"] { --color-accent: #ff9a6c; } /* 9.00:1 */
