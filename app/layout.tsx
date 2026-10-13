@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "x-code.studio — Tools, Teaching & Automation for Ad-Tech",
-  description: "Automation tools, GSAP libraries, DCO blueprints and workshops for agencies. Built by a NEOLAND teacher with 18+ years in ad-tech.",
+  metadataBase: new URL("https://www.x-code.studio"),
+  title: "x-code.studio · Ad-tech production tooling",
+  description: "Scripts, templates and pipelines that turn manual ad production into an automated one. Built on 18 years shipping campaigns for BMW, Google and Huawei at Monks.",
   icons: {
     icon: [
       {
@@ -29,8 +30,8 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "x-code.studio — Tools, Teaching & Automation for Ad-Tech",
-    description: "Automation tools, GSAP libraries, DCO blueprints and workshops for agencies. Built by a NEOLAND teacher with 18+ years in ad-tech.",
+  title: "x-code.studio · Ad-tech production tooling",
+    description: "Scripts, templates and pipelines that turn manual ad production into an automated one. Built on 18 years shipping campaigns for BMW, Google and Huawei at Monks.",
     url: "https://www.x-code.studio",
     siteName: "x-code.studio",
     type: "website",
@@ -39,14 +40,14 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "x-code.studio — Strategic AdTech Consultancy",
+        alt: "x-code.studio · ad-tech production tooling",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "x-code.studio — Tools, Teaching & Automation for Ad-Tech",
-    description: "Automation tools, GSAP libraries, DCO blueprints and workshops. Not a consultancy — just tools that solve real production problems.",
+  title: "x-code.studio · Ad-tech production tooling",
+    description: "Scripts, templates and pipelines that turn manual ad production into an automated one.",
     images: ["/og-image.png"],
   },
 };

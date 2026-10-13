@@ -200,7 +200,7 @@ export default function SprintPage() {
           <div className="bg-gradient-to-r from-[#1a1a1a] to-[#0d0d0d] border border-[#333] p-12 text-center">
             <h2 className="text-3xl font-bold text-white mb-6">Need to move fast?</h2>
             <Link 
-              href="/#audit"
+              href="/#contact"
               className="inline-block bg-[#00FF41] text-[#121212] font-bold px-8 py-4 hover:bg-[#00CC33] transition-colors uppercase tracking-wider"
             >
               Book Your Sprint (€2,500)
@@ -211,7 +211,7 @@ export default function SprintPage() {
 
         {/* Footer */}
         <footer className="border-t border-[#333] py-12 text-center text-gray-500 text-sm">
-          <p>&copy; 2025 x-code.studio | Amsterdam, NL</p>
+          <p>&copy; {new Date().getFullYear()} x-code.studio | Amsterdam, NL</p>
         </footer>
       </main>
     </div>
