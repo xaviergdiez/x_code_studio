@@ -288,7 +288,7 @@ export default function DesignSystemPage() {
         {/* FOOTER */}
         <footer className="bg-[#121212] border-t border-[#333] py-12">
           <div className="max-w-7xl mx-auto px-4 flex justify-between text-sm text-gray-500">
-            <div>&copy; 2025 x-code.studio | Amsterdam, NL</div>
+            <div>&copy; {new Date().getFullYear()} x-code.studio | Amsterdam, NL</div>
             <a href="mailto:hello@x-code.studio" className="hover:text-[#00FF41]">hello@x-code.studio</a>
           </div>
         </footer>

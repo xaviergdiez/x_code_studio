@@ -1,39 +1,166 @@
 @import "tailwindcss";
 
 /* ============================================================
-   x-code.studio — GLOBAL STYLES
-   Hacker Terminal Aesthetic / CRT / Neon / Glitch
+   x-code.studio — DESIGN SYSTEM
+   Single source of truth for colour, type, space and motion.
+
+   RULES
+   1. No raw hex in TSX. Use the utilities generated below
+      (bg-ink-800, text-secondary, border-line, text-neon...).
+   2. Every text token passes WCAG AA (4.5:1) on ink-600,
+      ink-700 and ink-800. Verified, not assumed.
+   3. The terminal look is an accent, not a chassis.
+      Monospace + all-caps belong to the hero, the boot
+      sequence and code fragments. Everything else is
+      sentence case in the sans stack.
    ============================================================ */
 
-:root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --neon: #00FF41;
-  --neon-dim: #00CC33;
-  --blue: #007ACC;
-  --charcoal: #121212;
-  --dark: #1E1E1E;
-  --border: #333;
-  --scanline-opacity: 0.03;
+@theme {
+  /* ---------- SURFACE ---------- */
+  --color-ink-900: #0a0a0a;  /* boot screen, deepest well */
+  --color-ink-800: #121212;  /* page background */
+  --color-ink-700: #1a1a1a;  /* raised panel / alternating band */
+  --color-ink-600: #1e1e1e;  /* card surface */
+
+  /* ---------- LINE ----------
+     line       = decorative divider. Never carries meaning.
+     line-strong = interactive boundary (inputs, focusable
+                   cards). 3.98:1 on ink-800, meets WCAG 1.4.11. */
+  --color-line: #333333;
+  --color-line-strong: #6e747d;
+
+  /* ---------- TEXT ----------
+     primary   16.7:1  headings, emphasis
+     secondary  9.8:1  body copy          (replaces gray-400/500)
+     muted      5.8:1  labels, captions   (replaces gray-500/600)
+     placeholder 3.98:1 input placeholders only, never real content */
+  --color-fg: #f2f2f2;          /* headings, emphasis      16.7:1 */
+  --color-fg-muted: #b8bcc4;
+  --color-fg-subtle: #8a9099;
+  --color-fg-placeholder: #6e747d;
+
+  /* ---------- ACCENT ----------
+     signal replaces the old #007ACC, which measured 4.15:1
+     on ink-800 and failed AA for body text. */
+  --color-neon: #00ff41;
+  --color-neon-dim: #00cc33;
+  --color-signal: #4aa8e0;
+  --color-alert: #ff6b6b;
+  --color-warn: #f5c451;
+  --color-on-neon: #121212;  /* text on a neon fill, 13.7:1 */
+
+  /* ---------- TYPE ---------- */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), 'SF Mono', 'Fira Code', monospace;
+
+  --text-display: 3.5rem;
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.03em;
+  --text-h1: 2.5rem;
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h2: 1.75rem;
+  --text-h2--line-height: 1.2;
+  --text-h3: 1.125rem;
+  --text-h3--line-height: 1.35;
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.6;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.12em;
+
+  --tracking-label: 0.12em;
+  --tracking-hero: -0.03em;
+
+  /* ---------- SPACE ----------
+     Section rhythm. Component padding uses the Tailwind
+     default 4px scale. */
+  --spacing-section: 6rem;
+  --spacing-section-lg: 8rem;
+
+  /* ---------- RADIUS ---------- */
+  --radius-card: 4px;
+
+  /* ---------- MOTION ---------- */
+  --ease-out-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 600ms;
 }
 
-/* ---- BASE ---- */
+/* ============================================================
+   BASE
+   ============================================================ */
 html {
-  scroll-behavior: auto; /* GSAP handles smooth scrolling */
+  scroll-behavior: auto; /* GSAP owns smooth scrolling */
 }
 
 body {
-  background: var(--charcoal);
-  color: var(--foreground);
-  font-family: 'Geist Mono', 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  background: var(--color-ink-800);
+  color: var(--color-fg-muted);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  cursor: default;
   overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--neon);
-  color: var(--charcoal);
+  background: var(--color-neon);
+  color: var(--color-on-neon);
+}
+
+/* Visible keyboard focus on every interactive element.
+   Was missing entirely; outline:none was set on inputs. */
+:focus-visible {
+  outline: 2px solid var(--color-neon);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   MOTION SAFETY
+   Everything decorative stops when the OS asks it to.
+   GSAP entrance tweens are neutralised in page.tsx via
+   gsap.matchMedia(), this covers the CSS-only effects.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .crt-overlay,
+  .matrix-canvas,
+  .noise-overlay::before {
+    display: none;
+  }
+}
+
+/* ============================================================
+   TERMINAL MOTIF
+   Scoped. Applied deliberately, not inherited by the page.
+   ============================================================ */
+.terminal {
+  font-family: var(--font-mono);
+}
+
+/* Terminal-styled heading that still reads plainly to a
+   screen reader. Usage:
+     <h2 className="terminal-heading">
+       <span aria-hidden="true">&gt;_ </span>The toolbox
+     </h2>
+   The prompt glyph is decorative and hidden from AT. */
+.terminal-heading {
+  font-family: var(--font-mono);
+  letter-spacing: -0.01em;
+}
+
+.terminal-heading .prompt {
+  color: var(--color-neon);
 }
 
 /* ---- CRT SCANLINE OVERLAY ---- */
@@ -41,18 +168,17 @@ body {
   pointer-events: none;
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  z-index: 60;
   background: repeating-linear-gradient(
     0deg,
-    rgba(0, 0, 0, var(--scanline-opacity)) 0px,
-    rgba(0, 0, 0, var(--scanline-opacity)) 1px,
+    rgba(0, 0, 0, 0.03) 0px,
+    rgba(0, 0, 0, 0.03) 1px,
     transparent 1px,
     transparent 3px
   );
   mix-blend-mode: multiply;
 }
 
-/* Subtle vignette */
 .crt-overlay::after {
   content: '';
   position: fixed;
@@ -65,114 +191,39 @@ body {
 .boot-screen {
   position: fixed;
   inset: 0;
-  z-index: 10000;
-  background: #0a0a0a;
+  z-index: 70;
+  background: var(--color-ink-900);
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 2rem;
-  font-family: 'Geist Mono', monospace;
+  font-family: var(--font-mono);
 }
 
 .boot-line {
   opacity: 0;
   font-size: 0.75rem;
   line-height: 1.8;
-  color: var(--neon);
+  color: var(--color-neon);
   white-space: nowrap;
   overflow: hidden;
 }
 
-.boot-line.dim {
-  color: #555;
-}
-
-.boot-line.accent {
-  color: var(--blue);
-}
-
-/* ---- GLITCH TEXT EFFECT ---- */
-.glitch {
-  position: relative;
-  display: inline-block;
-}
-
-.glitch::before,
-.glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-
-.glitch::before {
-  color: #ff0040;
-  z-index: -1;
-}
-
-.glitch::after {
-  color: #0ff;
-  z-index: -1;
-}
-
-.glitch.active::before {
-  animation: glitch-1 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  opacity: 0.8;
-}
-
-.glitch.active::after {
-  animation: glitch-2 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  opacity: 0.8;
-}
-
-@keyframes glitch-1 {
-  0%   { clip-path: inset(40% 0 61% 0); transform: translate(-2px, -1px); }
-  20%  { clip-path: inset(92% 0 1% 0);  transform: translate(1px, 2px); }
-  40%  { clip-path: inset(43% 0 1% 0);  transform: translate(-1px, 1px); }
-  60%  { clip-path: inset(25% 0 58% 0); transform: translate(2px, -1px); }
-  80%  { clip-path: inset(54% 0 7% 0);  transform: translate(-1px, 2px); }
-  100% { clip-path: inset(58% 0 43% 0); transform: translate(0); opacity: 0; }
-}
-
-@keyframes glitch-2 {
-  0%   { clip-path: inset(65% 0 3% 0);  transform: translate(2px, 1px); }
-  20%  { clip-path: inset(79% 0 14% 0); transform: translate(-2px, -1px); }
-  40%  { clip-path: inset(48% 0 30% 0); transform: translate(0px, 2px); }
-  60%  { clip-path: inset(33% 0 50% 0); transform: translate(1px, 0px); }
-  80%  { clip-path: inset(10% 0 80% 0); transform: translate(-1px, -2px); }
-  100% { clip-path: inset(0% 0 90% 0);  transform: translate(0); opacity: 0; }
-}
-
-/* ---- TEXT SCRAMBLE CURSOR ---- */
-.scramble-cursor::after {
-  content: '█';
-  color: var(--neon);
-  animation: cursor-blink 0.7s step-end infinite;
-  margin-left: 2px;
-}
-
-@keyframes cursor-blink {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0; }
-}
+.boot-line.dim { color: var(--color-fg-subtle); }
+.boot-line.accent { color: var(--color-signal); }
 
 /* ---- NEON GLOW ---- */
 .neon-glow {
   text-shadow:
     0 0 7px rgba(0, 255, 65, 0.3),
-    0 0 20px rgba(0, 255, 65, 0.15),
-    0 0 42px rgba(0, 255, 65, 0.08);
+    0 0 20px rgba(0, 255, 65, 0.15);
 }
 
 .neon-glow-strong {
   text-shadow:
     0 0 7px rgba(0, 255, 65, 0.5),
     0 0 20px rgba(0, 255, 65, 0.3),
-    0 0 42px rgba(0, 255, 65, 0.15),
-    0 0 82px rgba(0, 255, 65, 0.07);
+    0 0 42px rgba(0, 255, 65, 0.15);
 }
 
 .neon-box-glow {
@@ -194,11 +245,11 @@ body {
 /* ---- SCROLL PROGRESS BAR ---- */
 .scroll-progress {
   position: fixed;
-  top: 64px; /* Below nav */
+  top: 64px;
   left: 0;
   height: 2px;
-  background: var(--neon);
-  z-index: 100;
+  background: var(--color-neon);
+  z-index: 50;
   transform-origin: left;
   box-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
 }
@@ -207,7 +258,7 @@ body {
 .magnetic-btn {
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform var(--duration-base) var(--ease-out-soft);
 }
 
 .magnetic-btn::before {
@@ -216,70 +267,10 @@ body {
   inset: 0;
   background: linear-gradient(135deg, rgba(0, 255, 65, 0.1) 0%, transparent 50%);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--duration-base) ease;
 }
 
-.magnetic-btn:hover::before {
-  opacity: 1;
-}
-
-/* ---- CARD TILT / HOVER EFFECTS ---- */
-.tilt-card {
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  transition: transform 0.1s ease;
-}
-
-.tilt-card:hover {
-  box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.4),
-    0 0 1px rgba(0, 255, 65, 0.3);
-}
-
-/* ---- ANIMATED BORDER ---- */
-.animated-border {
-  position: relative;
-  overflow: hidden;
-}
-
-.animated-border::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 1px solid transparent;
-  background: linear-gradient(var(--dark), var(--dark)) padding-box,
-              linear-gradient(135deg, var(--neon), var(--blue), transparent, var(--neon)) border-box;
-  background-size: 300% 300%;
-  animation: border-rotate 6s linear infinite;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  z-index: 0;
-}
-
-.animated-border:hover::before {
-  opacity: 1;
-}
-
-@keyframes border-rotate {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* ---- TYPEWRITER LINE ---- */
-.typewriter-line {
-  overflow: hidden;
-  border-right: 2px solid var(--neon);
-  white-space: nowrap;
-  animation: typing-caret 0.7s step-end infinite;
-}
-
-@keyframes typing-caret {
-  0%, 100% { border-color: var(--neon); }
-  50%      { border-color: transparent; }
-}
+.magnetic-btn:hover::before { opacity: 1; }
 
 /* ---- GRID PATTERN ---- */
 .grid-bg {
@@ -305,33 +296,32 @@ body {
   height: 200%;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
   pointer-events: none;
-  z-index: 9998;
+  z-index: 55;
   opacity: 0.5;
 }
 
-/* ---- SMOOTH SCROLL INDICATOR FADE ---- */
-.scroll-indicator {
-  animation: scroll-bounce 2s ease-in-out infinite;
-}
+/* ---- SCROLL INDICATOR ---- */
+.scroll-indicator { animation: scroll-bounce 2s ease-in-out infinite; }
 
 @keyframes scroll-bounce {
   0%, 100% { transform: translateY(0); opacity: 0.5; }
   50%      { transform: translateY(8px); opacity: 1; }
 }
 
-/* ---- HORIZONTAL SCROLL SECTION ---- */
-.horizontal-scroll-wrapper {
-  overflow: hidden;
+/* ---- CURSOR BLINK ---- */
+.scramble-cursor::after {
+  content: '_';
+  color: var(--color-neon);
+  animation: cursor-blink 0.9s step-end infinite;
+  margin-left: 2px;
 }
 
-.horizontal-scroll-track {
-  display: flex;
-  width: fit-content;
-  gap: 2rem;
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
 }
 
-/* ---- RANGE SLIDER CUSTOM ---- */
-/* With -webkit-appearance:none, Chrome uses the element background as the track */
+/* ---- RANGE SLIDER ---- */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
@@ -339,84 +329,182 @@ input[type="range"] {
   height: 4px;
   border-radius: 2px;
   cursor: pointer;
-  outline: none;
-  /* background is set via inline style in JSX for dynamic fill */
+  /* track fill set inline for dynamic value */
 }
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: var(--neon);
+  background: var(--color-neon);
   cursor: pointer;
-  margin-top: -8px;
+  margin-top: -10px;
   box-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow var(--duration-fast) ease;
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
   box-shadow: 0 0 16px rgba(0, 255, 65, 0.8);
 }
 
-/* Firefox */
 input[type="range"]::-moz-range-track {
   height: 4px;
   border-radius: 2px;
-  background: #444;
+  background: var(--color-line-strong);
 }
 
 input[type="range"]::-moz-range-progress {
   height: 4px;
   border-radius: 2px;
-  background: var(--neon);
+  background: var(--color-neon);
 }
 
 input[type="range"]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: var(--neon);
+  background: var(--color-neon);
   cursor: pointer;
   border: none;
   box-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
 }
 
-/* ---- FLICKER ANIMATION ---- */
-.flicker {
-  animation: flicker-anim 4s linear infinite;
+/* ---- SCREEN READER ONLY ---- */
+.sr-only-focusable:not(:focus):not(:focus-within) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
+
+/* ============================================================
+   LEGACY — effects used only by the current homepage at `/`.
+
+   These are kept so the live site keeps rendering while the
+   rewrite is previewed at `/new`. When `/new` is promoted to
+   `/`, delete this whole block: nothing in the new design
+   system references any of it.
+   ============================================================ */
+:root { --scanline-opacity: 0.03; }
+
+.glitch { position: relative; display: inline-block; }
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  opacity: 0;
+}
+
+.glitch::before { color: #ff0040; z-index: -1; }
+.glitch::after  { color: #0ff;    z-index: -1; }
+
+.glitch.active::before { animation: glitch-1 0.3s cubic-bezier(0.25,0.46,0.45,0.94) both; opacity: 0.8; }
+.glitch.active::after  { animation: glitch-2 0.3s cubic-bezier(0.25,0.46,0.45,0.94) both; opacity: 0.8; }
+
+@keyframes glitch-1 {
+  0%   { clip-path: inset(40% 0 61% 0); transform: translate(-2px,-1px); }
+  20%  { clip-path: inset(92% 0 1% 0);  transform: translate(1px,2px); }
+  40%  { clip-path: inset(43% 0 1% 0);  transform: translate(-1px,1px); }
+  60%  { clip-path: inset(25% 0 58% 0); transform: translate(2px,-1px); }
+  80%  { clip-path: inset(54% 0 7% 0);  transform: translate(-1px,2px); }
+  100% { clip-path: inset(58% 0 43% 0); transform: translate(0); opacity: 0; }
+}
+
+@keyframes glitch-2 {
+  0%   { clip-path: inset(65% 0 3% 0);  transform: translate(2px,1px); }
+  20%  { clip-path: inset(79% 0 14% 0); transform: translate(-2px,-1px); }
+  40%  { clip-path: inset(48% 0 30% 0); transform: translate(0,2px); }
+  60%  { clip-path: inset(33% 0 50% 0); transform: translate(1px,0); }
+  80%  { clip-path: inset(10% 0 80% 0); transform: translate(-1px,-2px); }
+  100% { clip-path: inset(0% 0 90% 0);  transform: translate(0); opacity: 0; }
+}
+
+.tilt-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.1s ease;
+}
+
+.tilt-card:hover {
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 1px rgba(0,255,65,0.3);
+}
+
+.animated-border { position: relative; overflow: hidden; }
+
+.animated-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  background: linear-gradient(#1e1e1e, #1e1e1e) padding-box,
+              linear-gradient(135deg, #00ff41, #4aa8e0, transparent, #00ff41) border-box;
+  background-size: 300% 300%;
+  animation: border-rotate 6s linear infinite;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.animated-border:hover::before { opacity: 1; }
+
+@keyframes border-rotate {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.typewriter-line {
+  overflow: hidden;
+  border-right: 2px solid var(--color-neon);
+  white-space: nowrap;
+  animation: typing-caret 0.7s step-end infinite;
+}
+
+@keyframes typing-caret {
+  0%, 100% { border-color: var(--color-neon); }
+  50%      { border-color: transparent; }
+}
+
+.pulse-ring { position: relative; }
+
+.pulse-ring::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: 1px solid var(--color-neon);
+  border-radius: inherit;
+  animation: pulse-expand 2s cubic-bezier(0.4,0,0.2,1) infinite;
+}
+
+@keyframes pulse-expand {
+  0%   { transform: scale(1);    opacity: 0.5; }
+  100% { transform: scale(1.05); opacity: 0; }
+}
+
+.flicker { animation: flicker-anim 4s linear infinite; }
 
 @keyframes flicker-anim {
   0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
   20%, 24%, 55% { opacity: 0.5; }
 }
 
-/* ---- PULSE RING ---- */
-.pulse-ring {
-  position: relative;
-}
+.horizontal-scroll-wrapper { overflow: hidden; }
+.horizontal-scroll-track { display: flex; width: fit-content; gap: 2rem; }
 
-.pulse-ring::after {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border: 1px solid var(--neon);
-  border-radius: inherit;
-  animation: pulse-expand 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
+.logo-chevron-left,
+.logo-chevron-right { transform-origin: center; }
 
-@keyframes pulse-expand {
-  0%   { transform: scale(1); opacity: 0.5; }
-  100% { transform: scale(1.05); opacity: 0; }
-}
-
-/* ---- LOGO ANIMATION ---- */
-.logo-chevron-left {
-  transform-origin: center;
-}
-
-.logo-chevron-right {
-  transform-origin: center;
-}
+/* The old homepage sets font-mono on its own root, but any legacy
+   page that relied on the inherited monospace body needs this. */
+.legacy-mono { font-family: var(--font-mono); }
