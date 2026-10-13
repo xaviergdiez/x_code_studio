@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { ArrowRight, CheckCircle, ChevronDown, ExternalLink, Linkedin, Menu, X } from 'lucide-react';
 import gsap from 'gsap';
@@ -8,6 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useForm } from '@formspree/react';
 import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading, Card } from '@/components/ui/Section';
+import { MultiplyGrid } from '@/components/home/MultiplyGrid';
 
 /**
  * x-code.studio — homepage
@@ -25,6 +26,16 @@ import { Section, SectionHeading, Card } from '@/components/ui/Section';
  *   - Colour, type and spacing come from tokens in globals.css.
  *     No raw hex.
  */
+
+/**
+ * useLayoutEffect on the client, useEffect on the server.
+ *
+ * The animation setup must run before paint to avoid the flash, but
+ * Next.js server-renders this component and React warns that
+ * useLayoutEffect does nothing on the server. This is the same guard
+ * GSAP's own useGSAP hook uses.
+ */
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 // ─── Business facts. Update in one place. ────────────────────────
 const BUSINESS = {
@@ -372,8 +383,13 @@ export default function Home() {
   }, []);
 
   // ─── Animation. Wrapped in matchMedia so the reduced-motion
-  //     branch never creates the tweens at all. ─────────────────
-  useEffect(() => {
+  //     branch never creates the tweens at all.
+  //
+  //     useLayoutEffect, not useEffect: it runs synchronously before
+  //     the browser paints, so a gsap.from() never shows the frame
+  //     where the element is still visible. useEffect runs after
+  //     paint, which is what made the page flash. ────────────────
+  useIsomorphicLayoutEffect(() => {
     if (!booted) return;
     gsap.registerPlugin(ScrollTrigger);
 
@@ -390,11 +406,9 @@ export default function Home() {
           });
         }
 
-        gsap.timeline({ delay: 0.1 })
-          .from('.hero-eyebrow', { y: -20, opacity: 0, duration: 0.5, ease: 'power2.out' })
-          .from('.hero-title', { y: 40, opacity: 0, duration: 0.7, ease: 'power3.out' }, '-=0.25')
-          .from('.hero-sub', { y: 30, opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
-          .from('.hero-cta', { y: 20, opacity: 0, stagger: 0.1, duration: 0.5, ease: 'power2.out' }, '-=0.3');
+        // Hero entrance is CSS (.enter in globals.css). gsap.from()
+        // here caused a flash: useEffect runs after first paint, so
+        // the hero painted visible, then snapped to opacity 0.
 
         if (heroRef.current) {
           gsap.to('.hero-content', {
@@ -513,32 +527,44 @@ export default function Home() {
           <MatrixRain />
           <div className="absolute inset-0 z-[1] grid-bg" aria-hidden="true" />
 
-          <div className="hero-content relative z-10 mx-auto w-full max-w-6xl px-5 sm:px-8">
-            <p className="hero-eyebrow terminal mb-6 inline-block border border-neon/50 px-3 py-1 text-label uppercase tracking-label text-neon">
-              Ad-tech production tooling
-            </p>
+          <div className="hero-content relative z-10 mx-auto grid w-full max-w-6xl gap-14 px-5 sm:px-8 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-16">
+            <div>
+              <p className="enter enter-1 terminal mb-6 inline-block border border-neon/50 px-3 py-1 text-label uppercase tracking-label text-neon">
+                Ad-tech production tooling
+              </p>
 
-            <h1 className="hero-title max-w-4xl text-h1 font-bold tracking-hero text-fg md:text-display lg:text-[4.5rem]">
-              Stop rebuilding the same banner fifty times.
-            </h1>
+              <h1 className="enter enter-2 text-h1 font-bold tracking-hero text-fg md:text-display">
+                Build it once.
+                <br />
+                Ship it{' '}
+                <span className="text-neon neon-glow-strong">everywhere</span>.
+              </h1>
 
-            <p className="hero-sub mt-6 max-w-2xl text-body text-fg-muted md:text-h3">
-              I build the scripts, templates and pipelines that turn manual ad production into
-              an automated one, then teach your team to run it. Eighteen years shipping campaigns
-              for BMW, Google and Huawei at Monks.
-            </p>
+              <p className="enter enter-3 mt-6 max-w-xl text-body text-fg-muted md:text-h3">
+                I build the pipelines that turn one master creative into every size and
+                every market, then teach your team to run them. Eighteen years shipping
+                campaigns for BMW, Google and Huawei at Monks.
+              </p>
 
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <Button onClick={() => goTo('cost')} size="lg" className="hero-cta">
-                See what manual production costs you
-              </Button>
-              <Button onClick={() => goTo('toolbox')} variant="secondary" size="lg" className="hero-cta">
-                Ways to work together
-              </Button>
+              <div className="enter enter-4 mt-10 flex flex-col gap-4 sm:flex-row">
+                <Button onClick={() => goTo('cost')} size="lg">
+                  See what manual production costs you
+                </Button>
+                <Button onClick={() => goTo('work')} variant="secondary" size="lg">
+                  See the work
+                </Button>
+              </div>
+            </div>
+
+            <div className="enter enter-5 lg:justify-self-end">
+              <MultiplyGrid />
             </div>
           </div>
 
-          <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center text-fg-subtle" aria-hidden="true">
+          <div
+            className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center text-fg-subtle"
+            aria-hidden="true"
+          >
             <span className="mb-2 text-label uppercase tracking-label">Scroll</span>
             <ChevronDown size={16} className="scroll-indicator" />
           </div>
