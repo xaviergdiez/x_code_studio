@@ -396,6 +396,62 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* ============================================================
+   HERO ENTRANCE
+   Done in CSS, not GSAP, and that is the whole point.
+
+   gsap.from() runs inside useEffect, which fires after the browser
+   has already painted. The element therefore paints visible, then
+   snaps to opacity 0 and animates in. That is the flash.
+
+   A CSS animation is applied at first paint, so there is no frame
+   where the element is visible before it starts. It also needs no
+   JS, so the hero is never stuck invisible if a script fails.
+   Under reduced motion the rules below simply do not apply and
+   everything renders in place at full opacity.
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .enter {
+    opacity: 0;
+    animation: enter-up 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  .enter-1 { animation-delay: 0.05s; }
+  .enter-2 { animation-delay: 0.15s; }
+  .enter-3 { animation-delay: 0.25s; }
+  .enter-4 { animation-delay: 0.35s; }
+  .enter-5 { animation-delay: 0.45s; }
+}
+
+@keyframes enter-up {
+  from { opacity: 0; transform: translate3d(0, 24px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* ============================================================
+   MULTIPLY GRID
+   The hero visual: one master unit becoming many.
+   Cells fade up in sequence, then hold. Delay is set per cell
+   inline, since the count is data-driven.
+   ============================================================ */
+.cell {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cell {
+    animation: cell-in 0.5s ease-out forwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell { opacity: 1; }
+}
+
+@keyframes cell-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================================
    PER-CASE ACCENT
    Usage: <main data-accent="bmw"> ... </main>
    Verified contrast on ink-800 noted per value.
