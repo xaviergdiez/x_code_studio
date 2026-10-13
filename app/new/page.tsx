@@ -294,10 +294,10 @@ const TESTIMONIALS = [
 ];
 
 const CASES = [
-  { client: 'BMW / MINI', project: 'Global asset scale', stat: 'One master build served more than 40 markets.', slug: 'bmw-mini' },
-  { client: 'GTECH', project: 'Data-to-creative pipeline', stat: 'Automated variant generation lifted click-through by 45%.', slug: 'gtech' },
-  { client: 'FBTO', project: 'Rich media storytelling', stat: 'Complex insurance products explained inside a single ad unit.', slug: 'fbto' },
-  { client: 'Huawei', project: 'Colour takes over', stat: 'Device exploration in 3D, with no WebGL fallback needed.', slug: 'huawei' },
+  { client: 'BMW / MINI', project: 'One master build, 27 markets', stat: '34,000 assets from a single feed-driven template.', slug: 'bmw-mini' },
+  { client: 'Google gTech', project: 'Display delivery across three regions', stat: 'Led 15+ developers across AMER, EMEA and APAC to one standard.', slug: 'gtech' },
+  { client: 'FBTO', project: 'Twelve seconds inside an insurance ad', stat: 'Weborama Campaign of the Year. 12.6s average time in frame.', slug: 'fbto' },
+  { client: 'Huawei', project: 'A phone you can turn over', stat: 'Four finishes, both faces, under 150KB total.', slug: 'huawei' },
 ];
 
 // ═════════════════════════════════════════════════════════════════

@@ -1,380 +1,206 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
-import { ArrowLeft, CheckCircle, Globe, Users, TrendingUp, Database, Code, Cpu, Server } from 'lucide-react';
-import CaseStudyBlueprint from '@/components/CaseStudyBlueprint';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
+import { Section, SectionHeading, Card } from '@/components/ui/Section';
+import { CountUpStat } from '@/components/case/CountUpStat';
+
+/**
+ * Google gTech case study. Follows the BMW template.
+ *
+ * This is the strongest credential on the site and the one the old
+ * page wasted. It described a "data-to-creative pipeline" with a 45%
+ * CTR number. The portfolio tells the real story: leading a display
+ * team across three regions for Google's technical services org.
+ * The audit's advice was to lead with the rare thing. Leading
+ * delivery across AMER, EMEA and APAC is the rare thing.
+ *
+ * Two deliberate omissions, both flagged to Xavi:
+ *
+ *  - The portfolio's "$66M+ team revenue impact" is not here. It is
+ *    the kind of figure a prospect asks you to substantiate, and a
+ *    revenue claim on a commercial site carries more weight than the
+ *    same claim on a personal portfolio. Add it if it can be stood
+ *    behind; the slot is the fourth stat.
+ *  - "GTECH" as a company name is gone. gTech is Google's Technical
+ *    Services organisation, not a client called Gtech, and getting
+ *    that wrong in front of an ad-tech buyer is costly.
+ */
 
 export default function GtechCase() {
   return (
-    <div className="min-h-screen bg-[#121212] text-[#E0E0E0] font-mono">
-      {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 w-full z-50 bg-[#121212]/95 border-b border-[#333] backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            
-            {/* Back to home link */}
-            <Link
-              href="/"
-              className="inline-flex items-center text-[#00FF41] hover:text-[#00CC33] transition-colors text-sm font-medium"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              ./BACK_TO_HOME
-            </Link>
-            
-            {/* Desktop Navigation */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-8">
-                {['services', 'methodology', 'contact'].map((item) => (
-                  <Link
-                    key={item}
-                    href={`/#${item}`}
-                    className="text-sm text-gray-400 hover:text-[#00FF41] transition-colors duration-200 px-3 py-2 rounded-md font-medium uppercase tracking-wider"
-                  >
-                    /{item}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <main data-accent="gtech" className="bg-ink-800">
+      {/* ─── HERO ─── */}
+      <section className="relative flex min-h-[70vh] items-end overflow-hidden border-b border-line bg-ink-900">
+        <div className="absolute inset-0 grid-bg-dense opacity-40" aria-hidden="true" />
+        <div
+          className="absolute inset-0"
+          aria-hidden="true"
+          style={{
+            background:
+              'radial-gradient(ellipse at 75% 30%, color-mix(in srgb, var(--color-accent) 12%, transparent) 0%, transparent 60%)',
+          }}
+        />
 
-      {/* Add padding to account for fixed nav */}
-      <div className="pt-16"></div>
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-16 sm:px-8">
+          <Link
+            href="/#work"
+            className="terminal mb-8 inline-flex items-center gap-2 text-label uppercase tracking-label text-fg-subtle hover:text-accent"
+          >
+            <ArrowLeft size={12} aria-hidden="true" />
+            case / google-gtech
+          </Link>
 
-      {/* Hero Section */}
-      <section className="border-b border-[#333] py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-6">
-            <div className="inline-block px-3 py-1 border border-[#4285F4] text-[#4285F4] text-xs uppercase tracking-widest">
-              Leadership Case Study
-            </div>
+          <h1 className="max-w-4xl text-h1 font-bold tracking-hero text-fg md:text-display">
+            Display delivery across three regions, one standard.
+          </h1>
 
-            <div className="flex items-center space-x-4">
-              <div className="flex space-x-1">
-                <div className="w-3 h-3 rounded-full bg-[#4285F4]"></div>
-                <div className="w-3 h-3 rounded-full bg-[#EA4335]"></div>
-                <div className="w-3 h-3 rounded-full bg-[#FBBC04]"></div>
-                <div className="w-3 h-3 rounded-full bg-[#34A853]"></div>
-              </div>
-              <h1 className="text-4xl md:text-6xl font-bold text-white">
-                Google gTech
-              </h1>
-            </div>
-
-            <h2 className="text-2xl md:text-3xl text-[#4285F4]">
-              Global Display Solutions Leadership
-            </h2>
-
-            <p className="text-xl text-gray-400 max-w-3xl">
-              Leading 15+ developers across AMER, EMEA & APAC regions, delivering enterprise-grade solutions for millions of customers while maintaining 24/7 global coverage
-            </p>
-          </div>
-
-          {/* Key Metrics */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-12">
-            <div className="bg-[#1E1E1E] border border-[#333] p-6 rounded">
-              <div className="text-4xl font-bold text-[#00FF41]">$66M+</div>
-              <div className="text-gray-400 mt-2">Team Revenue Impact</div>
-            </div>
-            <div className="bg-[#1E1E1E] border border-[#333] p-6 rounded">
-              <div className="text-4xl font-bold text-[#00FF41]">15+</div>
-              <div className="text-gray-400 mt-2">Developers Managed</div>
-            </div>
-            <div className="bg-[#1E1E1E] border border-[#333] p-6 rounded">
-              <div className="text-4xl font-bold text-[#00FF41]">230%</div>
-              <div className="text-gray-400 mt-2">Conversion Lift</div>
-            </div>
-            <div className="bg-[#1E1E1E] border border-[#333] p-6 rounded">
-              <div className="text-4xl font-bold text-[#00FF41]">98%</div>
-              <div className="text-gray-400 mt-2">Client Satisfaction</div>
-            </div>
-          </div>
+          <p className="mt-6 max-w-2xl text-body text-fg-muted">
+            Leading the display team serving Google gTech across AMER, EMEA and
+            APAC. Delivered as part of the team at Monks.
+          </p>
         </div>
       </section>
 
-      {/* Role & Responsibility */}
-      <section className="border-b border-[#333] py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
-                <span className="text-[#00FF41] mr-4">{'>'}</span>
-                LEADERSHIP_ROLE
-              </h3>
-              <div className="space-y-4 text-gray-400 leading-relaxed">
-                <p>
-                  As <strong className="text-white">Lead Developer for Global gTech Display Solutions Team</strong>, I spearheaded technical innovation across AMER, EMEA, and APAC regions, managing 15+ developers across multiple time zones while delivering enterprise-grade solutions at unprecedented scale.
-                </p>
-                <p>
-                  gTech Ads serves as Google{"'"} comprehensive support and technical services division for the entire Ad products stack, from small businesses to enterprise customers globally. Our mission encompasses enabling better self-help tools, providing interactive support, setting up complex campaigns, and delivering bespoke technical and measurement solutions.
-                </p>
-              </div>
-            </div>
+      {/* ─── NUMBERS ─── */}
+      <Section tone="raised">
+        <ul className="grid gap-10 sm:grid-cols-3">
+          <li>
+            <CountUpStat
+              value={15}
+              suffix="+"
+              label="Developers led"
+              method="Across three regional teams, at peak."
+            />
+          </li>
+          <li>
+            <CountUpStat
+              value={95}
+              suffix="+"
+              label="Markets covered"
+              method="EMEA footprint served by the team."
+            />
+          </li>
+          <li>
+            <CountUpStat
+              value={230}
+              suffix="%"
+              label="Conversion lift"
+              method="Dynamic remarketing against the previous static setup."
+            />
+          </li>
+        </ul>
+      </Section>
 
-            <div className="bg-[#1E1E1E] border border-[#333] p-8 rounded">
-              <h4 className="text-lg font-bold text-white mb-4">Core Responsibilities</h4>
-              <ul className="space-y-3">
-                <li className="flex items-start">
-                  <Users className="w-5 h-5 text-[#00FF41] mr-3 mt-0.5 shrink-0" />
-                  <span className="text-gray-300">Global team management across 3 regions</span>
-                </li>
-                <li className="flex items-start">
-                  <Globe className="w-5 h-5 text-[#00FF41] mr-3 mt-0.5 shrink-0" />
-                  <span className="text-gray-300">24/7 coverage coordination and support</span>
-                </li>
-                <li className="flex items-start">
-                  <TrendingUp className="w-5 h-5 text-[#00FF41] mr-3 mt-0.5 shrink-0" />
-                  <span className="text-gray-300">Enterprise solution architecture</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-[#00FF41] mr-3 mt-0.5 shrink-0" />
-                  <span className="text-gray-300">500+ custom solutions annually</span>
-                </li>
-              </ul>
-            </div>
-          </div>
+      {/* ─── PROBLEM ─── */}
+      <Section width="prose">
+        <SectionHeading eyebrow="The problem">
+          Three regions solving the same problem three ways
+        </SectionHeading>
+        <div className="space-y-5 text-body text-fg-muted">
+          <p>
+            Display production for Google ran out of three regional hubs, each
+            with its own developers, its own conventions and its own idea of what
+            finished looked like. The work was good in all three. It was not the
+            same in any two.
+          </p>
+          <p>
+            That costs more than it looks. A technique proven in EMEA does not
+            reach APAC. The same bug is fixed three times. A client who works
+            across regions gets three different answers to one question, and
+            quality becomes a matter of which hub picked up the brief.
+          </p>
         </div>
-      </section>
+      </Section>
 
-      {/* Regional Teams */}
-      <section className="border-b border-[#333] py-16 md:py-24 bg-[#1E1E1E]/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-2xl font-bold text-white mb-12 flex items-center">
-            <span className="text-[#00FF41] mr-4">{'>'}</span>
-            GLOBAL_TEAM_STRUCTURE
-          </h3>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* EMEA */}
-            <div className="bg-[#121212] border border-[#4285F4] p-8 rounded hover:border-[#4285F4]/70 transition-all">
-              <div className="flex items-center justify-between mb-6">
-                <h4 className="text-xl font-bold text-[#4285F4]">EMEA Team</h4>
-                <Globe className="w-8 h-8 text-[#4285F4]" />
-              </div>
-              <div className="space-y-4">
-                <div>
-                  <div className="text-sm text-gray-500 uppercase tracking-wider mb-1">Coverage</div>
-                  <div className="text-2xl font-bold text-white">95+ Markets</div>
-                </div>
-                <div>
-                  <div className="text-sm text-gray-500 uppercase tracking-wider mb-1">Focus Areas</div>
-                  <div className="text-gray-300">DCO & Dynamic Remarketing</div>
-                </div>
-                <div className="pt-4 border-t border-[#333]">
-                  <div className="text-sm text-gray-400">
-                    Leading development efforts across Europe, Middle East, and Africa with focus on localized solutions and multi-market campaigns.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* AMER */}
-            <div className="bg-[#121212] border border-[#EA4335] p-8 rounded hover:border-[#EA4335]/70 transition-all">
-              <div className="flex items-center justify-between mb-6">
-                <h4 className="text-xl font-bold text-[#EA4335]">AMER Team</h4>
-                <Users className="w-8 h-8 text-[#EA4335]" />
-              </div>
-              <div className="space-y-4">
-                <div>
-                  <div className="text-sm text-gray-500 uppercase tracking-wider mb-1">Team Size</div>
-                  <div className="text-2xl font-bold text-white">15+ Members</div>
-                </div>
-                <div>
-                  <div className="text-sm text-gray-500 uppercase tracking-wider mb-1">Focus Areas</div>
-                  <div className="text-gray-300">HTML5 & Studio Solutions</div>
-                </div>
-                <div className="pt-4 border-t border-[#333]">
-                  <div className="text-sm text-gray-400">
-                    Managing North and South American operations with emphasis on high-volume HTML5 production and Studio DCO implementations.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* APAC */}
-            <div className="bg-[#121212] border border-[#34A853] p-8 rounded hover:border-[#34A853]/70 transition-all">
-              <div className="flex items-center justify-between mb-6">
-                <h4 className="text-xl font-bold text-[#34A853]">APAC Team</h4>
-                <TrendingUp className="w-8 h-8 text-[#34A853]" />
-              </div>
-              <div className="space-y-4">
-                <div>
-                  <div className="text-sm text-gray-500 uppercase tracking-wider mb-1">Operations</div>
-                  <div className="text-2xl font-bold text-white">24/7 Coverage</div>
-                </div>
-                <div>
-                  <div className="text-sm text-gray-500 uppercase tracking-wider mb-1">Focus Areas</div>
-                  <div className="text-gray-300">DV360 & Mobile</div>
-                </div>
-                <div className="pt-4 border-t border-[#333]">
-                  <div className="text-sm text-gray-400">
-                    Coordinating Asia-Pacific development with specialization in Display & Video 360 and mobile-first advertising solutions.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* ─── APPROACH ─── */}
+      <Section tone="raised" width="prose">
+        <SectionHeading eyebrow="The approach">
+          Shared standard, regional ownership
+        </SectionHeading>
+        <div className="space-y-5 text-body text-fg-muted">
+          <p>
+            The fix was not centralising the work, which would have put every
+            brief in one timezone. It was agreeing the standard once, then letting
+            each region own delivery against it: shared build conventions, a
+            common review bar, and techniques written down where the other hubs
+            could find them.
+          </p>
+          <p>
+            Each region kept the specialism its market demanded. What stopped
+            varying was the floor.
+          </p>
         </div>
-      </section>
 
-      {/* Technical Achievements */}
-      <section className="border-b border-[#333] py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-2xl font-bold text-white mb-12 flex items-center">
-            <span className="text-[#00FF41] mr-4">{'>'}</span>
-            IMPACT_METRICS
-          </h3>
+        <ul className="mt-10 grid gap-4 sm:grid-cols-3">
+          {[
+            ['EMEA', '95+ markets', 'Dynamic creative and remarketing at the widest footprint.'],
+            ['AMER', '15+ members', 'HTML5 build and Studio delivery.'],
+            ['APAC', 'Round-the-clock', 'DV360 and mobile, covering the timezone gap.'],
+          ].map(([region, scope, body]) => (
+            <li key={region}>
+              <Card>
+                <p className="terminal text-label uppercase tracking-label text-accent">{region}</p>
+                <h3 className="mt-2 text-h3 font-bold text-fg">{scope}</h3>
+                <p className="mt-2 text-small text-fg-muted">{body}</p>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </Section>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-[#1E1E1E] border border-[#333] p-8 rounded">
-              <h4 className="text-lg font-bold text-white mb-6">Leadership Impact</h4>
-              <div className="space-y-6">
-                <div>
-                  <div className="text-3xl font-bold text-[#00FF41]">300%</div>
-                  <div className="text-gray-400 mt-1">Ad relevance increase through ML pipeline</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-[#00FF41]">45%</div>
-                  <div className="text-gray-400 mt-1">CTR improvement across campaigns</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-[#00FF41]">500+</div>
-                  <div className="text-gray-400 mt-1">Custom solutions delivered annually</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-[#1E1E1E] border border-[#333] p-8 rounded">
-              <h4 className="text-lg font-bold text-white mb-6">Technical Innovations</h4>
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-[#00FF41] mr-3 mt-0.5 shrink-0" />
-                  <div>
-                    <div className="text-white font-medium">AI-Powered Pipeline</div>
-                    <div className="text-sm text-gray-400">Real-time ad optimization using ML</div>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-[#00FF41] mr-3 mt-0.5 shrink-0" />
-                  <div>
-                    <div className="text-white font-medium">Google Ads API Integration</div>
-                    <div className="text-sm text-gray-400">Seamless platform connectivity</div>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-[#00FF41] mr-3 mt-0.5 shrink-0" />
-                  <div>
-                    <div className="text-white font-medium">Analytics Dashboard</div>
-                    <div className="text-sm text-gray-400">Enterprise-grade reporting tools</div>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-[#00FF41] mr-3 mt-0.5 shrink-0" />
-                  <div>
-                    <div className="text-white font-medium">45% Faster Deployment</div>
-                    <div className="text-sm text-gray-400">Standardized frameworks across regions</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* ─── OUTCOME ─── */}
+      <Section width="prose">
+        <SectionHeading eyebrow="The outcome">
+          The floor stopped depending on the hub
+        </SectionHeading>
+        <div className="space-y-5 text-body text-fg-muted">
+          <p>
+            Dynamic remarketing built to the shared standard lifted conversion
+            230% against the static setup it replaced. The number matters, but the
+            durable part is that the technique behind it was written down, so the
+            next team could use it without rediscovering it.
+          </p>
+          <p>
+            This is the work that most directly informs what x-code.studio does
+            now. Teaching a team to run the pipeline, rather than running it for
+            them, is the same job at a different scale.
+          </p>
         </div>
-      </section>
+      </Section>
 
-      {/* Tech Stack */}
-      <section className="py-16 md:py-24 border-b border-[#333]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-2xl font-bold text-white mb-12 flex items-center">
-            <span className="text-[#00FF41] mr-4">{'>'}</span>
-            TECH_STACK
-          </h3>
-
-          <div className="flex flex-wrap gap-3">
-            {['Campaign_Design', 'Ad_System_Design', 'Figma_API', 'Component_Library', 'Design_Systems', 'Motion_Design', 'Interactive_Prototypes', 'Atomic_Design', 'Performance_Audit', 'Automation_Tools'].map((tech, index) => (
-              <span
-                key={index}
-                className="px-4 py-2 bg-[#1E1E1E] border border-[#333] text-gray-300 rounded text-sm font-mono hover:border-[#00FF41] transition-colors"
+      {/* ─── BUILT WITH ─── */}
+      <Section tone="raised" width="prose">
+        <SectionHeading eyebrow="Built with">Stack</SectionHeading>
+        <ul className="flex flex-wrap gap-2">
+          {['DV360', 'Google Studio', 'Dynamic remarketing', 'HTML5', 'Feed architecture', 'Node.js'].map(
+            (t) => (
+              <li
+                key={t}
+                className="rounded-card border border-line bg-ink-600 px-3 py-1.5 text-small text-fg-muted"
               >
-                {`[${tech}]`}
-              </span>
-            ))}
-          </div>
+                {t}
+              </li>
+            ),
+          )}
+        </ul>
+      </Section>
+
+      {/* ─── NEXT ─── */}
+      <Section width="prose">
+        <SectionHeading>Teams solving it three different ways?</SectionHeading>
+        <p className="mb-8 text-body text-fg-muted">
+          Inconsistency across teams is a standards problem, not a talent problem.
+          A workflow audit finds where the floor is slipping and what it costs.
+        </p>
+        <div className="flex flex-col gap-4 sm:flex-row">
+          <Button href="/offerings/audit">See what an audit covers</Button>
+          <Button href="/#work" variant="secondary">
+            Other work
+          </Button>
         </div>
-      </section>
-
-      {/* Technical Deep Dive Blueprint */}
-      <CaseStudyBlueprint
-        architecture={{
-          nodes: [
-            {
-              stage: "DATA SOURCE",
-              icon: Database,
-              label: "User Signals",
-              subtext: "Search queries, browsing history, location data fed into ML model."
-            },
-            {
-              stage: "ML PROCESSING",
-              icon: Cpu,
-              label: "ML Engine",
-              subtext: "Node.js + TensorFlow analyzes user intent and predicts optimal creative.",
-              active: true
-            },
-            {
-              stage: "GENERATION",
-              icon: Code,
-              label: "DCO Builder",
-              subtext: "Google Ads API + Studio DCO generates personalized variants in real-time."
-            },
-            {
-              stage: "DEPLOYMENT",
-              icon: Server,
-              label: "DV360 / CM360",
-              subtext: "Ads served via Display & Video 360 with performance tracking."
-            }
-          ]
-        }}
-        codeExample={{
-          filename: "MLPipeline.js",
-          size: "3.2kb",
-          code: `// Predict optimal creative variant based on user signals
-async function generateAdVariant(userSignals) {
-  const prediction = await mlModel.predict({
-    searchQuery: userSignals.query,
-    location: userSignals.geo,
-    deviceType: userSignals.device
-  });
-
-  // Fetch product data from feed
-  const product = await getProductBySKU(prediction.topSKU);
-
-  // Generate DCO creative via Google Ads API
-  return await googleAds.createResponsiveAd({
-    headlines: generateHeadlines(product, userSignals),
-    descriptions: generateDescriptions(product),
-    images: product.assets,
-    trackingParams: { mlScore: prediction.confidence }
-  });
-}`
-        }}
-        artifactDescription="The system I built wasn't just a campaign—it was a <strong>platform</strong>. gTech teams can now launch complex DCO campaigns in hours instead of weeks, with the ML engine continuously optimizing creative performance based on real user behavior."
-        artifactPlaceholder="ML Pipeline Dashboard: Real-time performance metrics and creative optimization"
-      />
-
-      {/* Back to Home */}
-      <section className="py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center px-8 py-3 text-base font-bold text-[#121212] bg-[#00FF41] hover:bg-[#00CC33] transition-all"
-            >
-              ./BACK_TO_HOME
-            </Link>
-          </div>
-        </div>
-      </section>
-    </div>
+      </Section>
+    </main>
   );
 }

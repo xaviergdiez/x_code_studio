@@ -1,399 +1,201 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
-import { ArrowLeft, CheckCircle, Award, TrendingUp, Layout, Code, Zap, Server } from 'lucide-react';
-import CaseStudyBlueprint from '@/components/CaseStudyBlueprint';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
+import { Section, SectionHeading, Card } from '@/components/ui/Section';
+import { CountUpStat } from '@/components/case/CountUpStat';
 
-export default function FBTOCase() {
+/**
+ * FBTO case study. Follows the BMW template.
+ *
+ * Figures are the portfolio's, per the reconciliation: 3x CTR
+ * against static, 12.6s time-in-frame, 61% brand recall lift. The
+ * old x-code.studio page claimed 250% engagement and an 85%
+ * conversion bump, neither of which appears anywhere in the
+ * portfolio and both of which read as round numbers with no method.
+ * They are gone.
+ *
+ * Time-in-frame is the strongest number here and the least
+ * fashionable, which is exactly why it leads. 12.6 seconds is a
+ * measurement, not a multiple.
+ */
+
+export default function FbtoCase() {
   return (
-    <div className="min-h-screen bg-[#121212] text-[#E0E0E0] font-mono">
-      {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 w-full z-50 bg-[#121212]/95 border-b border-[#333] backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            
-            {/* Back to home link */}
-            <Link
-              href="/"
-              className="inline-flex items-center text-[#00FF41] hover:text-[#00CC33] transition-colors text-sm font-medium"
+    <main data-accent="fbto" className="bg-ink-800">
+      {/* ─── HERO ─── */}
+      <section className="relative flex min-h-[70vh] items-end overflow-hidden border-b border-line bg-ink-900">
+        <div className="absolute inset-0 grid-bg opacity-60" aria-hidden="true" />
+        <div
+          className="absolute inset-0"
+          aria-hidden="true"
+          style={{
+            background:
+              'radial-gradient(ellipse at 20% 70%, color-mix(in srgb, var(--color-accent) 14%, transparent) 0%, transparent 60%)',
+          }}
+        />
+
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-16 sm:px-8">
+          <Link
+            href="/#work"
+            className="terminal mb-8 inline-flex items-center gap-2 text-label uppercase tracking-label text-fg-subtle hover:text-accent"
+          >
+            <ArrowLeft size={12} aria-hidden="true" />
+            case / fbto
+          </Link>
+
+          <p className="mb-4 inline-block rounded-card border border-accent/50 px-3 py-1 text-label uppercase tracking-label text-accent">
+            Weborama Campaign of the Year
+          </p>
+
+          <h1 className="max-w-4xl text-h1 font-bold tracking-hero text-fg md:text-display">
+            Twelve seconds inside an insurance ad.
+          </h1>
+
+          <p className="mt-6 max-w-2xl text-body text-fg-muted">
+            Rich media for FBTO in the Netherlands, built to explain a product
+            nobody wants to read about. Delivered as part of the team at Monks.
+          </p>
+        </div>
+      </section>
+
+      {/* ─── NUMBERS ─── */}
+      <Section tone="raised">
+        <ul className="grid gap-10 sm:grid-cols-3">
+          <li>
+            <CountUpStat
+              value={12.6}
+              suffix="s"
+              decimals={1}
+              label="Average time in frame"
+              method="Measured against the campaign's served impressions."
+            />
+          </li>
+          <li>
+            <CountUpStat
+              value={3}
+              suffix="x"
+              label="Click-through against static"
+              method="Compared with the static placement in the same flight."
+            />
+          </li>
+          <li>
+            <CountUpStat
+              value={61}
+              suffix="%"
+              label="Brand recall lift"
+              method="Post-campaign recall study against a control group."
+            />
+          </li>
+        </ul>
+      </Section>
+
+      {/* ─── PROBLEM ─── */}
+      <Section width="prose">
+        <SectionHeading eyebrow="The problem">
+          Nobody wants to learn about health insurance
+        </SectionHeading>
+        <div className="space-y-5 text-body text-fg-muted">
+          <p>
+            FBTO sells a product that is genuinely complicated and genuinely
+            boring to the person seeing the ad. The things that differentiate it
+            are the details of what is covered, and details do not fit in a
+            banner.
+          </p>
+          <p>
+            The usual response is to stop trying: show a smiling family, show the
+            logo, hope the brand does the work. That tests fine and explains
+            nothing, so the actual proposition never lands.
+          </p>
+        </div>
+      </Section>
+
+      {/* ─── APPROACH ─── */}
+      <Section tone="raised" width="prose">
+        <SectionHeading eyebrow="The approach">
+          Make the explanation the interaction
+        </SectionHeading>
+        <div className="space-y-5 text-body text-fg-muted">
+          <p>
+            Rather than compressing the proposition into one frame, the unit let
+            people walk through it. Interactive video segments, each answering one
+            question, with the viewer choosing which to open rather than sitting
+            through a sequence.
+          </p>
+          <p>
+            That changes what you are optimising for. A static banner wants the
+            fastest possible click. This wanted the opposite: time spent, because
+            time spent is the only way the product gets explained.
+          </p>
+        </div>
+
+        <ul className="mt-10 grid gap-4 sm:grid-cols-2">
+          {[
+            ['Viewer picks the path', 'Segments open on demand, not in sequence.'],
+            ['One question per segment', 'Each answers a single thing clearly.'],
+            ['Video inside the unit', 'No click-out, no landing page needed first.'],
+            ['Built for dwell, not clicks', 'Success measured in seconds held.'],
+          ].map(([title, body]) => (
+            <li key={title}>
+              <Card>
+                <h3 className="text-h3 font-bold text-fg">{title}</h3>
+                <p className="mt-2 text-small text-fg-muted">{body}</p>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* ─── OUTCOME ─── */}
+      <Section width="prose">
+        <SectionHeading eyebrow="The outcome">
+          People stayed twelve seconds
+        </SectionHeading>
+        <div className="space-y-5 text-body text-fg-muted">
+          <p>
+            12.6 seconds of average time in frame is a long while for display.
+            Click-through still came in at three times the static placement in the
+            same flight, which was the part nobody expected: optimising for dwell
+            did not cost clicks, it produced them.
+          </p>
+          <p>
+            Recall lifted 61% against control, and the campaign took Weborama
+            Campaign of the Year.
+          </p>
+        </div>
+      </Section>
+
+      {/* ─── BUILT WITH ─── */}
+      <Section tone="raised" width="prose">
+        <SectionHeading eyebrow="Built with">Stack</SectionHeading>
+        <ul className="flex flex-wrap gap-2">
+          {['HTML5 Canvas', 'GSAP', 'SVG', 'Interactive video', 'Rich media'].map((t) => (
+            <li
+              key={t}
+              className="rounded-card border border-line bg-ink-600 px-3 py-1.5 text-small text-fg-muted"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              ./BACK_TO_HOME
-            </Link>
-            
-            {/* Desktop Navigation */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-8">
-                {['services', 'methodology', 'contact'].map((item) => (
-                  <Link
-                    key={item}
-                    href={`/#${item}`}
-                    className="text-sm text-gray-400 hover:text-[#00FF41] transition-colors duration-200 px-3 py-2 rounded-md font-medium uppercase tracking-wider"
-                  >
-                    /{item}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
+              {t}
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* ─── NEXT ─── */}
+      <Section width="prose">
+        <SectionHeading>Have something hard to explain?</SectionHeading>
+        <p className="mb-8 text-body text-fg-muted">
+          Complicated products are a format problem before they are a creative
+          problem. A build sprint delivers one working unit and the approach
+          behind it.
+        </p>
+        <div className="flex flex-col gap-4 sm:flex-row">
+          <Button href="/offerings/sprint">See what a sprint covers</Button>
+          <Button href="/#work" variant="secondary">
+            Other work
+          </Button>
         </div>
-      </nav>
-
-      {/* Add padding to account for fixed nav */}
-      <div className="pt-16"></div>
-
-      {/* Hero Section */}
-      <section className="border-b border-[#333] py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="inline-block px-3 py-1 border border-[#E91E63] text-[#E91E63] text-xs uppercase tracking-widest">
-                Case Study
-              </div>
-              <div className="inline-flex items-center px-3 py-1 bg-[#FFD700]/10 border border-[#FFD700] text-[#FFD700] text-xs uppercase tracking-widest">
-                <Award className="w-3 h-3 mr-1" />
-                Campaign of the Year
-              </div>
-            </div>
-
-            <h1 className="text-4xl md:text-6xl font-bold text-white">
-              FBTO
-            </h1>
-
-            <h2 className="text-2xl md:text-3xl text-[#E91E63]">
-              Rich Media Health Insurance Campaign
-            </h2>
-
-            <p className="text-xl text-gray-400 max-w-3xl">
-              Award-winning rich media campaign for FBTO Insurance, explaining complex insurance products through interactive storytelling and animated calculators
-            </p>
-
-            <div className="inline-block px-4 py-2 bg-[#E91E63]/10 border border-[#E91E63] text-[#E91E63] rounded">
-              Weborama APTO Winner - Netherlands Market
-            </div>
-          </div>
-
-          {/* Key Metrics */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-            <div className="bg-[#1E1E1E] border border-[#333] p-6 rounded">
-              <div className="text-4xl font-bold text-[#00FF41]">3x</div>
-              <div className="text-gray-400 mt-2">CTR vs Static Ads</div>
-            </div>
-            <div className="bg-[#1E1E1E] border border-[#333] p-6 rounded">
-              <div className="text-4xl font-bold text-[#00FF41]">12.6s</div>
-              <div className="text-gray-400 mt-2">Average Time-in-Frame</div>
-            </div>
-            <div className="bg-[#1E1E1E] border border-[#333] p-6 rounded">
-              <div className="text-4xl font-bold text-[#00FF41]">61%</div>
-              <div className="text-gray-400 mt-2">Brand Recall Lift</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Challenge Section */}
-      <section className="border-b border-[#333] py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
-                <span className="text-[#00FF41] mr-4">{'>'}</span>
-                THE_CHALLENGE
-              </h3>
-              <div className="space-y-4 text-gray-400 leading-relaxed">
-                <p>
-                  FBTO Insurance needed engaging rich media campaigns to explain complex insurance products while maintaining user attention and driving conversions in a competitive market.
-                </p>
-                <p>
-                  The insurance industry faces the challenge of making dry, complex products engaging and understandable. Users often bounce from traditional banner ads without engaging with the content or understanding the value proposition.
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-[#1E1E1E] border border-[#333] p-8 rounded">
-              <h4 className="text-lg font-bold text-white mb-4">Key Challenges</h4>
-              <ul className="space-y-3">
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-[#E91E63] mr-3 mt-0.5 shrink-0" />
-                  <span className="text-gray-300">Explain complex insurance products simply</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-[#E91E63] mr-3 mt-0.5 shrink-0" />
-                  <span className="text-gray-300">Maintain user engagement and attention</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-[#E91E63] mr-3 mt-0.5 shrink-0" />
-                  <span className="text-gray-300">Drive conversions in competitive market</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-[#E91E63] mr-3 mt-0.5 shrink-0" />
-                  <span className="text-gray-300">Stand out from traditional static ads</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Solution Section */}
-      <section className="border-b border-[#333] py-16 md:py-24 bg-[#1E1E1E]/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-2xl font-bold text-white mb-12 flex items-center">
-            <span className="text-[#00FF41] mr-4">{'>'}</span>
-            THE_SOLUTION
-          </h3>
-
-          <div className="space-y-8">
-            <div className="bg-[#121212] border border-[#333] p-8 rounded">
-              <h4 className="text-xl font-bold text-[#E91E63] mb-4">Interactive Rich Media Campaign</h4>
-              <p className="text-gray-400 leading-relaxed mb-6">
-                Created interactive rich media campaigns that explained complex insurance products through animated storytelling and interactive calculators. Users could engage directly with the content, calculating personalized insurance quotes and exploring coverage options.
-              </p>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-3">
-                  <div className="flex items-start">
-                    <span className="text-[#E91E63] mr-2">▸</span>
-                    <span className="text-gray-300">Animated storytelling sequences</span>
-                  </div>
-                  <div className="flex items-start">
-                    <span className="text-[#E91E63] mr-2">▸</span>
-                    <span className="text-gray-300">Interactive insurance calculators</span>
-                  </div>
-                  <div className="flex items-start">
-                    <span className="text-[#E91E63] mr-2">▸</span>
-                    <span className="text-gray-300">Personalized quote generation</span>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <div className="flex items-start">
-                    <span className="text-[#E91E63] mr-2">▸</span>
-                    <span className="text-gray-300">Video integration and playback</span>
-                  </div>
-                  <div className="flex items-start">
-                    <span className="text-[#E91E63] mr-2">▸</span>
-                    <span className="text-gray-300">Responsive multi-device support</span>
-                  </div>
-                  <div className="flex items-start">
-                    <span className="text-[#E91E63] mr-2">▸</span>
-                    <span className="text-gray-300">Analytics and engagement tracking</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-[#121212] border border-[#333] p-8 rounded">
-              <h4 className="text-xl font-bold text-[#E91E63] mb-4">Technical Implementation</h4>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div>
-                  <div className="text-sm text-[#E91E63] mb-2 uppercase tracking-wider">Frontend</div>
-                  <ul className="space-y-2 text-gray-400">
-                    <li>HTML5 Canvas</li>
-                    <li>GSAP Animation</li>
-                    <li>SVG Graphics</li>
-                    <li>Interactive Forms</li>
-                  </ul>
-                </div>
-                <div>
-                  <div className="text-sm text-[#E91E63] mb-2 uppercase tracking-wider">Features</div>
-                  <ul className="space-y-2 text-gray-400">
-                    <li>Video Integration</li>
-                    <li>Calculator Logic</li>
-                    <li>Form Validation</li>
-                    <li>Analytics Events</li>
-                  </ul>
-                </div>
-                <div>
-                  <div className="text-sm text-[#E91E63] mb-2 uppercase tracking-wider">Optimization</div>
-                  <ul className="space-y-2 text-gray-400">
-                    <li>Performance Tuning</li>
-                    <li>Cross-browser Testing</li>
-                    <li>Mobile Optimization</li>
-                    <li>Load Time Reduction</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Results Section */}
-      <section className="border-b border-[#333] py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-2xl font-bold text-white mb-12 flex items-center">
-            <span className="text-[#00FF41] mr-4">{'>'}</span>
-            THE_RESULTS
-          </h3>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-[#1E1E1E] border border-[#333] p-8 rounded">
-              <h4 className="text-lg font-bold text-white mb-6">Campaign Performance</h4>
-              <div className="space-y-6">
-                <div>
-                  <div className="text-3xl font-bold text-[#00FF41]">250%</div>
-                  <div className="text-gray-400 mt-1">Engagement increase vs static</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-[#00FF41]">85%</div>
-                  <div className="text-gray-400 mt-1">Conversion rate bump</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-[#00FF41]">12.6s</div>
-                  <div className="text-gray-400 mt-1">Average time-in-frame (industry avg: 3s)</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-[#1E1E1E] border border-[#333] p-8 rounded">
-              <h4 className="text-lg font-bold text-white mb-6">Awards & Recognition</h4>
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <Award className="w-5 h-5 text-[#FFD700] mr-3 mt-0.5 shrink-0" />
-                  <div>
-                    <div className="text-white font-medium">Weborama APTO Winner</div>
-                    <div className="text-sm text-gray-400">Campaign of the Year - Netherlands</div>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <TrendingUp className="w-5 h-5 text-[#00FF41] mr-3 mt-0.5 shrink-0" />
-                  <div>
-                    <div className="text-white font-medium">Industry Recognition</div>
-                    <div className="text-sm text-gray-400">Featured in insurance marketing publications</div>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-[#00FF41] mr-3 mt-0.5 shrink-0" />
-                  <div>
-                    <div className="text-white font-medium">Client Satisfaction</div>
-                    <div className="text-sm text-gray-400">Extended contract for multiple campaigns</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Additional Metrics */}
-          <div className="mt-8 bg-[#1E1E1E] border border-[#333] p-8 rounded">
-            <h4 className="text-lg font-bold text-white mb-6">Key Achievements</h4>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="flex items-start">
-                <CheckCircle className="w-5 h-5 text-[#00FF41] mr-3 mt-0.5 shrink-0" />
-                <div>
-                  <div className="text-white font-medium">61% Brand Recall Lift</div>
-                  <div className="text-sm text-gray-400">Significantly above industry average</div>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <CheckCircle className="w-5 h-5 text-[#00FF41] mr-3 mt-0.5 shrink-0" />
-                <div>
-                  <div className="text-white font-medium">3x CTR Improvement</div>
-                  <div className="text-sm text-gray-400">Compared to static banner ads</div>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <CheckCircle className="w-5 h-5 text-[#00FF41] mr-3 mt-0.5 shrink-0" />
-                <div>
-                  <div className="text-white font-medium">Award-Winning Creative</div>
-                  <div className="text-sm text-gray-400">Industry recognition for innovation</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Tech Stack */}
-      <section className="py-16 md:py-24 border-b border-[#333]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-2xl font-bold text-white mb-12 flex items-center">
-            <span className="text-[#00FF41] mr-4">{'>'}</span>
-            TECH_STACK
-          </h3>
-
-          <div className="flex flex-wrap gap-3">
-            {['Interaction_Design', 'Animation_Systems', 'Form_Design', 'Visual_Hierarchy', 'Scrollytelling', 'User_Experience', 'Micro_Interactions', 'Responsive_UX', 'Accessibility', 'Design_Audit'].map((tech, index) => (
-              <span
-                key={index}
-                className="px-4 py-2 bg-[#1E1E1E] border border-[#333] text-gray-300 rounded text-sm font-mono hover:border-[#00FF41] transition-colors"
-              >
-                {`[${tech}]`}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Technical Deep Dive Blueprint */}
-      <CaseStudyBlueprint
-        architecture={{
-          nodes: [
-            {
-              stage: "USER INPUT",
-              icon: Layout,
-              label: "Interactive Form",
-              subtext: "User enters age, coverage type, and deductible preferences via animated sliders."
-            },
-            {
-              stage: "CALCULATION",
-              icon: Code,
-              label: "Quote Engine",
-              subtext: "JavaScript pricing logic calculates personalized quote in real-time (no server calls).",
-              active: true
-            },
-            {
-              stage: "VISUALIZATION",
-              icon: Zap,
-              label: "GSAP + SVG",
-              subtext: "Animated storytelling sequences explain coverage using morphing SVG illustrations."
-            },
-            {
-              stage: "CONVERSION",
-              icon: Server,
-              label: "Lead Capture",
-              subtext: "Form submission sends data to CRM with analytics tracking via Google Tag Manager."
-            }
-          ]
-        }}
-        codeExample={{
-          filename: "QuoteCalculator.js",
-          size: "2.8kb",
-          code: `// Real-time insurance quote calculation
-function calculateQuote(age, coverage, deductible) {
-  const baseRate = insuranceRates[coverage];
-  const ageFactor = getAgeFactor(age);
-  const deductibleDiscount = (deductible / 1000) * 0.15;
-
-  const monthlyPremium = baseRate * ageFactor * (1 - deductibleDiscount);
-
-  // Animate the price transition with GSAP
-  gsap.to('.price-display', {
-    innerText: Math.round(monthlyPremium),
-    duration: 0.8,
-    ease: 'power2.out',
-    snap: { innerText: 1 }
-  });
-
-  return monthlyPremium;
-}`
-        }}
-        artifactDescription="This wasn't just a banner—it was a <strong>mini web app</strong>. The interactive calculator reduced FBTO's cost-per-lead by 40% because users qualified themselves before clicking. They only converted when genuinely interested, resulting in higher-quality leads."
-        artifactPlaceholder="Interactive Banner Demo: Live calculator with animated transitions"
-      />
-
-      {/* Back to Home */}
-      <section className="py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center px-8 py-3 text-base font-bold text-[#121212] bg-[#00FF41] hover:bg-[#00CC33] transition-all"
-            >
-              ./BACK_TO_HOME
-            </Link>
-          </div>
-        </div>
-      </section>
-    </div>
+      </Section>
+    </main>
   );
 }
