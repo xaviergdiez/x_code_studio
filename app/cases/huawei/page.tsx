@@ -1,9 +1,11 @@
 'use client';
 
+import { useRef } from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading, Card } from '@/components/ui/Section';
+import { useScrollReveal } from '@/lib/motion';
 import { HuaweiPhones } from '@/components/case/HuaweiPhones';
 
 /**
@@ -28,8 +30,11 @@ const METRICS = [
 ];
 
 export default function HuaweiCase() {
+  const rootRef = useRef<HTMLElement>(null);
+  useScrollReveal(rootRef);
+
   return (
-    <main data-accent="huawei" className="bg-ink-800">
+    <main ref={rootRef} data-accent="huawei" className="bg-ink-800">
       <HuaweiPhones>
         <div className="max-w-xl space-y-6 py-20">
           <div className="flex flex-wrap items-center gap-3">

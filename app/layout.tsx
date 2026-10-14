@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { MotionProvider } from "@/components/motion/MotionProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,11 +59,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>
+        {/* Runs before first paint. `js` lets CSS hide [data-split] headings only when JS will reveal them; `data-boot` marks a first-visit boot on the homepage only (the one place that clears it) so the page never paints ahead of it. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `var d=document.documentElement;d.classList.add('js');try{if(location.pathname==='/'&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&sessionStorage.getItem('xcs-booted')!=='1')d.dataset.boot='1'}catch(e){}`,
+          }}
+        />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className="antialiased"
         suppressHydrationWarning
       >
+        <MotionProvider />
         {children}
       </body>
     </html>

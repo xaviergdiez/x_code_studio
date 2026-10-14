@@ -8,7 +8,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useForm } from '@formspree/react';
 import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading, Card } from '@/components/ui/Section';
-import { MultiplyGrid } from '@/components/home/MultiplyGrid';
+import { AdaptiveStage } from '@/components/home/AdaptiveStage';
+import { HeroFeed } from '@/components/home/HeroFeed';
+import { scrollToId, useScrollReveal } from '@/lib/motion';
 
 /**
  * x-code.studio — homepage
@@ -50,55 +52,6 @@ const BUSINESS = {
 const TOOLBOX_STATUS: 'waitlist' | 'live' = 'waitlist';
 
 // ═════════════════════════════════════════════════════════════════
-// MATRIX RAIN
-// ═════════════════════════════════════════════════════════════════
-function MatrixRain() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*<>/|';
-    const fontSize = 14;
-    const columns = Math.floor(canvas.width / fontSize);
-    const drops: number[] = Array(columns).fill(1).map(() => Math.random() * -100);
-
-    const draw = () => {
-      ctx.fillStyle = 'rgba(18, 18, 18, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#00FF41';
-      ctx.font = `${fontSize}px monospace`;
-      for (let i = 0; i < drops.length; i++) {
-        const char = chars[Math.floor(Math.random() * chars.length)];
-        ctx.globalAlpha = Math.random() * 0.5 + 0.1;
-        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i] += 0.5 + Math.random() * 0.5;
-      }
-    };
-
-    const interval = setInterval(draw, 50);
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener('resize', resize);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} className="matrix-canvas" aria-hidden="true" />;
-}
-
-// ═════════════════════════════════════════════════════════════════
 // ANIMATED LOGO
 // ═════════════════════════════════════════════════════════════════
 function AnimatedLogo({ size = 28 }: { size?: number }) {
@@ -108,6 +61,16 @@ function AnimatedLogo({ size = 28 }: { size?: number }) {
       <path d="M218.067 1029L726.89 512.587L218.067 0H0.000162074L504.997 506.849V518.325L0.000162074 1029H218.067Z" fill="currentColor" />
       <path d="M1016.93 1029L508.11 512.587L1016.93 0H1235L730.003 506.849V518.325L1235 1029H1016.93Z" fill="var(--color-neon)" />
     </svg>
+  );
+}
+
+/** The wordmark. One definition so the nav and footer can never drift apart. */
+function Wordmark() {
+  return (
+    <span className="flex items-center gap-3 text-fg">
+      <AnimatedLogo size={24} />
+      <span className="terminal text-h3 font-bold">x-code.studio</span>
+    </span>
   );
 }
 
@@ -374,12 +337,13 @@ export default function Home() {
   }, []);
 
   // Boot only on a first visit this session, and never when the
-  // visitor has asked for reduced motion.
-  useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let seen = true;
-    try { seen = sessionStorage.getItem('xcs-booted') === '1'; } catch { /* private mode */ }
-    if (!reduced && !seen) setBooted(false);
+  // visitor has asked for reduced motion. The head script in
+  // layout.tsx already decided and hid the body; this layout effect
+  // mounts the boot screen before first paint, then reveals.
+  useIsomorphicLayoutEffect(() => {
+    const root = document.documentElement;
+    if (root.dataset.boot) setBooted(false);
+    delete root.dataset.boot;
   }, []);
 
   // ─── Animation. Wrapped in matchMedia so the reduced-motion
@@ -406,28 +370,81 @@ export default function Home() {
           });
         }
 
-        // Hero entrance is CSS (.enter in globals.css). gsap.from()
-        // here caused a flash: useEffect runs after first paint, so
-        // the hero painted visible, then snapped to opacity 0.
+        // Hero entrance is CSS (.enter in globals.css) and the headline
+        // is a [data-split] reveal (lib/motion.ts). gsap.from() here
+        // caused a flash: useEffect runs after first paint, so the
+        // hero painted visible, then snapped to opacity 0.
+      });
 
-        if (heroRef.current) {
-          gsap.to('.hero-content', {
-            y: -80,
-            opacity: 0,
-            ease: 'none',
-            scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: true },
-          });
-        }
-
-        gsap.utils.toArray<Element>('.reveal').forEach((el) => {
-          gsap.from(el, {
-            y: 40,
-            opacity: 0,
-            duration: 0.7,
-            ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-          });
+      // Always-on drift for the feed, faster while the page is scrolling.
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        const drift = gsap.utils.toArray<HTMLElement>('.hs-track').map((track, i) => {
+          const down = i % 2 === 0;
+          return gsap.fromTo(
+            track,
+            { yPercent: down ? -25 : 0 },
+            { yPercent: down ? 0 : -25, duration: 46 + i * 7, ease: 'none', repeat: -1 },
+          );
         });
+        const boost = { s: 1, to: 1 };
+        const apply = () => drift.forEach((d) => d.timeScale(boost.s));
+        const tick = () => {
+          boost.to += (1 - boost.to) * 0.06;
+          boost.s += (boost.to - boost.s) * 0.12;
+          apply();
+        };
+        gsap.ticker.add(tick);
+        ScrollTrigger.create({
+          start: 0,
+          end: 'max',
+          onUpdate: (self) => { boost.to = gsap.utils.clamp(1, 9, 1 + Math.abs(self.getVelocity()) / 350); },
+        });
+        return () => gsap.ticker.remove(tick);
+      });
+
+      // Mobile: no pin (it fights the browser chrome). The feed flattens as the hero
+      // scrolls through, and the unit count rises at the bottom.
+      mm.add('(max-width: 1023px) and (prefers-reduced-motion: no-preference)', () => {
+        if (!heroRef.current) return;
+        const count = { n: 0 };
+        const counter = rootRef.current?.querySelector('.hw-count');
+        gsap.timeline({
+          scrollTrigger: { trigger: heroRef.current, start: 'top 15%', end: 'bottom bottom', scrub: 0.6 },
+        })
+          .to('.hs-tilt', { rotateY: -6, rotateZ: -3, scale: 1.05, ease: 'none', duration: 1 }, 0)
+          // Reveal, as on desktop: the columns rise into place, then the copy gives way and the scrim clears.
+          .fromTo('.hs-col', { yPercent: 14, opacity: 0.2 }, { yPercent: 0, opacity: 1, ease: 'none', duration: 0.5, stagger: 0.06 }, 0)
+          .to('.hero-copy > *, .hero-visual', { autoAlpha: 0.12, y: -40, ease: 'none', duration: 0.3 }, 0.55)
+          .to('.hs-scrim', { opacity: 0, ease: 'none', duration: 0.4 }, 0.5)
+          .to(count, { n: 144, ease: 'none', duration: 0.5, onUpdate: () => { if (counter) counter.textContent = String(Math.round(count.n)); } }, 0.5)
+          .fromTo('.hw-caption', { opacity: 0 }, { opacity: 1, ease: 'none', duration: 0.25 }, 0.5);
+      });
+
+      // Pinned scene: the copy and device give way to the full feed,
+      // flattening and filling the screen, then the page carries on.
+      // Desktop only; small screens keep the plain hero.
+      mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+        if (!heroRef.current) return;
+        const count = { n: 0 };
+        const counter = rootRef.current?.querySelector('.hw-count');
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: 'top 64px',
+            end: '+=150%',
+            pin: true,
+            scrub: 0.8,
+            anticipatePin: 1,
+          },
+        })
+          .to('.hero-copy', { autoAlpha: 0, x: -80, duration: 0.3, ease: 'power3.in' }, 0)
+          .to('.hero-visual', { scale: 0.82, autoAlpha: 0, duration: 0.35, ease: 'power3.in' }, 0)
+          .to('.hs-scrim', { opacity: 0, duration: 0.5, ease: 'power2.inOut' }, 0.1)
+          .to('.hs-tilt', { rotateY: -4, rotateZ: -2, scale: 1.02, duration: 0.8, ease: 'power2.inOut' }, 0)
+          .to(count, { n: 144, duration: 0.7, ease: 'power2.out', onUpdate: () => { if (counter) counter.textContent = String(Math.round(count.n)); } }, 0.3)
+          .to('.hw-caption', { opacity: 1, duration: 0.25, ease: 'power2.out' }, 0.65)
+          .fromTo('.hw-caption > div', { y: 40, scale: 0.94 }, { y: 0, scale: 1, duration: 0.3, ease: 'power3.out' }, 0.65)
+          .to({}, { duration: 0.25 });
       });
 
       return () => mm.revert();
@@ -436,14 +453,10 @@ export default function Home() {
     return () => ctx.revert();
   }, [booted]);
 
+  useScrollReveal(rootRef, booted);
+
   const goTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({
-      top: el.getBoundingClientRect().top + window.scrollY - 80,
-      behavior: reduced ? 'auto' : 'smooth',
-    });
+    scrollToId(id);
     setMenuOpen(false);
   };
 
@@ -470,9 +483,8 @@ export default function Home() {
       {/* ─── NAV ─── */}
       <nav className="fixed inset-x-0 top-0 z-50 border-b border-line bg-ink-800/90 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
-          <button onClick={() => goTo('top')} className="flex items-center gap-3 text-fg">
-            <AnimatedLogo size={24} />
-            <span className="terminal text-h3 font-bold">x-code.studio</span>
+          <button onClick={() => goTo('top')} aria-label="x-code.studio, back to top">
+            <Wordmark />
           </button>
 
           <div className="hidden items-center gap-6 md:flex">
@@ -522,47 +534,50 @@ export default function Home() {
         <section
           ref={heroRef}
           id="top"
-          className="relative flex min-h-[88vh] items-center overflow-hidden border-b border-line"
+          className="relative flex min-h-[calc(100svh-4rem)] items-center overflow-hidden border-b border-line"
         >
-          <MatrixRain />
+          <div className="hero-aurora z-0" aria-hidden="true" />
+          <HeroFeed />
           <div className="absolute inset-0 z-[1] grid-bg" aria-hidden="true" />
 
-          <div className="hero-content relative z-10 mx-auto grid w-full max-w-6xl gap-14 px-5 sm:px-8 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-16">
-            <div>
-              <p className="enter enter-1 terminal mb-6 inline-block border border-neon/50 px-3 py-1 text-label uppercase tracking-label text-neon">
+          <div className="hero-content relative z-10 mx-auto grid w-full max-w-7xl gap-10 px-5 max-lg:gap-6 max-lg:pb-[85svh] max-lg:pt-10 sm:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-8">
+            <div className="hero-copy max-lg:contents">
+              <p className="enter enter-1 terminal mb-6 inline-block w-fit border border-neon/50 px-3 py-1 max-lg:order-1 max-lg:mb-0 text-label uppercase tracking-label text-neon">
                 Ad-tech production tooling
               </p>
 
-              <h1 className="enter enter-2 text-h1 font-bold tracking-hero text-fg md:text-display">
+              <h1 data-split className="text-[clamp(1.75rem,8.6vw,2.5rem)] font-bold leading-[1.1] tracking-hero text-fg max-lg:order-2 md:text-display">
                 Build it once.
                 <br />
                 Ship it{' '}
                 <span className="text-neon neon-glow-strong">everywhere</span>.
               </h1>
 
-              <p className="enter enter-3 mt-6 max-w-xl text-body text-fg-muted md:text-h3">
+              <p className="enter enter-3 mt-6 max-w-xl text-body text-fg-muted max-lg:order-4 max-lg:mt-0 md:text-h3">
                 I build the pipelines that turn one master creative into every size and
                 every market, then teach your team to run them. Eighteen years shipping
                 campaigns for BMW, Google and Huawei at Monks.
               </p>
 
-              <div className="enter enter-4 mt-10 flex flex-col gap-4 sm:flex-row">
-                <Button onClick={() => goTo('cost')} size="lg">
-                  See what manual production costs you
+              <div className="enter enter-4 mt-10 flex flex-col gap-4 max-lg:order-5 max-lg:mt-2 sm:flex-row sm:flex-wrap">
+                <Button onClick={() => goTo('cost')} size="lg" className="sm:whitespace-nowrap">
+                  See what manual work costs
                 </Button>
-                <Button onClick={() => goTo('work')} variant="secondary" size="lg">
+                <Button onClick={() => goTo('work')} variant="secondary" size="lg" className="sm:whitespace-nowrap">
                   See the work
                 </Button>
               </div>
             </div>
 
-            <div className="enter enter-5 lg:justify-self-end">
-              <MultiplyGrid />
+            <div className="hero-visual w-full max-lg:order-3">
+              <div className="enter enter-5">
+                <AdaptiveStage />
+              </div>
             </div>
           </div>
 
           <div
-            className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center text-fg-subtle"
+            className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center text-fg-subtle max-lg:hidden"
             aria-hidden="true"
           >
             <span className="mb-2 text-label uppercase tracking-label">Scroll</span>
@@ -572,7 +587,7 @@ export default function Home() {
 
         {/* ─── COST ─── */}
         <Section id="cost" tone="raised">
-          <div className="reveal">
+          <div className="contents">
             <SectionHeading
               eyebrow="Start here"
               lede="Agencies lose most of their production margin in the versioning phase, and almost nobody measures it."
@@ -585,14 +600,14 @@ export default function Home() {
 
         {/* ─── PROOF ─── */}
         <Section id="proof">
-          <div className="reveal">
+          <div className="contents">
             <SectionHeading lede="Four colleagues from Monks, quoted from LinkedIn.">
               What the people I built this with say
             </SectionHeading>
 
             <ul className="grid gap-6 md:grid-cols-2">
-              {TESTIMONIALS.map((t) => (
-                <li key={t.name}>
+              {TESTIMONIALS.map((t, i) => (
+                <li key={t.name} data-reveal-item={i % 2 ? 'right' : 'left'}>
                   <Card interactive>
                     <Linkedin size={16} className="absolute right-5 top-5 text-signal" aria-hidden="true" />
                     <blockquote className="pr-8 text-small leading-relaxed text-fg-muted">
@@ -619,14 +634,14 @@ export default function Home() {
 
         {/* ─── TIERS ─── */}
         <Section id="toolbox" tone="raised">
-          <div className="reveal">
+          <div className="contents">
             <SectionHeading lede="One promise underneath all three: manual ad production becomes an automated pipeline, and your team can run it without me.">
               Three ways to work with this
             </SectionHeading>
 
             <ul className="grid gap-6 md:grid-cols-3">
               {TIERS.map((tier) => (
-                <li key={tier.id}>
+                <li key={tier.id} data-reveal-item="scale">
                   <Card highlighted={tier.highlighted} interactive={!tier.highlighted}>
                     {tier.status && (
                       <span className="absolute right-0 top-0 bg-signal px-2 py-0.5 text-label font-bold uppercase tracking-label text-ink-800">
@@ -671,14 +686,14 @@ export default function Home() {
 
         {/* ─── WORK ─── */}
         <Section id="work">
-          <div className="reveal">
+          <div className="contents">
             <SectionHeading lede="Four campaigns, delivered as part of the team at Monks. The pipelines I build now came out of this work.">
               The work behind it
             </SectionHeading>
 
             <ul className="space-y-6">
               {CASES.map((c) => (
-                <li key={c.slug} data-accent={c.accent}>
+                <li key={c.slug} data-accent={c.accent} data-reveal-item>
                   <Link href={`/cases/${c.slug}`} className="group block">
                     <Card interactive className="md:flex-row md:items-center md:gap-10">
                       <div className="md:flex-1">
@@ -721,7 +736,7 @@ export default function Home() {
 
         {/* ─── CONTACT ─── */}
         <Section id="contact" tone="raised" width="prose">
-          <div className="reveal">
+          <div className="contents">
             {state.succeeded ? (
               <div className="rounded-card border border-neon/40 bg-neon/5 p-10 text-center">
                 <CheckCircle size={48} className="mx-auto mb-4 text-neon" aria-hidden="true" />
@@ -816,9 +831,8 @@ export default function Home() {
           <div className="mx-auto max-w-6xl px-5 sm:px-8">
             <div className="mb-12 grid gap-12 md:grid-cols-2">
               <div>
-                <div className="mb-5 flex items-center gap-3 text-fg">
-                  <AnimatedLogo size={28} />
-                  <span className="terminal text-h2 font-bold">x-code.studio</span>
+                <div className="mb-5">
+                  <Wordmark />
                 </div>
                 <p className="max-w-md text-small text-fg-muted">
                   Ad-tech production tooling. I turn manual ad production into automated
