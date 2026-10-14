@@ -1,9 +1,11 @@
 'use client';
 
+import { useRef } from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading, Card } from '@/components/ui/Section';
+import { useScrollReveal } from '@/lib/motion';
 import { CountUpStat } from '@/components/case/CountUpStat';
 import { BannerWall } from '@/components/case/BannerWall';
 import { BMW_BANNERS, BANNER_ORIGIN } from '@/lib/bmw-banners';
@@ -28,8 +30,11 @@ import { BMW_BANNERS, BANNER_ORIGIN } from '@/lib/bmw-banners';
  */
 
 export default function BmwMiniCase() {
+  const rootRef = useRef<HTMLElement>(null);
+  useScrollReveal(rootRef);
+
   return (
-    <main data-accent="bmw" className="bg-ink-800">
+    <main ref={rootRef} data-accent="bmw" className="bg-ink-800">
       {/* ─── HERO ─── */}
       <section className="relative flex min-h-[85vh] items-end overflow-hidden border-b border-line">
         <BannerWall
@@ -47,7 +52,7 @@ export default function BmwMiniCase() {
             case / bmw-mini
           </Link>
 
-          <h1 className="max-w-4xl text-h1 font-bold tracking-hero text-fg md:text-display">
+          <h1 data-split className="max-w-4xl text-h1 font-bold tracking-hero text-fg md:text-display">
             One master build, 27 markets.
           </h1>
 

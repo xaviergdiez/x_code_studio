@@ -145,7 +145,6 @@ body {
     scroll-behavior: auto !important;
   }
   .crt-overlay,
-  .matrix-canvas,
   .noise-overlay::before {
     display: none;
   }
@@ -166,12 +165,15 @@ body {
      </h2>
    The prompt glyph is decorative and hidden from AT. */
 .terminal-heading {
-  font-family: var(--font-mono);
+  /* Sans, per the house style: the mono face belongs to the wordmark, hero eyebrow, boot and code.
+     (Geist was silently not loading, so headings have always rendered sans; this keeps that look.) */
+  font-family: var(--font-sans);
   letter-spacing: -0.01em;
 }
 
 .terminal-heading .prompt {
   color: var(--color-neon);
+  font-family: var(--font-mono);
 }
 
 /* ---- CRT SCANLINE OVERLAY ---- */
@@ -199,6 +201,9 @@ body {
 }
 
 /* ---- BOOT SEQUENCE ---- */
+/* Set by the head script in layout.tsx; Home clears it once the boot screen is mounted. */
+html[data-boot] { background: var(--color-ink-900); }
+html[data-boot] body { visibility: hidden; }
 .boot-screen {
   position: fixed;
   inset: 0;
@@ -244,15 +249,6 @@ body {
     inset 0 0 5px rgba(0, 255, 65, 0.03);
 }
 
-/* ---- MATRIX RAIN CANVAS ---- */
-.matrix-canvas {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  opacity: 0.07;
-  pointer-events: none;
-}
-
 /* ---- SCROLL PROGRESS BAR ---- */
 .scroll-progress {
   position: fixed;
@@ -269,7 +265,7 @@ body {
 .magnetic-btn {
   position: relative;
   overflow: hidden;
-  transition: transform var(--duration-base) var(--ease-out-soft);
+  /* Transform is driven by GSAP (MotionProvider); a CSS transition would fight it. */
 }
 
 .magnetic-btn::before {
@@ -428,27 +424,16 @@ input[type="range"]::-moz-range-thumb {
 
 /* ============================================================
    MULTIPLY GRID
-   The hero visual: one master unit becoming many.
-   Cells fade up in sequence, then hold. Delay is set per cell
-   inline, since the count is data-driven.
+   GSAP drives the loop (AdaptiveStage and the pinned scene in app/page.tsx). GSAP
+   runs after first paint, so the dimmed starting state lives here:
+   cells never paint fully lit and then drop. Under reduced motion
+   the rules do not apply and the finished grid shows still.
    ============================================================ */
-.cell {
-  opacity: 0;
-}
+.mg-hot { opacity: 0.3; }
 
 @media (prefers-reduced-motion: no-preference) {
-  .cell {
-    animation: cell-in 0.5s ease-out forwards;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cell { opacity: 1; }
-}
-
-@keyframes cell-in {
-  from { opacity: 0; transform: scale(0.92); }
-  to   { opacity: 1; transform: scale(1); }
+  .mg-cell { opacity: 0.25; }
+  .mg-hot { opacity: 0; }
 }
 
 /* ============================================================
@@ -460,3 +445,70 @@ input[type="range"]::-moz-range-thumb {
 [data-accent="gtech"]  { --color-accent: #8ab4f8; } /* 8.89:1 */
 [data-accent="fbto"]   { --color-accent: #ff8fab; } /* 8.71:1 */
 [data-accent="huawei"] { --color-accent: #ff9a6c; } /* 9.00:1 */
+
+
+/* ============================================================
+   SCROLL MOTION
+   [data-split] headings start hidden so the line reveal never
+   flashes (GSAP runs after paint). The failsafe animation un-hides
+   them after 2.5s if the script never ran. Under reduced motion
+   nothing is hidden at all.
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-split] {
+    visibility: hidden;
+    animation: split-failsafe 0s 2.5s forwards;
+  }
+}
+@keyframes split-failsafe { to { visibility: visible; } }
+
+/* ---- HERO BACKDROP: slow neon drift, replaces the matrix rain ---- */
+.hero-aurora {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(38% 38% at 72% 38%, rgba(0, 255, 65, 0.1), transparent 70%),
+    radial-gradient(30% 30% at 18% 82%, rgba(0, 255, 65, 0.06), transparent 70%);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-aurora { animation: aurora-drift 18s ease-in-out infinite alternate; }
+}
+@keyframes aurora-drift {
+  from { transform: translate3d(-3%, -2%, 0) scale(1); }
+  to   { transform: translate3d(3%, 2%, 0) scale(1.08); }
+}
+
+/* ---- HERO WALL: 144 units revealed by the pinned scroll scene ---- */
+
+/* ---- HERO FEED: perspective on the parent, start tilt here so the scrub never jumps ---- */
+.hs-feed { perspective: 1400px; }
+.hs-tilt { transform: rotateY(-18deg) rotateZ(-6deg) scale(1.15); transform-origin: 70% 50%; }
+.hs-col-down .hs-track { transform: translateY(-25%); } /* one of four copies; matches the GSAP loop */
+
+/* Scrim over the feed. Desktop: solid under the headline on the left, dimmed behind the device.
+   Mobile: solid under the copy at the top, fading out toward the device, with a dim pool behind it. */
+.hs-scrim {
+  background-image:
+    radial-gradient(ellipse 34% 52% at 71% 50%, color-mix(in srgb, var(--color-ink-800) 78%, transparent), transparent),
+    linear-gradient(90deg, var(--color-ink-800) 0%, var(--color-ink-800) 36%, transparent 70%),
+    linear-gradient(180deg, var(--color-ink-800) 0%, transparent 18%, transparent 82%, var(--color-ink-800) 100%);
+}
+@media (max-width: 1023px) {
+  /* Mobile order is headline, device, copy, then a full-bleed feed band (the bottom 85svh, padded in page.tsx).
+     The scrim covers only the text area: dim behind the device, solid behind the copy, feathering out into the band. */
+  .hs-scrim {
+    inset: 0 0 85svh 0;
+    background-image:
+      radial-gradient(ellipse 62% 14% at 50% 36%, color-mix(in srgb, var(--color-ink-800) 70%, transparent), transparent),
+      linear-gradient(180deg, var(--color-ink-800) 0%, var(--color-ink-800) 16%, color-mix(in srgb, var(--color-ink-800) 25%, transparent) 26%, color-mix(in srgb, var(--color-ink-800) 25%, transparent) 46%, var(--color-ink-800) 58%, var(--color-ink-800) 88%, transparent 100%);
+  }
+}
+
+
+
+/* ---- ADAPTIVE STAGE: hidden start states live in CSS (GSAP runs after paint) ---- */
+.as-ex-laptop, .as-ex-desk, .as-corner, .as-cursor, .as-click { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .as-outline, .as-fill, .as-ui, .as-dim, .as-ruler, .as-marker, .as-label { opacity: 0; }
+}

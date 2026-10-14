@@ -25,7 +25,7 @@ export function Section({
 
   return (
     <section id={id} className={`${bg} py-section border-b border-line ${className}`}>
-      <div className={`${measure} mx-auto px-5 sm:px-8`}>{children}</div>
+      <div className={`${measure} reveal mx-auto px-5 sm:px-8`}>{children}</div>
     </section>
   );
 }
@@ -54,11 +54,11 @@ export function SectionHeading({
   return (
     <header className="mb-12">
       {eyebrow && (
-        <p className="terminal text-label uppercase tracking-label text-signal mb-3">
+        <p className="text-label uppercase tracking-label text-signal mb-3">
           {eyebrow}
         </p>
       )}
-      <Tag className="terminal-heading text-h2 font-bold text-fg">
+      <Tag data-split className="terminal-heading text-h2 font-bold text-fg">
         <span className="prompt" aria-hidden="true">
           {'>'}_{' '}
         </span>

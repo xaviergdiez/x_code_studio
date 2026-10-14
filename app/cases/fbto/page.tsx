@@ -1,9 +1,12 @@
 'use client';
 
+import { useRef } from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading, Card } from '@/components/ui/Section';
+import { TimeInFrame } from '@/components/case/TimeInFrame';
+import { useScrollReveal } from '@/lib/motion';
 import { CountUpStat } from '@/components/case/CountUpStat';
 
 /**
@@ -22,8 +25,11 @@ import { CountUpStat } from '@/components/case/CountUpStat';
  */
 
 export default function FbtoCase() {
+  const rootRef = useRef<HTMLElement>(null);
+  useScrollReveal(rootRef);
+
   return (
-    <main data-accent="fbto" className="bg-ink-800">
+    <main ref={rootRef} data-accent="fbto" className="bg-ink-800">
       {/* ─── HERO ─── */}
       <section className="relative flex min-h-[70vh] items-end overflow-hidden border-b border-line bg-ink-900">
         <div className="absolute inset-0 grid-bg opacity-60" aria-hidden="true" />
@@ -36,10 +42,11 @@ export default function FbtoCase() {
           }}
         />
 
-        <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-16 sm:px-8">
+        <div className="relative z-10 mx-auto grid w-full max-w-6xl gap-12 px-5 pb-16 sm:px-8 lg:grid-cols-[1.3fr_1fr] lg:items-end">
+          <div>
           <Link
             href="/#work"
-            className="terminal mb-8 inline-flex items-center gap-2 text-label uppercase tracking-label text-fg-subtle hover:text-accent"
+            className="terminal mb-8 flex w-fit items-center gap-2 text-label uppercase tracking-label text-fg-subtle hover:text-accent"
           >
             <ArrowLeft size={12} aria-hidden="true" />
             case / fbto
@@ -49,7 +56,7 @@ export default function FbtoCase() {
             Weborama Campaign of the Year
           </p>
 
-          <h1 className="max-w-4xl text-h1 font-bold tracking-hero text-fg md:text-display">
+          <h1 data-split className="max-w-4xl text-h1 font-bold tracking-hero text-fg md:text-display">
             Twelve seconds inside an insurance ad.
           </h1>
 
@@ -57,6 +64,10 @@ export default function FbtoCase() {
             Rich media for FBTO in the Netherlands, built to explain a product
             nobody wants to read about. Delivered as part of the team at Monks.
           </p>
+          </div>
+          <div className="hidden lg:block">
+            <TimeInFrame />
+          </div>
         </div>
       </section>
 

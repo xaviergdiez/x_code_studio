@@ -1,9 +1,12 @@
 'use client';
 
+import { useRef } from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading, Card } from '@/components/ui/Section';
+import { RegionRelay } from '@/components/case/RegionRelay';
+import { useScrollReveal } from '@/lib/motion';
 import { CountUpStat } from '@/components/case/CountUpStat';
 
 /**
@@ -29,8 +32,11 @@ import { CountUpStat } from '@/components/case/CountUpStat';
  */
 
 export default function GtechCase() {
+  const rootRef = useRef<HTMLElement>(null);
+  useScrollReveal(rootRef);
+
   return (
-    <main data-accent="gtech" className="bg-ink-800">
+    <main ref={rootRef} data-accent="gtech" className="bg-ink-800">
       {/* ─── HERO ─── */}
       <section className="relative flex min-h-[70vh] items-end overflow-hidden border-b border-line bg-ink-900">
         <div className="absolute inset-0 grid-bg-dense opacity-40" aria-hidden="true" />
@@ -43,7 +49,8 @@ export default function GtechCase() {
           }}
         />
 
-        <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-16 sm:px-8">
+        <div className="relative z-10 mx-auto grid w-full max-w-6xl gap-12 px-5 pb-16 sm:px-8 lg:grid-cols-[1.3fr_1fr] lg:items-end">
+          <div>
           <Link
             href="/#work"
             className="terminal mb-8 inline-flex items-center gap-2 text-label uppercase tracking-label text-fg-subtle hover:text-accent"
@@ -52,7 +59,7 @@ export default function GtechCase() {
             case / google-gtech
           </Link>
 
-          <h1 className="max-w-4xl text-h1 font-bold tracking-hero text-fg md:text-display">
+          <h1 data-split className="max-w-4xl text-h1 font-bold tracking-hero text-fg md:text-display">
             Display delivery across three regions, one standard.
           </h1>
 
@@ -60,6 +67,10 @@ export default function GtechCase() {
             Leading the display team serving Google gTech across AMER, EMEA and
             APAC. Delivered as part of the team at Monks.
           </p>
+          </div>
+          <div className="hidden lg:block">
+            <RegionRelay />
+          </div>
         </div>
       </section>
 
