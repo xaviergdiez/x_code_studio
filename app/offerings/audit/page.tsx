@@ -171,7 +171,7 @@ export default function AuditPage() {
               },
               {
                 q: 'What if I need ongoing support?',
-                a: "After the audit you get a full implementation roadmap. If you need hands-on help executing it, book a Design System Rescue (€2,950) or a Team Workshop (€500) — both are available on the main page."
+                a: "After the audit you get a full implementation roadmap. If you need hands-on help executing it, book a Build Sprint (€2,950) or a Team Workshop (€500) — both are available on the main page."
               }
             ].map((item, i) => (
               <div key={i} className="border border-[#333] bg-[#1a1a1a] p-6">
