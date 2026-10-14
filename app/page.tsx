@@ -254,7 +254,7 @@ const TIERS = [
     body: 'One week, one deliverable. A working pipeline, a rebuilt design system, or a DCO setup, with documentation and handover.',
     includes: ['Working deliverable, not a deck', 'Full documentation', 'Your team owns the result'],
     cta: 'See what is included',
-    href: '/offerings/design-system',
+    href: '/offerings/sprint',
     status: null,
     highlighted: false,
   },
@@ -468,7 +468,7 @@ export default function Home() {
   ];
 
   return (
-    <div ref={rootRef} className="min-h-screen overflow-x-hidden bg-ink-800 text-fg-muted noise-overlay">
+    <div ref={rootRef} className={`min-h-screen overflow-x-hidden bg-ink-800 text-fg-muted noise-overlay${booted ? '' : ' booting'}`}>
       {!booted && <BootSequence onComplete={finishBoot} />}
       <div className="crt-overlay" aria-hidden="true" />
       <div ref={progressRef} className="scroll-progress w-full" aria-hidden="true" />

@@ -34,7 +34,7 @@ export default function SprintPage() {
               I block my calendar for 5 days. You get a dedicated technologist focused on one critical feature. Delivered Friday.
             </p>
             <div className="pt-4 flex items-center gap-4">
-              <div className="text-3xl font-bold text-[#00FF41]">€2,500</div>
+              <div className="text-3xl font-bold text-[#00FF41]">€2,950</div>
               <div className="text-gray-400">/week</div>
             </div>
           </div>
@@ -180,7 +180,7 @@ export default function SprintPage() {
               },
               {
                 q: 'What if I need the sprint to start Wednesday?',
-                a: 'Standard sprint is Mon-Fri. Wed-Sun sprint is €3,250 (weekend rates). Thu-Mon sprint is €3,000. Custom dates negotiable.'
+                a: 'Standard sprint is Mon-Fri. Wed-Sun sprint is €3,700 (weekend rates). Thu-Mon sprint is €3,450. Custom dates negotiable.'
               },
               {
                 q: 'Can I extend into the next week?',
@@ -203,7 +203,7 @@ export default function SprintPage() {
               href="/#contact"
               className="inline-block bg-[#00FF41] text-[#121212] font-bold px-8 py-4 hover:bg-[#00CC33] transition-colors uppercase tracking-wider"
             >
-              Book Your Sprint (€2,500)
+              Book Your Sprint (€2,950)
             </Link>
             <p className="text-gray-400 mt-6">Monday kickoff. Friday delivery. Guaranteed.</p>
           </div>

@@ -204,6 +204,8 @@ body {
 /* Set by the head script in layout.tsx; Home clears it once the boot screen is mounted. */
 html[data-boot] { background: var(--color-ink-900); }
 html[data-boot] body { visibility: hidden; }
+/* Boot running: nothing but the boot screen is visible, so nothing shows through as it fades. */
+.booting > :not(.boot-screen), .booting main { visibility: hidden; }
 .boot-screen {
   position: fixed;
   inset: 0;
@@ -410,6 +412,8 @@ input[type="range"]::-moz-range-thumb {
     opacity: 0;
     animation: enter-up 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   }
+  /* While the boot screen runs, hold every entrance so they start together once it lifts, not behind it. */
+  .booting .enter { animation: none; }
   .enter-1 { animation-delay: 0.05s; }
   .enter-2 { animation-delay: 0.15s; }
   .enter-3 { animation-delay: 0.25s; }
