@@ -186,15 +186,29 @@ export function BannerWall({
         ))}
       </div>
 
-      {/* Single scrim. The headline has to stay the brightest thing here. */}
+      {/* Scrim.
+          Earlier this was a flat ink-900/75 plus a radial on top, and
+          between them the ads were a dark smudge. The wall is the only
+          proof on the site that cannot be faked, so it has to be
+          legible; the headline stays readable by darkening only where
+          the headline actually sits rather than the whole frame.
+
+          The gradient is strong at the bottom left, under the copy,
+          and clears quickly across the rest of the wall. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-ink-900/75"
+        className="absolute inset-0"
         style={{
-          backgroundImage:
-            'radial-gradient(ellipse at 25% 85%, color-mix(in srgb, var(--color-ink-900) 92%, transparent) 0%, transparent 65%)',
+          backgroundImage: [
+            'linear-gradient(to top, color-mix(in srgb, var(--color-ink-900) 94%, transparent) 0%, color-mix(in srgb, var(--color-ink-900) 70%, transparent) 28%, transparent 62%)',
+            'linear-gradient(to right, color-mix(in srgb, var(--color-ink-900) 82%, transparent) 0%, transparent 55%)',
+          ].join(', '),
         }}
       />
+
+      {/* A light overall wash keeps the units from competing with the
+          headline without hiding them. */}
+      <div aria-hidden="true" className="absolute inset-0 bg-ink-900/25" />
 
       <p className="sr-only">{label}</p>
     </div>

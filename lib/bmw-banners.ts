@@ -12,7 +12,20 @@ import type { Banner } from '@/components/case/BannerWall';
  * BANNER_ORIGIN below is the one place that decides where they come
  * from. Point it at a CDN, a blob store, or an assets subdomain.
  */
-export const BANNER_ORIGIN = 'https://whoisxavier.com';
+/**
+ * Where the running ad units are served from.
+ *
+ * Still whoisxavier.com by default, which means this site depends on
+ * a domain that was earmarked for retirement. Moving the assets is
+ * now a deploy-time change rather than a code change: set
+ * NEXT_PUBLIC_BANNER_ORIGIN in Vercel (an assets subdomain, a blob
+ * store, a CDN) and nothing here needs editing.
+ *
+ * Before retiring whoisxavier.com, move the assets and set that
+ * variable, or the BMW hero goes blank.
+ */
+export const BANNER_ORIGIN =
+  process.env.NEXT_PUBLIC_BANNER_ORIGIN?.replace(/\/$/, '') || 'https://whoisxavier.com';
 
 export const BMW_BANNERS: Banner[] = [
   { name: "F65", width: 300, height: 600, path: "iframes/F65_300x600/index.html" },

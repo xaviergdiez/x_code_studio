@@ -269,6 +269,18 @@ const TESTIMONIALS = [
 
 const CASES = [
   {
+    slug: 'sef',
+    client: 'STANLEY Engineered Fastening',
+    accent: 'sef',
+    headline: 'Eight brands, one ad template',
+    body: 'A Figma library where the brand is a dropdown rather than a copy of the file. Their content studio now builds every campaign from it without me.',
+    figures: [
+      { value: '120', label: 'Variants in one component' },
+      { value: '8', label: 'Brands carried' },
+      { value: '3', label: 'Platform families' },
+    ],
+  },
+  {
     slug: 'bmw-mini',
     client: 'BMW / MINI',
     accent: 'bmw',
@@ -423,6 +435,15 @@ export default function Home() {
       // Pinned scene: the copy and device give way to the full feed,
       // flattening and filling the screen, then the page carries on.
       // Desktop only; small screens keep the plain hero.
+      //
+      // Pin length is a budget, not a free parameter. At +=150% the
+      // hero plus pin ran to 2.4 viewports, so the first substantive
+      // line on the page sat 2,070px down and a visitor had to scroll
+      // through two and a half screens of animation to reach it. That
+      // is the boot-sequence mistake in a prettier form.
+      //
+      // At +=70% the whole choreography still plays, just tighter,
+      // and the calculator arrives about a screen sooner.
       mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
         if (!heroRef.current) return;
         const count = { n: 0 };
@@ -431,7 +452,7 @@ export default function Home() {
           scrollTrigger: {
             trigger: heroRef.current,
             start: 'top 64px',
-            end: '+=150%',
+            end: '+=70%',
             pin: true,
             scrub: 0.8,
             anticipatePin: 1,
@@ -443,8 +464,7 @@ export default function Home() {
           .to('.hs-tilt', { rotateY: -4, rotateZ: -2, scale: 1.02, duration: 0.8, ease: 'power2.inOut' }, 0)
           .to(count, { n: 144, duration: 0.7, ease: 'power2.out', onUpdate: () => { if (counter) counter.textContent = String(Math.round(count.n)); } }, 0.3)
           .to('.hw-caption', { opacity: 1, duration: 0.25, ease: 'power2.out' }, 0.65)
-          .fromTo('.hw-caption > div', { y: 40, scale: 0.94 }, { y: 0, scale: 1, duration: 0.3, ease: 'power3.out' }, 0.65)
-          .to({}, { duration: 0.25 });
+          .fromTo('.hw-caption > div', { y: 40, scale: 0.94 }, { y: 0, scale: 1, duration: 0.3, ease: 'power3.out' }, 0.65);
       });
 
       return () => mm.revert();
@@ -687,7 +707,7 @@ export default function Home() {
         {/* ─── WORK ─── */}
         <Section id="work">
           <div className="contents">
-            <SectionHeading lede="Four campaigns, delivered as part of the team at Monks. The pipelines I build now came out of this work.">
+            <SectionHeading lede="Recent work as x-code.studio, and the campaigns behind it, delivered as part of the team at Monks.">
               The work behind it
             </SectionHeading>
 
