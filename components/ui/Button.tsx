@@ -31,7 +31,7 @@ const base =
 
 const variants: Record<Variant, string> = {
   primary:
-    'magnetic-btn bg-neon text-on-neon hover:bg-neon-dim neon-box-glow',
+    'btn-primary magnetic-btn bg-neon text-on-neon hover:bg-neon-dim neon-box-glow',
   secondary:
     'magnetic-btn bg-ink-600 text-fg border border-line-strong hover:border-neon',
   ghost:

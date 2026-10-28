@@ -53,8 +53,12 @@ export function SectionHeading({
 }) {
   return (
     <header className="mb-12">
+      {/* text-eyebrow defaults to signal, so pages without an accent
+          keep their blue labels, and an accented case page points it
+          at that accent. The eyebrow used to be fixed blue, which on
+          the yellow SEF page fought every section it headed. */}
       {eyebrow && (
-        <p className="text-label uppercase tracking-label text-signal mb-3">
+        <p className="text-label uppercase tracking-label text-eyebrow mb-3">
           {eyebrow}
         </p>
       )}
@@ -65,7 +69,7 @@ export function SectionHeading({
         {children}
       </Tag>
       {lede && <p className="mt-4 max-w-2xl text-body text-fg-muted">{lede}</p>}
-      <div className="mt-6 h-px w-16 bg-neon/60" />
+      <div className="mt-6 h-px w-16 bg-accent/60" />
     </header>
   );
 }

@@ -94,19 +94,24 @@ export function ThemeMatrix() {
             </span>
 
             <div>
+              {/* Placeholder copy, deliberately. The real campaign
+                  headlines are SEF's, and the template's own rule is
+                  that each field has a character limit, so showing the
+                  limit demonstrates the system better than borrowing
+                  their words would. */}
               <p
                 className="text-h3 font-bold leading-tight transition-colors duration-500"
                 style={{ color: ink }}
               >
-                Hold the joint.
+                Headline sits here,
                 <br />
-                Lose the weight.
+                up to 35 characters
               </p>
               <span
                 className="mt-4 inline-block px-3 py-1.5 text-label font-bold transition-colors duration-500"
                 style={{ background: ctaBg, color: ctaInk }}
               >
-                See the data
+                Call to action
               </span>
             </div>
           </div>
