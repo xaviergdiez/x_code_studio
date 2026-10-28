@@ -60,6 +60,10 @@
      the rest of the site. */
   --color-accent: var(--color-neon);
 
+  /* Section eyebrows. Defaults to signal so the homepage keeps its
+     blue labels; an accented case page points it at that accent. */
+  --color-eyebrow: var(--color-signal);
+
   /* ---------- TYPE ---------- */
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), 'SF Mono', 'Fira Code', monospace;
@@ -172,7 +176,10 @@ body {
 }
 
 .terminal-heading .prompt {
-  color: var(--color-neon);
+  /* accent, not neon, so the glyph belongs to the page it heads.
+     Off an accented page the accent resolves to neon anyway, so the
+     homepage is unchanged. */
+  color: var(--color-accent);
   font-family: var(--font-mono);
 }
 
@@ -445,6 +452,25 @@ input[type="range"]::-moz-range-thumb {
    Usage: <main data-accent="bmw"> ... </main>
    Verified contrast on ink-800 noted per value.
    ============================================================ */
+/* On an accented page the primary action takes that page's accent
+   instead of the site neon. Without this a yellow SEF page ends on a
+   bright green button, and the per-case accent stops at the
+   decoration while the one element that matters ignores it.
+
+   Every accent is a light hue (all measure above 8.7:1 on ink-800),
+   so ink text on an accent fill is safe across all five. */
+[data-accent] { --color-eyebrow: var(--color-accent); }
+
+[data-accent] .btn-primary {
+  background: var(--color-accent);
+  color: var(--color-ink-800);
+  box-shadow: none;
+}
+
+[data-accent] .btn-primary:hover {
+  background: color-mix(in srgb, var(--color-accent) 85%, var(--color-ink-800));
+}
+
 [data-accent="sef"]    { --color-accent: #ffdf00; } /* 14.10:1 */
 [data-accent="bmw"]    { --color-accent: #6cb6ff; } /* 8.72:1 */
 [data-accent="gtech"]  { --color-accent: #8ab4f8; } /* 8.89:1 */

@@ -33,7 +33,11 @@ export default function SefCase() {
   return (
     <main data-accent="sef" className="bg-ink-800">
       {/* ─── HERO ─── */}
-      <section className="relative flex min-h-[70vh] items-end overflow-hidden border-b border-line bg-ink-900">
+      {/* 70vh left a large empty field above the copy, because unlike
+          the BMW hero there is no wall of running units to fill it.
+          56vh keeps the hero feeling like a hero without the dead
+          space. */}
+      <section className="relative flex min-h-[56vh] items-end overflow-hidden border-b border-line bg-ink-900">
         <div className="absolute inset-0 grid-bg opacity-50" aria-hidden="true" />
         <div
           className="absolute inset-0"
@@ -45,17 +49,21 @@ export default function SefCase() {
         />
 
         <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-16 sm:px-8">
-          <Link
-            href="/#work"
-            className="terminal mb-8 inline-flex items-center gap-2 text-label uppercase tracking-label text-fg-subtle hover:text-accent"
-          >
-            <ArrowLeft size={12} aria-hidden="true" />
-            case / stanley-engineered-fastening
-          </Link>
-
-          <p className="mb-4 inline-block rounded-card border border-accent/50 px-3 py-1 text-label uppercase tracking-label text-accent">
-            2026
-          </p>
+          {/* Breadcrumb and year on one deliberate row. Previously the
+              inline-block year badge simply flowed up against the end
+              of the breadcrumb and the two collided. */}
+          <div className="mb-8 flex flex-wrap items-center gap-4">
+            <Link
+              href="/#work"
+              className="terminal inline-flex items-center gap-2 text-label uppercase tracking-label text-fg-subtle hover:text-accent"
+            >
+              <ArrowLeft size={12} aria-hidden="true" />
+              case / stanley-engineered-fastening
+            </Link>
+            <span className="rounded-card border border-accent/50 px-3 py-1 text-label uppercase tracking-label text-accent">
+              2026
+            </span>
+          </div>
 
           <h1 className="max-w-4xl text-h1 font-bold tracking-hero text-fg md:text-display">
             Eight brands, one ad template.

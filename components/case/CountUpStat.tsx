@@ -60,12 +60,23 @@ export function CountUpStat({
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         const obj = { v: 0 };
-        setDisplay(format(0));
+        // The zero is set by onEnter, not here. Setting it up front
+        // meant that if the ScrollTrigger never fired (stat below the
+        // fold on a tall mobile page, a capture that never scrolls, a
+        // layout shift that moves the trigger past its start) the
+        // figure sat at 0 permanently and the page stated a wrong
+        // number. Now the true value renders until the count actually
+        // begins.
         gsap.to(obj, {
           v: value,
           duration: 1.4,
           ease: 'power2.out',
-          scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            once: true,
+            onEnter: () => setDisplay(format(0)),
+          },
           onUpdate: () => setDisplay(format(obj.v)),
           onComplete: () => setDisplay(null),
         });
