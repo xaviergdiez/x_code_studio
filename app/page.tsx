@@ -48,9 +48,6 @@ const BUSINESS = {
   city: 'Amsterdam, NL',
 };
 
-// Products have no checkout yet. Until they do, the toolbox
-// collects a waitlist rather than promising an instant download.
-const TOOLBOX_STATUS: 'waitlist' | 'live' = 'waitlist';
 
 // ═════════════════════════════════════════════════════════════════
 // ANIMATED LOGO
@@ -227,17 +224,6 @@ function CostEstimator() {
 // ═════════════════════════════════════════════════════════════════
 const TIERS = [
   {
-    id: 'tools',
-    name: 'Tools you download',
-    price: 'From €100',
-    body: 'Automation scripts, GSAP templates and DCO blueprints, packaged with setup docs. Buy once, use forever.',
-    includes: ['Banner automation kit', 'GSAP animation library', 'DCO implementation blueprint'],
-    cta: TOOLBOX_STATUS === 'waitlist' ? 'Join the waitlist' : 'Browse the toolbox',
-    href: TOOLBOX_STATUS === 'waitlist' ? '#contact' : '/toolbox',
-    status: TOOLBOX_STATUS === 'waitlist' ? 'In build' : null,
-    highlighted: false,
-  },
-  {
     id: 'audit',
     name: 'Workflow audit',
     price: priceLabel(PRICING.audit),
@@ -260,6 +246,36 @@ const TIERS = [
     includes: ['Working deliverable, not a deck', 'Full documentation', 'Your team owns the result'],
     cta: 'See what is included',
     href: '/offerings/sprint',
+    status: null,
+    highlighted: false,
+  },
+  {
+    id: 'tooling',
+    name: 'Pipeline tooling',
+    price: priceLabel(PRICING.tooling),
+    body: 'A Figma plugin, a build and preview pipeline, an automated delivery step. Built against your library and your delivery targets, then handed over with the source.',
+    includes: [
+      'Scoped to your workflow, not off a shelf',
+      'Source and documentation included',
+      `Optional tool care, ${priceLabel(PRICING.toolCare)}`,
+    ],
+    cta: 'See what is included',
+    href: '/offerings/tooling',
+    status: null,
+    highlighted: false,
+  },
+  {
+    id: 'system',
+    name: 'Ad system build',
+    price: priceLabel(PRICING.designSystem),
+    body: 'Tokens, components and templates in one Figma library, built feed-ready, so a campaign is a set of dropdowns rather than a folder of files.',
+    includes: [
+      'Library, feed spec and documentation',
+      'Hands-on workshop for your team',
+      'Phased, fixed price per phase',
+    ],
+    cta: 'See what is included',
+    href: '/offerings/design-system',
     status: null,
     highlighted: false,
   },
@@ -660,11 +676,11 @@ export default function Home() {
         {/* ─── TIERS ─── */}
         <Section id="toolbox" tone="raised">
           <div className="contents">
-            <SectionHeading lede="One promise underneath all three: manual ad production becomes an automated pipeline, and your team can run it without me.">
-              Three ways to work with this
+            <SectionHeading lede="One promise underneath all four: manual ad production becomes an automated pipeline, and your team can run it without me.">
+              Four ways to work with this
             </SectionHeading>
 
-            <ul className="grid gap-6 md:grid-cols-3">
+            <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {TIERS.map((tier) => (
                 <li key={tier.id} data-reveal-item="scale">
                   <Card highlighted={tier.highlighted} interactive={!tier.highlighted}>
@@ -698,14 +714,6 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-
-            {TOOLBOX_STATUS === 'waitlist' && (
-              <p className="mt-6 text-small text-fg-subtle">
-                The downloadable tools are still being packaged. Rather than take your money for
-                something I cannot deliver today, the button collects an email and you hear from me
-                when it ships.
-              </p>
-            )}
           </div>
         </Section>
 
@@ -820,7 +828,7 @@ export default function Home() {
                       className="w-full rounded-card border border-line-strong bg-ink-800 p-3 text-small text-fg focus:border-neon"
                     >
                       <option value="" disabled>Choose one</option>
-                      <option value="waitlist">Tell me when the tools launch</option>
+                      <option value="tooling">A tool for my pipeline ({priceLabel(PRICING.tooling)})</option>
                       <option value="audit">A workflow audit ({PRICING.audit.label})</option>
                       <option value="sprint">A build sprint ({PRICING.sprint.label})</option>
                       <option value="design-system">A design system build ({priceLabel(PRICING.designSystem)})</option>

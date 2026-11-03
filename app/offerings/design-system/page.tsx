@@ -1,350 +1,308 @@
 'use client';
 
-import { ArrowLeft, CheckCircle, Figma, Code, Zap, Palette, Database } from 'lucide-react';
 import Link from 'next/link';
-import { PRICING, UPLIFTS, priceLabel } from '@/lib/pricing';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
+import { Section, SectionHeading, Card } from '@/components/ui/Section';
+import { PRICING, UPLIFTS, priceLabel, AUDIT_CREDIT_DAYS } from '@/lib/pricing';
 
-export default function DesignSystemPage() {
+/**
+ * Ad system build.
+ *
+ * This page used to sell something else. It described "bridging Figma
+ * and React, living style guides, atomic components to dark-mode
+ * architecture", which is a product design system for a web app. That
+ * is not the work: SEF was an ad production system, and the Fairphone
+ * pitch sells the same thing. The top-priced offer was describing a
+ * service the studio does not lead with, and the SEF case now links
+ * here, so the mismatch was about to be visible to a reader.
+ *
+ * Structure follows the four layers the pitch uses, because that is
+ * the actual mental model of the work: tokens carry brand, components
+ * carry the parts, templates carry the formats, and a campaign is one
+ * instance with dropdowns. Feed-readiness is in from the start, since
+ * retrofitting it is the expensive version.
+ *
+ * The route stays /offerings/design-system so existing links and the
+ * SEF case keep working. Renaming it to /offerings/ad-system would
+ * read better and needs a redirect, which is a separate decision.
+ */
+
+const LAYERS = [
+  {
+    n: '01',
+    name: 'Tokens',
+    body: 'Colour, type, spacing and logo sizing as variables, with a mode per product, language and partner. A brand is a mode, not a copy of the file.',
+  },
+  {
+    n: '02',
+    name: 'Components',
+    body: 'Headline block, CTA, price and offer tag, image slot, partner logo slot, legal line. Each one reusable and each one bound to the tokens.',
+  },
+  {
+    n: '03',
+    name: 'Templates',
+    body: 'Every format built from those components with Auto Layout, so safe zones, margins and copy limits hold at every size.',
+  },
+  {
+    n: '04',
+    name: 'Campaign',
+    body: 'One instance per campaign. Dropdowns switch product, language, partner and surface across every size at once.',
+  },
+];
+
+const FEED = [
+  { step: 'feed.csv', body: 'One row per variant: product, market, language, partner, copy, price, image.' },
+  { step: 'Bound layers', body: 'Every text and image layer named and mapped to a column.' },
+  { step: 'Variants', body: 'Rows times formats generated together, with the layout rules applied.' },
+  { step: 'Review', body: 'Designers check, adjust and export per channel.' },
+];
+
+const PHASES = [
+  {
+    n: '01',
+    name: 'Audit and foundations',
+    body: 'Review the current templates and guidelines, set up tokens and core components, ship the first template family so there is something working early.',
+  },
+  {
+    n: '02',
+    name: 'Templates and localisation',
+    body: 'The remaining format families, language and partner modes, and the campaign switcher.',
+  },
+  {
+    n: '03',
+    name: 'Feed scaling',
+    body: 'Feed specification, bound layers tested against a real campaign sheet, and the path to generated variants.',
+  },
+  {
+    n: '04',
+    name: 'Handoff',
+    body: 'In-file documentation, a step-by-step guide, a hands-on workshop and library publishing.',
+  },
+];
+
+const DELIVERABLES = [
+  ['Figma library', 'Tokens, components, templates and the campaign switcher, published to your team.'],
+  ['Feed specification', 'Column map, a sample feed and naming rules for every bound layer.'],
+  ['Documentation', 'In-file docs beside the templates, plus a step-by-step guide.'],
+  ['Training', 'A hands-on workshop for the people who will run it.'],
+  ['Maintenance rules', 'Who edits what, how to add a product, language or partner, how to publish.'],
+];
+
+export default function AdSystemOffering() {
   return (
-    <div className="min-h-screen bg-[#121212] text-[#E0E0E0] font-mono">
-      
-      {/* HEADER */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#121212]/95 border-b border-[#333] backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 hover:text-[#00FF41] transition-colors">
-            <ArrowLeft className="w-5 h-5" />
-            <span className="text-sm font-bold">BACK_TO_HOME</span>
+    <main className="bg-ink-800">
+      {/* ─── HERO ─── */}
+      <section className="relative flex min-h-[56vh] items-end overflow-hidden border-b border-line bg-ink-900">
+        <div className="absolute inset-0 grid-bg opacity-50" aria-hidden="true" />
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-16 sm:px-8">
+          <Link
+            href="/"
+            className="terminal mb-8 inline-flex items-center gap-2 text-label uppercase tracking-label text-fg-subtle hover:text-neon"
+          >
+            <ArrowLeft size={12} aria-hidden="true" />
+            offering / ad system
           </Link>
-          <div className="text-right">
-            <div className="text-sm text-[#007ACC]">DESIGN_SYS.config</div>
-          </div>
+
+          <h1 className="max-w-4xl text-h1 font-bold tracking-hero text-fg md:text-display">
+            An ad system your team runs without you.
+          </h1>
+
+          <p className="mt-6 max-w-2xl text-body text-fg-muted">
+            Tokens, components and templates in one Figma library, built feed-ready,
+            so a campaign is a set of dropdowns rather than a folder of files.
+          </p>
+
+          <p className="mt-8 text-h3 font-bold text-neon">
+            {priceLabel(PRICING.designSystem)}
+          </p>
+          <p className="mt-1 text-small text-fg-subtle">
+            Phase one, fixed price. The full programme is scoped after the audit.
+          </p>
         </div>
-      </header>
+      </section>
 
-      <main className="pt-16">
-        
-        {/* HERO */}
-        <section className="min-h-screen flex items-center justify-center relative border-b border-[#333] bg-[#1E1E1E]">
-          <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
-          
-          <div className="relative z-10 max-w-5xl mx-auto px-4 w-full">
-            <div className="space-y-8">
-              <div className="inline-block px-3 py-1 border border-[#00FF41] text-[#00FF41] text-xs uppercase tracking-widest">
-                DESIGN_SYS.config
-              </div>
-              
-              <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tighter leading-tight">
-                <span className="block">ARCHITECTING THE</span>
-                <span className="block text-[#00FF41]">SOURCE OF TRUTH</span>
-              </h1>
-              
-              <div className="max-w-2xl text-lg md:text-xl text-gray-400 leading-relaxed">
-                <span className="text-[#00FF41]">{'>'}</span> Bridging Figma and React. I build Living Style Guides and Token Systems that ensure the design intent survives the development process. From atomic components to dark-mode architecture.
-              </div>
+      {/* ─── WHO IT IS FOR ─── */}
+      <Section tone="raised" width="prose">
+        <SectionHeading eyebrow="Who it is for">
+          Teams whose asset count grows faster than the team
+        </SectionHeading>
+        <div className="space-y-5 text-body text-fg-muted">
+          <p>
+            Every campaign is products times languages times formats times partners.
+            Add a market and the work multiplies; add a channel and it multiplies
+            again. The design is not the bottleneck, the versioning is.
+          </p>
+          <p>
+            This is the fix: build the campaign once as a system, and let the data
+            vary instead of the files.
+          </p>
+        </div>
+      </Section>
 
-              <div className="pt-8">
-                <div className="inline-block px-6 py-3 bg-[#00FF41] text-[#121212] font-bold uppercase tracking-wider hover:bg-[#00CC33] transition-all">
-                  {priceLabel(PRICING.designSystem).toUpperCase()}
+      {/* ─── THE FOUR LAYERS ─── */}
+      <Section>
+        <SectionHeading
+          eyebrow="How it is built"
+          lede="Four layers, each built on the one below. Change a token or a component once and every template and campaign follows at the next library publish."
+        >
+          One system, four layers
+        </SectionHeading>
+
+        <ol className="grid gap-4 md:grid-cols-2">
+          {LAYERS.map((l) => (
+            <li key={l.n}>
+              <Card>
+                <p className="terminal text-label uppercase tracking-label text-signal">{l.n}</p>
+                <h3 className="mt-2 text-h3 font-bold text-fg">{l.name}</h3>
+                <p className="mt-2 text-small text-fg-muted">{l.body}</p>
+              </Card>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      {/* ─── FEED READY ─── */}
+      <Section tone="raised">
+        <SectionHeading
+          eyebrow="Feed-ready from day one"
+          lede="Built to be filled from a spreadsheet whether or not you start that way. Manual campaigns first, then filled from a sheet, then generated. No rebuild between steps."
+        >
+          From a row to every format
+        </SectionHeading>
+
+        <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {FEED.map((f, i) => (
+            <li key={f.step} className="relative">
+              <Card>
+                <p className="terminal text-label text-signal">
+                  {String(i + 1).padStart(2, '0')}
+                </p>
+                <h3 className="mt-2 text-h3 font-bold text-fg">{f.step}</h3>
+                <p className="mt-2 text-small text-fg-muted">{f.body}</p>
+              </Card>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      {/* ─── BEYOND DISPLAY ─── */}
+      <Section width="prose">
+        <SectionHeading eyebrow="Scope">
+          Display first, then the channels that share the same parts
+        </SectionHeading>
+        <div className="space-y-5 text-body text-fg-muted">
+          <p>
+            Display, Performance Max and LinkedIn come from the same master in phase
+            one, because they share the most structure. Social, motion and web run as
+            parallel tracks or follow-on phases once the foundation holds.
+          </p>
+          <p>
+            They are worth doing on the same tokens rather than separately: a new
+            colourway or a product launch then reaches ads, social and the site
+            together instead of three times.
+          </p>
+        </div>
+      </Section>
+
+      {/* ─── WHAT YOU GET ─── */}
+      <Section tone="raised">
+        <SectionHeading eyebrow="What you get">A system, not a folder</SectionHeading>
+        <dl className="grid gap-4 md:grid-cols-2">
+          {DELIVERABLES.map(([name, body]) => (
+            <div key={name}>
+              <Card>
+                <dt className="text-h3 font-bold text-fg">{name}</dt>
+                <dd className="mt-2 text-small text-fg-muted">{body}</dd>
+              </Card>
+            </div>
+          ))}
+        </dl>
+        <p className="mt-6 text-small text-fg-subtle">
+          The same package delivered for STANLEY Engineered Fastening: library, docs,
+          guide and team training.
+        </p>
+      </Section>
+
+      {/* ─── PHASES ─── */}
+      <Section>
+        <SectionHeading
+          eyebrow="How it runs"
+          lede="Four phases, with something usable at the end of the first. Timeline and fee for the later phases are scoped together once the audit is done."
+        >
+          Value from phase one
+        </SectionHeading>
+
+        <ol className="space-y-4">
+          {PHASES.map((p) => (
+            <li key={p.n}>
+              <Card className="md:flex-row md:gap-8">
+                <p className="terminal shrink-0 text-h2 font-bold text-signal md:w-16">{p.n}</p>
+                <div>
+                  <h3 className="text-h3 font-bold text-fg">{p.name}</h3>
+                  <p className="mt-2 text-small text-fg-muted">{p.body}</p>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
+              </Card>
+            </li>
+          ))}
+        </ol>
+      </Section>
 
-        {/* WHAT YOU GET */}
-        <section className="py-24 border-b border-[#333] bg-[#121212]">
-          <div className="max-w-5xl mx-auto px-4">
-            <div className="mb-16">
-              <h2 className="text-4xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> WHAT_YOU_GET</h2>
-              <p className="text-gray-400">Everything you need to scale design operations.</p>
-            </div>
-
-            <div className="space-y-6">
-              <FeatureBlock
-                icon={<Figma className="w-6 h-6 text-[#00FF41]" />}
-                title="FIGMA DESIGN SYSTEM"
-                desc="Complete atomic design methodology. Design Tokens, Figma Variables, responsive components at every scale (atoms → organisms). Light/dark mode pre-built."
-                keywords={["Atomic Design", "Design Tokens", "Figma Variables", "Component Library"]}
-              />
-
-              <FeatureBlock
-                icon={<Code className="w-6 h-6 text-[#00FF41]" />}
-                title="READY-TO-DEV HAND-OFF"
-                desc="Your developers receive documented, organized, production-ready component specs. No guesswork. No back-and-forth. Figma → React is seamless."
-                keywords={["Component Specs", "Figma Documentation", "Dev Handoff", "Component Inventory"]}
-              />
-
-              <FeatureBlock
-                icon={<Zap className="w-6 h-6 text-[#00FF41]" />}
-                title="ADVERTISING TEMPLATES"
-                desc="Ready-to-customize display ad frameworks. Covers Social Ads, Rich Media, HTML5, and DCO-enabled banner templates. Brand-consistent, performance-optimized."
-                keywords={["Display Ads", "Rich Media", "HTML5", "DCO Framework"]}
-              />
-
-              <FeatureBlock
-                icon={<Palette className="w-6 h-6 text-[#00FF41]" />}
-                title="UX/UI WEB DESIGN"
-                desc="Modern interface design for web applications. Accessibility-first, performance-optimized. From wireframes to hi-fi design system implementation."
-                keywords={["Web Design", "Accessibility (A11y)", "UI/UX", "Design Systems"]}
-              />
-
-              <FeatureBlock
-                icon={<Database className="w-6 h-6 text-[#00FF41]" />}
-                title="LANDING PAGE ANIMATIONS"
-                desc="Custom GSAP animations and interactions. Scrollytelling, micro-interactions, page transitions. High-fidelity motion that feels native."
-                keywords={["GSAP Animations", "Scrollytelling", "Micro-interactions", "Performance"]}
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* DELIVERABLES */}
-        <section className="py-24 border-b border-[#333] bg-[#1a1a1a]">
-          <div className="max-w-5xl mx-auto px-4">
-            <div className="mb-16">
-              <h2 className="text-4xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> DELIVERABLES</h2>
-              <p className="text-gray-400">Exactly what you&apos;ll receive.</p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="border border-[#333] bg-[#1E1E1E] p-8 rounded">
-                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-[#00FF41]" />
-                  Figma File
-                </h3>
-                <ul className="space-y-2 text-gray-400 text-sm">
-                  <li>{'>'} Atomic Design structure (atoms, molecules, organisms)</li>
-                  <li>{'>'} Design Tokens + Figma Variables</li>
-                  <li>{'>'} Light & Dark mode components</li>
-                  <li>{'>'} 50+ reusable components</li>
-                  <li>{'>'} Copy, specs, and usage guidelines</li>
-                </ul>
-              </div>
-
-              <div className="border border-[#333] bg-[#1E1E1E] p-8 rounded">
-                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-[#00FF41]" />
-                  Ad Templates
-                </h3>
-                <ul className="space-y-2 text-gray-400 text-sm">
-                  <li>{'>'} Social Media templates (16:9, Square, Stories)</li>
-                  <li>{'>'} Rich Media banner framework</li>
-                  <li>{'>'} HTML5 ad scaffold + GSAP animations</li>
-                  <li>{'>'} DCO-ready data feeds + placeholders</li>
-                  <li>{'>'} Performance optimized for all platforms</li>
-                </ul>
-              </div>
-
-              <div className="border border-[#333] bg-[#1E1E1E] p-8 rounded">
-                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-[#00FF41]" />
-                  Web Design
-                </h3>
-                <ul className="space-y-2 text-gray-400 text-sm">
-                  <li>{'>'} Marketing website design (6-8 pages)</li>
-                  <li>{'>'} Mobile-first responsive design</li>
-                  <li>{'>'} Interaction & animation specifications</li>
-                  <li>{'>'} Accessibility audit (WCAG 2.1 AA)</li>
-                  <li>{'>'} Design handoff documentation</li>
-                </ul>
-              </div>
-
-              <div className="border border-[#333] bg-[#1E1E1E] p-8 rounded">
-                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-[#00FF41]" />
-                  Development Assets
-                </h3>
-                <ul className="space-y-2 text-gray-400 text-sm">
-                  <li>{'>'} React component library scaffold</li>
-                  <li>{'>'} CSS/Tailwind tokens</li>
-                  <li>{'>'} GSAP animation code snippets</li>
-                  <li>{'>'} GitHub repository + documentation</li>
-                  <li>{'>'} Developer handoff guide</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* WHY THIS WORKS */}
-        <section className="py-24 border-b border-[#333] bg-[#121212]">
-          <div className="max-w-5xl mx-auto px-4">
-            <div className="mb-16">
-              <h2 className="text-4xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> WHY_THIS_WORKS</h2>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-white">FOR CTOS</h3>
-                <p className="text-gray-400 leading-relaxed">
-                  Design Systems solve scalability. Your team ships 10x faster because components are pre-built, tested, and documented. One source of truth means fewer bugs, cleaner code, and faster feature velocity.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-white">FOR CREATIVE DIRECTORS</h3>
-                <p className="text-gray-400 leading-relaxed">
-                  Consistency across all touchpoints. No more design drift. Every ad, every landing page, every email uses the same token system. Your brand integrity is protected by architecture.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-white">FOR AGENCIES</h3>
-                <p className="text-gray-400 leading-relaxed">
-                  This is the infrastructure your clients need but can&apos;t build themselves. You become the strategic partner, not the order-taker. Justify premium pricing because you&apos;re building systems, not banners.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-white">FOR DESIGNERS & DEVS</h3>
-                <p className="text-gray-400 leading-relaxed">
-                  A shared vocabulary. Designers work in Figma with tokens. Devs implement those exact tokens in code. No miscommunication. No rework. Collaboration becomes seamless.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* TIMELINE */}
-        <section className="py-24 border-b border-[#333] bg-[#1a1a1a]">
-          <div className="max-w-5xl mx-auto px-4">
-            <div className="mb-16">
-              <h2 className="text-4xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> PROJECT_TIMELINE</h2>
-              <p className="text-gray-400">Typical engagement: 6-8 weeks</p>
-            </div>
-
-            <div className="space-y-6">
-              <TimelineStep
-                week="WEEK 01-02"
-                title="DISCOVERY & AUDIT"
-                items={["Audit existing design & code", "Define token structure", "Plan atomic design hierarchy"]}
-              />
-              <TimelineStep
-                week="WEEK 03-04"
-                title="DESIGN SYSTEM FOUNDATION"
-                items={["Build Figma component library", "Define Design Tokens & Variables", "Create responsive component specs"]}
-              />
-              <TimelineStep
-                week="WEEK 05-06"
-                title="AD TEMPLATES & WEB DESIGN"
-                items={["Design display ad templates (Social, Rich Media, HTML5)", "Design web pages using system components", "Implement GSAP animations"]}
-              />
-              <TimelineStep
-                week="WEEK 07-08"
-                title="HANDOFF & DOCUMENTATION"
-                items={["Prepare Figma handoff specs", "Document component usage", "Create developer setup guide", "Final review & iteration"]}
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section className="py-24 border-b border-[#333] bg-[#121212]">
-          <div className="max-w-5xl mx-auto px-4">
-            <div className="mb-16">
-              <h2 className="text-4xl font-bold mb-4"><span className="text-[#00FF41]">{'>'}</span> FAQ</h2>
-            </div>
-
-            <div className="space-y-4">
-              <FAQItem
-                q="What if we already have a design system?"
-                a="I audit it, improve it, and scale it. Most existing systems lack proper tokenization or consistency. We&apos;ll enhance what you have and add the missing pieces."
-              />
-              <FAQItem
-                q="Can you include dev implementation?"
-                a="Yes. That&apos;s a separate engagement ({priceLabel(UPLIFTS.implementation)}). This package covers Figma + deliverables. You or your team implement the React components."
-              />
-              <FAQItem
-                q="Do you offer ongoing support?"
-                a={`After delivery, your team owns the system with full documentation. For future evolution you can book a follow-up workshop (${PRICING.workshop.label}) or another scoped project. No ongoing retainer needed.`}
-              />
-              <FAQItem
-                q="What design tool do you use?"
-                a="Figma exclusively. It&apos;s the industry standard for component systems, tokens, and handoff. Full integration with Figma Variables and documentation."
-              />
-              <FAQItem
-                q="Can we customize the timeline?"
-                a="Yes. If you need it faster, we can compress the timeline. If you need more polish, we can extend. Let&apos;s discuss your constraints."
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="py-24 bg-[#1E1E1E] border-t border-[#333]">
-          <div className="max-w-5xl mx-auto px-4 text-center">
-            <h2 className="text-4xl font-bold text-white mb-6">READY TO BUILD YOUR SYSTEM?</h2>
-            <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
-              Let&apos;s architect the infrastructure that scales your design operations.
-            </p>
-            <a 
-              href="mailto:hello@x-code.studio?subject=Design%20System%20Inquiry%20-%20DESIGN_SYS.config"
-              className="inline-block px-8 py-4 bg-[#00FF41] text-[#121212] font-bold uppercase tracking-wider hover:bg-[#00CC33] transition-all text-lg"
-            >
-              BOOK_CONSULTATION
-            </a>
-          </div>
-        </section>
-
-        {/* FOOTER */}
-        <footer className="bg-[#121212] border-t border-[#333] py-12">
-          <div className="max-w-7xl mx-auto px-4 flex justify-between text-sm text-gray-500">
-            <div>&copy; {new Date().getFullYear()} x-code.studio | Amsterdam, NL</div>
-            <a href="mailto:hello@x-code.studio" className="hover:text-[#00FF41]">hello@x-code.studio</a>
-          </div>
-        </footer>
-
-      </main>
-    </div>
-  );
-}
-
-function FeatureBlock({ icon, title, desc, keywords }: { icon: React.ReactNode; title: string; desc: string; keywords: string[] }) {
-  return (
-    <div className="border border-[#333] bg-[#1E1E1E] p-8 rounded hover:border-[#00FF41] transition-colors">
-      <div className="flex gap-4 mb-4">
-        <div className="p-2 bg-[#121212] rounded border border-[#333]">
-          {icon}
+      {/* ─── HOW IT IS PRICED ─── */}
+      <Section tone="raised" width="prose">
+        <SectionHeading eyebrow="Price">Fixed, per phase</SectionHeading>
+        <div className="space-y-5 text-body text-fg-muted">
+          <p>
+            Phase one is {priceLabel(PRICING.designSystem)}, fixed. Later phases are
+            quoted as their own fixed-price deliverables once the audit has shown the
+            real format count, language count and partner count.
+          </p>
+          <p>
+            Every engagement is scoped as a deliverable rather than availability. No
+            retainer, no hourly billing and no commitment to be on call, which keeps
+            the arrangement clean for both sides under Dutch contracting rules.
+          </p>
+          <p>
+            A {PRICING.audit.label} workflow audit is the usual way in, and its fee
+            comes off a build booked within {AUDIT_CREDIT_DAYS} days. Engineering the
+            system into a codebase is a separate engagement from{' '}
+            {UPLIFTS.implementation.label}.
+          </p>
         </div>
-        <h3 className="text-xl font-bold text-white flex items-center">{title}</h3>
-      </div>
-      <p className="text-gray-400 mb-4 leading-relaxed">{desc}</p>
-      <div className="flex flex-wrap gap-2">
-        {keywords.map((kw, i) => (
-          <span key={i} className="text-xs bg-[#121212] border border-[#333] text-gray-300 px-2 py-1 rounded">
-            {kw}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
+      </Section>
 
-function TimelineStep({ week, title, items }: { week: string; title: string; items: string[] }) {
-  return (
-    <div className="border-l-4 border-[#00FF41] pl-6 py-4">
-      <div className="text-[#00FF41] font-bold text-sm mb-2">{week}</div>
-      <h3 className="text-2xl font-bold text-white mb-3">{title}</h3>
-      <ul className="space-y-2 text-gray-400">
-        {items.map((item, i) => (
-          <li key={i} className="flex items-start gap-2">
-            <span className="text-[#00FF41] font-bold mr-2">{'>'}</span>
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+      {/* ─── PROOF ─── */}
+      <Section width="prose">
+        <SectionHeading eyebrow="Proof">Built for eight brands at once</SectionHeading>
+        <p className="mb-8 text-body text-fg-muted">
+          STANLEY Engineered Fastening runs eight brands across display, Performance
+          Max and LinkedIn from one component with 120 variants. Their content studio
+          builds every campaign from it.
+        </p>
+        <Link
+          href="/cases/sef"
+          className="inline-flex items-center gap-2 text-small font-bold text-neon hover:underline"
+        >
+          Read the SEF case
+          <ArrowRight size={14} aria-hidden="true" />
+        </Link>
+      </Section>
 
-function FAQItem({ q, a }: { q: string; a: string }) {
-  return (
-    <details className="border border-[#333] bg-[#1E1E1E] p-6 rounded hover:border-[#00FF41] transition-colors group cursor-pointer">
-      <summary className="font-bold text-white flex justify-between items-center">
-        <span>{q}</span>
-        <span className="text-[#00FF41] group-open:rotate-180 transition-transform">▼</span>
-      </summary>
-      <p className="text-gray-400 mt-4 leading-relaxed">{a}</p>
-    </details>
+      {/* ─── NEXT ─── */}
+      <Section tone="raised" width="prose">
+        <SectionHeading>Start with the audit</SectionHeading>
+        <p className="mb-8 text-body text-fg-muted">
+          One week inside your current process, a written report naming what the
+          versioning actually costs, and a scoped proposal for the build. The fee
+          comes off the build.
+        </p>
+        <div className="flex flex-col gap-4 sm:flex-row">
+          <Button href="/offerings/audit">See what the audit covers</Button>
+          <Button href="/#contact" variant="secondary">
+            Tell me what is broken
+          </Button>
+        </div>
+      </Section>
+    </main>
   );
 }

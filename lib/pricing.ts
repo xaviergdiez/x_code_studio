@@ -40,8 +40,8 @@ export type Price = {
   amount: number;
   /** Typical working days, used to sanity-check the implied rate. */
   days: number;
-  /** "fixed" prints as "€3,500 fixed"; "from" prints as "from €14,500". */
-  basis: 'fixed' | 'from';
+  /** "fixed" → "€3,500 fixed"; "from" → "from €14,500"; "annual" → "€4,800 a year". */
+  basis: 'fixed' | 'from' | 'annual';
 };
 
 const euro = (n: number) => `€${n.toLocaleString('en-GB')}`;
@@ -59,6 +59,24 @@ export const PRICING = {
   designSystem: price(14500, 18, 'from'),
   /** 2 days delivery plus preparation → ~€280/hr on delivery days */
   workshop: price(4500, 2),
+  /**
+   * A bespoke tool: a Figma plugin, a build and preview pipeline, an
+   * automated delivery step. Roughly 6 days → ~€156/hr.
+   */
+  tooling: price(7500, 6, 'from'),
+  /**
+   * Keeping a delivered tool working. Ad platform specs, the Figma
+   * plugin API and the Node ecosystem all move, so a tool built this
+   * year breaks next year. Priced at about a quarter of a build per
+   * year, which is the usual band for software maintenance.
+   *
+   * This is deliberately not a retainer. It buys a working tool, not
+   * availability: a result obligation, renewable and cancellable,
+   * with no commitment to be on call. That distinction is what keeps
+   * it clean under Dutch contracting rules, and it is the reason the
+   * site has no monthly retainer anywhere.
+   */
+  toolCare: price(4800, 0, 'annual'),
 } as const;
 
 /** Rush and out-of-hours uplifts, kept proportional to the base. */
@@ -82,9 +100,11 @@ export const UPLIFTS = {
  */
 export const AUDIT_CREDIT_DAYS = 60;
 
-/** "€3,500 fixed" or "from €14,500". */
+/** "€3,500 fixed", "from €14,500" or "€4,800 a year". */
 export function priceLabel(p: Price): string {
-  return p.basis === 'from' ? `from ${p.label}` : `${p.label} fixed`;
+  if (p.basis === 'from') return `from ${p.label}`;
+  if (p.basis === 'annual') return `${p.label} a year`;
+  return `${p.label} fixed`;
 }
 
 /** Implied hourly rate at 8h days, for internal sanity checks. */

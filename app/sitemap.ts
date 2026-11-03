@@ -13,6 +13,7 @@ const ROUTES: { path: string; priority: number; changeFrequency: MetadataRoute.S
   { path: '/', priority: 1, changeFrequency: 'monthly' },
   { path: '/offerings/audit', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/offerings/sprint', priority: 0.8, changeFrequency: 'monthly' },
+  { path: '/offerings/tooling', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/offerings/design-system', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/cases/sef', priority: 0.7, changeFrequency: 'yearly' },
   { path: '/cases/bmw-mini', priority: 0.7, changeFrequency: 'yearly' },
