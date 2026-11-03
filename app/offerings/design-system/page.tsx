@@ -12,16 +12,16 @@ import { PRICING, UPLIFTS, priceLabel, AUDIT_CREDIT_DAYS } from '@/lib/pricing';
  * This page used to sell something else. It described "bridging Figma
  * and React, living style guides, atomic components to dark-mode
  * architecture", which is a product design system for a web app. That
- * is not the work: SEF was an ad production system, and the Fairphone
- * pitch sells the same thing. The top-priced offer was describing a
- * service the studio does not lead with, and the SEF case now links
- * here, so the mismatch was about to be visible to a reader.
+ * is not the work: SEF was an ad production system, and so is what
+ * the studio pitches. The top-priced offer was describing a service
+ * the studio does not lead with, and the SEF case now links here, so
+ * the mismatch was about to be visible to a reader.
  *
- * Structure follows the four layers the pitch uses, because that is
- * the actual mental model of the work: tokens carry brand, components
- * carry the parts, templates carry the formats, and a campaign is one
- * instance with dropdowns. Feed-readiness is in from the start, since
- * retrofitting it is the expensive version.
+ * Structure follows the four layers used in client pitches, because
+ * that is the actual mental model of the work: tokens carry brand,
+ * components carry the parts, templates carry the formats, and a
+ * campaign is one instance with dropdowns. Feed-readiness is in from
+ * the start, since retrofitting it is the expensive version.
  *
  * The route stays /offerings/design-system so existing links and the
  * SEF case keep working. Renaming it to /offerings/ad-system would
