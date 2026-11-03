@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { PRICING, UPLIFTS } from '@/lib/pricing';
 import { ArrowLeft, CheckCircle, Calendar } from 'lucide-react';
 
 export default function SprintPage() {
@@ -34,7 +35,7 @@ export default function SprintPage() {
               I block my calendar for 5 days. You get a dedicated technologist focused on one critical feature. Delivered Friday.
             </p>
             <div className="pt-4 flex items-center gap-4">
-              <div className="text-3xl font-bold text-[#00FF41]">€2,950</div>
+              <div className="text-3xl font-bold text-[#00FF41]">{PRICING.sprint.label}</div>
               <div className="text-gray-400">/week</div>
             </div>
           </div>
@@ -180,11 +181,11 @@ export default function SprintPage() {
               },
               {
                 q: 'What if I need the sprint to start Wednesday?',
-                a: 'Standard sprint is Mon-Fri. Wed-Sun sprint is €3,700 (weekend rates). Thu-Mon sprint is €3,450. Custom dates negotiable.'
+                a: `Standard sprint is Mon-Fri. Wed-Sun sprint is ${UPLIFTS.sprintWeekend.label} (weekend rates). Thu-Mon sprint is ${UPLIFTS.sprintShoulder.label}. Custom dates negotiable.`
               },
               {
                 q: 'Can I extend into the next week?',
-                a: 'Yes. The sprint ends Friday EOD. If you want continued work, simply book another sprint — same fixed price, same deliverable-based model.'
+                a: 'Yes. The sprint ends Friday end of day. If you want continued work, book another sprint: same fixed price, same deliverable-based model.'
               }
             ].map((item, i) => (
               <div key={i} className="border border-[#333] bg-[#1a1a1a] p-6">
@@ -203,7 +204,7 @@ export default function SprintPage() {
               href="/#contact"
               className="inline-block bg-[#00FF41] text-[#121212] font-bold px-8 py-4 hover:bg-[#00CC33] transition-colors uppercase tracking-wider"
             >
-              Book Your Sprint (€2,950)
+              Book a sprint ({PRICING.sprint.label})
             </Link>
             <p className="text-gray-400 mt-6">Monday kickoff. Friday delivery. Guaranteed.</p>
           </div>

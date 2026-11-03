@@ -8,6 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useForm } from '@formspree/react';
 import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading, Card } from '@/components/ui/Section';
+import { PRICING, priceLabel, AUDIT_CREDIT_DAYS } from '@/lib/pricing';
 import { AdaptiveStage } from '@/components/home/AdaptiveStage';
 import { HeroFeed } from '@/components/home/HeroFeed';
 import { scrollToId, useScrollReveal } from '@/lib/motion';
@@ -239,9 +240,13 @@ const TIERS = [
   {
     id: 'audit',
     name: 'Workflow audit',
-    price: '€995 fixed',
+    price: priceLabel(PRICING.audit),
     body: 'One week inside your production process. You get a written report naming the bottlenecks and a roadmap ordered by payback.',
-    includes: ['Written audit report', 'Roadmap ordered by payback', 'No retainer, no hourly'],
+    includes: [
+      'Written audit report',
+      'Roadmap ordered by payback',
+      `Credited in full against a build booked within ${AUDIT_CREDIT_DAYS} days`,
+    ],
     cta: 'See what is included',
     href: '/offerings/audit',
     status: null,
@@ -250,7 +255,7 @@ const TIERS = [
   {
     id: 'sprint',
     name: 'Build sprint',
-    price: '€2,950 fixed',
+    price: priceLabel(PRICING.sprint),
     body: 'One week, one deliverable. A working pipeline, a rebuilt design system, or a DCO setup, with documentation and handover.',
     includes: ['Working deliverable, not a deck', 'Full documentation', 'Your team owns the result'],
     cta: 'See what is included',
@@ -816,9 +821,10 @@ export default function Home() {
                     >
                       <option value="" disabled>Choose one</option>
                       <option value="waitlist">Tell me when the tools launch</option>
-                      <option value="audit">A workflow audit (€995)</option>
-                      <option value="sprint">A build sprint (€2,950)</option>
-                      <option value="workshop">Team training</option>
+                      <option value="audit">A workflow audit ({PRICING.audit.label})</option>
+                      <option value="sprint">A build sprint ({PRICING.sprint.label})</option>
+                      <option value="design-system">A design system build ({priceLabel(PRICING.designSystem)})</option>
+                      <option value="workshop">Team training ({PRICING.workshop.label})</option>
                       <option value="other">Something else</option>
                     </select>
                   </div>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { PRICING, UPLIFTS, AUDIT_CREDIT_DAYS, priceLabel } from '@/lib/pricing';
 import { ArrowLeft, CheckCircle } from 'lucide-react';
 
 export default function AuditPage() {
@@ -41,7 +42,7 @@ export default function AuditPage() {
               Diagnostic scan of your entire ad tech pipeline. Identify bottlenecks. Get actionable recommendations. Delivered as a PDF strategy report.
             </p>
             <div className="pt-4 flex items-center gap-4">
-              <div className="text-3xl font-bold text-[#00FF41]">€995</div>
+              <div className="text-3xl font-bold text-[#00FF41]">{PRICING.audit.label}</div>
               <div className="text-gray-400">one-time investment</div>
             </div>
           </div>
@@ -167,11 +168,11 @@ export default function AuditPage() {
               },
               {
                 q: 'Can I get this expedited?',
-                a: 'Yes. Add €250 for 3-day express delivery. Add €500 for 2-day rush (starts Monday, delivered Wednesday).'
+                a: `Yes. Add ${UPLIFTS.auditExpress.label} for 3-day express delivery. Add ${UPLIFTS.auditRush.label} for 2-day rush (starts Monday, delivered Wednesday).`
               },
               {
                 q: 'What if I need ongoing support?',
-                a: "After the audit you get a full implementation roadmap. If you need hands-on help executing it, book a Build Sprint (€2,950) or a Team Workshop (€500) — both are available on the main page."
+                a: `After the audit you get a full implementation roadmap. If you want hands-on help executing it, the audit fee comes off a Build Sprint (${PRICING.sprint.label}) or a design system build (${priceLabel(PRICING.designSystem)}) booked within ${AUDIT_CREDIT_DAYS} days. A team workshop (${PRICING.workshop.label}) is the other route.`
               }
             ].map((item, i) => (
               <div key={i} className="border border-[#333] bg-[#1a1a1a] p-6">
@@ -190,7 +191,7 @@ export default function AuditPage() {
               href="/#contact"
               className="inline-block bg-[#00FF41] text-[#121212] font-bold px-8 py-4 hover:bg-[#00CC33] transition-colors uppercase tracking-wider"
             >
-              Book Now (€995)
+              Book now ({PRICING.audit.label})
             </Link>
             <p className="text-gray-400 mt-6">5-day turnaround. Actionable report. Money-back guarantee if not satisfied.</p>
           </div>

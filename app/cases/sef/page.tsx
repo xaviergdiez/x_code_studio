@@ -219,7 +219,7 @@ export default function SefCase() {
           library, the documentation and the handover.
         </p>
         <div className="flex flex-col gap-4 sm:flex-row">
-          <Button href="/offerings/sprint">See what a sprint covers</Button>
+          <Button href="/offerings/design-system">See what a system build covers</Button>
           <Button href="/#work" variant="secondary">
             Other work
           </Button>

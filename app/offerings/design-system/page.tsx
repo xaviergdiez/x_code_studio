@@ -2,6 +2,7 @@
 
 import { ArrowLeft, CheckCircle, Figma, Code, Zap, Palette, Database } from 'lucide-react';
 import Link from 'next/link';
+import { PRICING, UPLIFTS, priceLabel } from '@/lib/pricing';
 
 export default function DesignSystemPage() {
   return (
@@ -43,7 +44,7 @@ export default function DesignSystemPage() {
 
               <div className="pt-8">
                 <div className="inline-block px-6 py-3 bg-[#00FF41] text-[#121212] font-bold uppercase tracking-wider hover:bg-[#00CC33] transition-all">
-                  €4,500 / PACKAGE
+                  {priceLabel(PRICING.designSystem).toUpperCase()}
                 </div>
               </div>
             </div>
@@ -251,11 +252,11 @@ export default function DesignSystemPage() {
               />
               <FAQItem
                 q="Can you include dev implementation?"
-                a="Yes. That&apos;s a separate engagement (€2,500+). This package covers Figma + deliverables. You or your team implement the React components."
+                a="Yes. That&apos;s a separate engagement ({priceLabel(UPLIFTS.implementation)}). This package covers Figma + deliverables. You or your team implement the React components."
               />
               <FAQItem
                 q="Do you offer ongoing support?"
-                a="After delivery, your team owns the system with full documentation. For future evolution, you can book a follow-up Workshop (€500) or another scoped project — no ongoing retainer needed."
+                a={`After delivery, your team owns the system with full documentation. For future evolution you can book a follow-up workshop (${PRICING.workshop.label}) or another scoped project. No ongoing retainer needed.`}
               />
               <FAQItem
                 q="What design tool do you use?"
