@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading, Card } from '@/components/ui/Section';
 import { PRICING, priceLabel, AUDIT_CREDIT_DAYS } from '@/lib/pricing';
+import { SEF_CASE_PUBLISHED } from '@/lib/flags';
 
 /**
  * Pipeline tooling.
@@ -207,13 +208,15 @@ export default function ToolingOffering() {
             Tell me what is broken
           </Button>
         </div>
-        <Link
-          href="/cases/sef"
-          className="mt-10 inline-flex items-center gap-2 text-small text-fg-subtle hover:text-neon"
-        >
-          See a system built this way
-          <ArrowRight size={14} aria-hidden="true" />
-        </Link>
+        {SEF_CASE_PUBLISHED && (
+          <Link
+            href="/cases/sef"
+            className="mt-10 inline-flex items-center gap-2 text-small text-fg-subtle hover:text-neon"
+          >
+            See a system built this way
+            <ArrowRight size={14} aria-hidden="true" />
+          </Link>
+        )}
       </Section>
     </main>
   );

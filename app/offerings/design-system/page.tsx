@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading, Card } from '@/components/ui/Section';
 import { PRICING, UPLIFTS, priceLabel, AUDIT_CREDIT_DAYS } from '@/lib/pricing';
+import { SEF_CASE_PUBLISHED, FASTENING_CLIENT } from '@/lib/flags';
 
 /**
  * Ad system build.
@@ -12,10 +13,10 @@ import { PRICING, UPLIFTS, priceLabel, AUDIT_CREDIT_DAYS } from '@/lib/pricing';
  * This page used to sell something else. It described "bridging Figma
  * and React, living style guides, atomic components to dark-mode
  * architecture", which is a product design system for a web app. That
- * is not the work: SEF was an ad production system, and so is what
- * the studio pitches. The top-priced offer was describing a service
- * the studio does not lead with, and the SEF case now links here, so
- * the mismatch was about to be visible to a reader.
+ * is not the work: the studio builds ad production systems. The
+ * top-priced offer was describing a service it does not lead with,
+ * and the flagship case links here, so the mismatch was about to be
+ * visible to a reader.
  *
  * Structure follows the four layers used in client pitches, because
  * that is the actual mental model of the work: tokens carry brand,
@@ -24,7 +25,7 @@ import { PRICING, UPLIFTS, priceLabel, AUDIT_CREDIT_DAYS } from '@/lib/pricing';
  * the start, since retrofitting it is the expensive version.
  *
  * The route stays /offerings/design-system so existing links and the
- * SEF case keep working. Renaming it to /offerings/ad-system would
+ * flagship case keep working. Renaming it to /offerings/ad-system would
  * read better and needs a redirect, which is a separate decision.
  */
 
@@ -219,8 +220,8 @@ export default function AdSystemOffering() {
           ))}
         </dl>
         <p className="mt-6 text-small text-fg-subtle">
-          The same package delivered for STANLEY Engineered Fastening: library, docs,
-          guide and team training.
+          The same package delivered for {FASTENING_CLIENT}: library, docs, guide and
+          team training.
         </p>
       </Section>
 
@@ -275,17 +276,19 @@ export default function AdSystemOffering() {
       <Section width="prose">
         <SectionHeading eyebrow="Proof">Built for eight brands at once</SectionHeading>
         <p className="mb-8 text-body text-fg-muted">
-          STANLEY Engineered Fastening runs eight brands across display, Performance
-          Max and LinkedIn from one component with 120 variants. Their content studio
-          builds every campaign from it.
+          Most recently for {FASTENING_CLIENT}, running display, Performance Max and
+          LinkedIn from one component with 120 variants. Their content studio builds
+          every campaign from it.
         </p>
-        <Link
-          href="/cases/sef"
-          className="inline-flex items-center gap-2 text-small font-bold text-neon hover:underline"
-        >
-          Read the SEF case
-          <ArrowRight size={14} aria-hidden="true" />
-        </Link>
+        {SEF_CASE_PUBLISHED && (
+          <Link
+            href="/cases/sef"
+            className="inline-flex items-center gap-2 text-small font-bold text-neon hover:underline"
+          >
+            Read the case
+            <ArrowRight size={14} aria-hidden="true" />
+          </Link>
+        )}
       </Section>
 
       {/* ─── NEXT ─── */}

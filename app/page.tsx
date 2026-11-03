@@ -9,6 +9,7 @@ import { useForm } from '@formspree/react';
 import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading, Card } from '@/components/ui/Section';
 import { PRICING, priceLabel, AUDIT_CREDIT_DAYS } from '@/lib/pricing';
+import { SEF_CASE_PUBLISHED } from '@/lib/flags';
 import { AdaptiveStage } from '@/components/home/AdaptiveStage';
 import { HeroFeed } from '@/components/home/HeroFeed';
 import { scrollToId, useScrollReveal } from '@/lib/motion';
@@ -289,18 +290,6 @@ const TESTIMONIALS = [
 ];
 
 const CASES = [
-  {
-    slug: 'sef',
-    client: 'STANLEY Engineered Fastening',
-    accent: 'sef',
-    headline: 'Eight brands, one ad template',
-    body: 'A Figma library where the brand is a dropdown rather than a copy of the file. Their content studio now builds every campaign from it without me.',
-    figures: [
-      { value: '120', label: 'Variants in one component' },
-      { value: '8', label: 'Brands carried' },
-      { value: '3', label: 'Platform families' },
-    ],
-  },
   {
     slug: 'bmw-mini',
     client: 'BMW / MINI',
@@ -720,7 +709,7 @@ export default function Home() {
         {/* ─── WORK ─── */}
         <Section id="work">
           <div className="contents">
-            <SectionHeading lede="Recent work as x-code.studio, and the campaigns behind it, delivered as part of the team at Monks.">
+            <SectionHeading lede="Four campaigns, delivered as part of the team at Monks. The pipelines I build now came out of this work.">
               The work behind it
             </SectionHeading>
 
