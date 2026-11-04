@@ -2,7 +2,11 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '@/lib/motion';
-import { PHONE_BACK_MASK, PHONE_BACK_VIEWBOX } from './huaweiPaths';
+import {
+  PHONE_BACK_MASK,
+  PHONE_BACK_VIEWBOX,
+  PHONE_FRONT_MASK,
+} from './huaweiPaths';
 
 /**
  * Candidate 7: the P30 Pro homepage takeover, rebuilt honestly.
@@ -51,15 +55,17 @@ type Finish = {
   stops: [string, string, string];
   /** Back-of-phone photograph. Every finish here has one. */
   img: string;
+  /** Front photograph, used for the masthead's second phone. */
+  front: string;
   /** Whether label text on this finish should be light or dark. */
   ink: 'light' | 'dark';
 };
 
 const FINISHES: Finish[] = [
-  { id: 'aurora', name: 'Aurora', stops: ['#02b09c', '#009d91', '#027b7f'], img: 'green_back.jpg', ink: 'light' },
-  { id: 'amber', name: 'Amber Sunrise', stops: ['#ff8400', '#ff6700', '#ff3602'], img: 'orange_back.jpg', ink: 'dark' },
-  { id: 'black', name: 'Black', stops: ['#7c7c7c', '#4a4a4a', '#000000'], img: 'black_back.jpg', ink: 'light' },
-  { id: 'crystal', name: 'Breathing Crystal', stops: ['#d8edfc', '#a1daf8', '#4db4e7'], img: 'blue_back.jpg', ink: 'dark' },
+  { id: 'aurora', name: 'Aurora', stops: ['#02b09c', '#009d91', '#027b7f'], img: 'green_back.jpg', front: 'green_front.jpg', ink: 'light' },
+  { id: 'amber', name: 'Amber Sunrise', stops: ['#ff8400', '#ff6700', '#ff3602'], img: 'orange_back.jpg', front: 'orange_front.jpg', ink: 'dark' },
+  { id: 'black', name: 'Black', stops: ['#7c7c7c', '#4a4a4a', '#000000'], img: 'black_back.jpg', front: 'black_front.jpg', ink: 'light' },
+  { id: 'crystal', name: 'Breathing Crystal', stops: ['#d8edfc', '#a1daf8', '#4db4e7'], img: 'blue_back.jpg', front: 'blue_front.jpg', ink: 'dark' },
 ];
 
 type SlotKind = 'masthead' | 'skin' | 'rect';
@@ -85,17 +91,33 @@ function slotDoc(kind: SlotKind, slotIndex: number, finishes: Finish[]): string 
   // the device silhouette by filling the mask path with a pattern
   // holding the JPEG, which is how the portfolio did it: without
   // the mask each photo arrives in its own 400x840 white box.
+  const phone = (f: Finish, face: 'back' | 'front') => {
+    const id = `pat-${face}-${f.id}`;
+    const src = face === 'back' ? f.img : f.front;
+    const mask = face === 'back' ? PHONE_BACK_MASK : PHONE_FRONT_MASK;
+    return `<svg viewBox="${PHONE_BACK_VIEWBOX}" xmlns="http://www.w3.org/2000/svg">
+      <defs><pattern id="${id}" patternUnits="userSpaceOnUse" width="400" height="840" x="0" y="0">
+        <image href="/images/huawei/${src}" width="400" height="840" x="0" y="0"/>
+      </pattern></defs>
+      <path d="${mask}" fill="url(#${id})"/>
+    </svg>`;
+  };
+
+  // The masthead is wide and short, so one upright phone leaves it
+  // looking empty. A tilted front-and-back pair is what the hero
+  // does and what the shipped billboard did: it fills the band and
+  // shows both faces of the device in the space available.
   const layers = finishes
-    .map(
-      (f) => `<div class="layer" data-f="${f.id}">
-         <svg viewBox="${PHONE_BACK_VIEWBOX}" xmlns="http://www.w3.org/2000/svg">
-           <defs><pattern id="pat-${f.id}" patternUnits="userSpaceOnUse" width="400" height="840" x="0" y="0">
-             <image href="/images/huawei/${f.img}" width="400" height="840" x="0" y="0"/>
-           </pattern></defs>
-           <path d="${PHONE_BACK_MASK}" fill="url(#pat-${f.id})"/>
-         </svg>
-       </div>`,
-    )
+    .map((f) => {
+      const art =
+        kind === 'masthead'
+          ? `<div class="pair">
+               <span class="tilt tilt-a">${phone(f, 'front')}</span>
+               <span class="tilt tilt-b">${phone(f, 'back')}</span>
+             </div>`
+          : phone(f, 'back');
+      return `<div class="layer" data-f="${f.id}">${art}</div>`;
+    })
     .join('');
 
   return `<!doctype html><html lang="en"><head><meta charset="utf-8">
@@ -119,6 +141,14 @@ function slotDoc(kind: SlotKind, slotIndex: number, finishes: Finish[]): string 
          opacity:0;transition:opacity .55s ease;pointer-events:none}
   .layer[data-on="1"]{opacity:1}
   .layer svg{max-width:100%;max-height:100%;display:block;filter:drop-shadow(0 8px 18px rgba(0,0,0,.35))}
+  /* Masthead pair: two phones tilted off vertical, overlapping, and
+     allowed to run past the band's top and bottom edges the way a
+     billboard crop does. */
+  .pair{display:flex;align-items:center;justify-content:center;gap:0;height:100%}
+  .tilt{display:block;height:230%}
+  .tilt svg{height:100%;width:auto;max-height:none}
+  .tilt-a{transform:rotate(-22deg) translateY(-6%);margin-right:-5%}
+  .tilt-b{transform:rotate(-22deg) translateY(6%)}
   #brand{position:absolute;top:6px;left:8px;font-size:10px;font-weight:700;letter-spacing:.5px}
   #pick{position:absolute;left:0;right:0;bottom:0;padding:6px;display:flex;gap:6px;justify-content:center;align-items:center}
   .sw{width:26px;height:26px;min-width:26px;border-radius:50%;border:2px solid rgba(255,255,255,.85);cursor:pointer;padding:0}
