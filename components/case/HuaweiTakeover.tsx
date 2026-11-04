@@ -290,15 +290,24 @@ export function HuaweiTakeover() {
           </span>
         </div>
 
-        {slot('masthead', 0, 'block h-[72px] w-full border-0', 'Ad slot: masthead')}
+        {/* Proportions are the demo's, not a real publisher's. A real
+            takeover gives the skins whatever is left beside a wide
+            article column, which here left three narrow strips of
+            colour around a field of grey placeholder. Since the point
+            is watching four surfaces move together, the article column
+            is capped and centred and the slots take the room back:
+            the skins are wide enough to read as surfaces and sit
+            right against the content, and the masthead is a billboard
+            rather than a bar. */}
+        {slot('masthead', 0, 'block h-[132px] w-full border-0', 'Ad slot: masthead')}
 
-        <div className="flex gap-2 bg-neutral-100 p-2">
-          {slot('skin', 1, 'hidden h-[320px] w-[120px] shrink-0 border-0 sm:block', 'Ad slot: left skin')}
+        <div className="flex justify-center gap-1.5 bg-neutral-100 p-1.5">
+          {slot('skin', 1, 'hidden h-[430px] w-[150px] shrink-0 border-0 sm:block md:w-[200px]', 'Ad slot: left skin')}
 
-          <div className="min-w-0 flex-1 rounded bg-white p-3">
+          <div className="min-w-0 w-full max-w-[460px] rounded bg-white p-4">
             <div className="mb-3 h-2.5 w-2/5 rounded bg-neutral-300" />
             <div className="space-y-1.5">
-              {[1, 0.95, 0.88, 0.97, 0.6].map((w, i) => (
+              {[1, 0.95, 0.88].map((w, i) => (
                 <div key={i} className="h-1.5 rounded bg-neutral-200" style={{ width: `${w * 100}%` }} />
               ))}
             </div>
@@ -312,7 +321,7 @@ export function HuaweiTakeover() {
             </div>
           </div>
 
-          {slot('skin', 3, 'hidden h-[320px] w-[120px] shrink-0 border-0 lg:block', 'Ad slot: right skin')}
+          {slot('skin', 3, 'hidden h-[430px] w-[150px] shrink-0 border-0 sm:block md:w-[200px]', 'Ad slot: right skin')}
         </div>
       </div>
 
