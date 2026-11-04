@@ -55,7 +55,7 @@ export default function HuaweiCase() {
           <p className="hero-text text-body">
             The P30 Pro launch in the Netherlands, built as a rich media unit
             that let people explore every finish without leaving the ad.
-            Delivered as part of the team at This Page.
+            Delivered as part of the team at ThisPageAmsterdam.
           </p>
 
           <dl className="flex flex-col gap-3 pt-2 sm:flex-row sm:gap-4">

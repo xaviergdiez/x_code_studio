@@ -20,7 +20,7 @@ gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
  * Candidate 5: the Twilight phone, ported from the 2018 banner.
  *
  * This is not a Codrops effect. It is the Huawei Mate 20 Pro unit
- * that shipped at This Page, brought forward from GSAP 2 to GSAP 3 and
+ * that shipped at ThisPageAmsterdam, brought forward from GSAP 2 to GSAP 3 and
  * rewired for the site. It earns its place over the borrowed effects
  * because it is the case study rather than an illustration of it:
  * "a phone you can turn over, in under 150KB" is a claim on the

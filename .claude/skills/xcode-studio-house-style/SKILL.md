@@ -59,8 +59,8 @@ Short, direct, warm. Second person. Specific over impressive.
   |---|---|
   | BMW / MINI | Monks |
   | GTECH (Google) | Monks |
-  | Huawei | This Page |
-  | FBTO | This Page |
+  | Huawei | ThisPageAmsterdam |
+  | FBTO | ThisPageAmsterdam |
 
   Say so plainly: both agencies are the credential, and claiming sole
   credit for team work is the failure to avoid. The testimonial section
