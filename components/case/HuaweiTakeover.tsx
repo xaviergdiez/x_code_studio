@@ -2,7 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '@/lib/motion';
-import { PHONE_BODY, PHONE_VIEWBOX } from './huaweiPaths';
+import {
+  PHONE_BODY,
+  PHONE_VIEWBOX,
+  PHONE_BACK_MASK,
+  PHONE_BACK_VIEWBOX,
+} from './huaweiPaths';
 
 /**
  * Candidate 7: the P30 Pro homepage takeover, rebuilt honestly.
@@ -77,32 +82,71 @@ function slotDoc(kind: SlotKind, slotIndex: number, finishes: Finish[]): string 
           .join('')
       : '';
 
+  // One layer per finish, all present from the start so a switch is
+  // a cross-fade rather than a load. The photographed finishes are
+  // clipped to the device silhouette by filling the mask path with
+  // a pattern holding the JPEG, which is how the portfolio did it:
+  // without the mask each photo arrives in its own 400x840 white
+  // box. Twilight has no photograph, so it is the drawn path with
+  // the gradient instead.
+  const layers = finishes
+    .map((f) => {
+      const art = f.img
+        ? `<svg viewBox="${PHONE_BACK_VIEWBOX}" xmlns="http://www.w3.org/2000/svg">
+             <defs><pattern id="pat-${f.id}" patternUnits="userSpaceOnUse" width="400" height="840" x="0" y="0">
+               <image href="/images/huawei/${f.img}" width="400" height="840" x="0" y="0"/>
+             </pattern></defs>
+             <path d="${PHONE_BACK_MASK}" fill="url(#pat-${f.id})"/>
+           </svg>`
+        : `<svg viewBox="${PHONE_VIEWBOX}" xmlns="http://www.w3.org/2000/svg">
+             <defs><linearGradient id="grad-${f.id}" x1="445" y1="1143" x2="156" y2="65" gradientUnits="userSpaceOnUse">
+               <stop offset="0" stop-color="hsl(212,30%,8%)"/><stop offset=".55" stop-color="hsl(248,38%,16%)"/>
+               <stop offset=".87" stop-color="hsl(240,51%,48%)"/><stop offset="1" stop-color="hsl(197,94%,79%)"/>
+             </linearGradient></defs>
+             <path d="${PHONE_BODY}" fill="url(#grad-${f.id})"/>
+           </svg>`;
+      return `<div class="layer" data-f="${f.id}">${art}</div>`;
+    })
+    .join('');
+
   return `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <style>
   *{box-sizing:border-box}
   html,body{margin:0;height:100%;overflow:hidden;font-family:system-ui,sans-serif}
-  #bg{position:absolute;inset:0;transition:background-image .45s ease, background-color .45s ease}
-  #art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:${kind === 'rect' ? '6px 6px 48px' : '8px'}}
-  #art img,#art svg{max-width:100%;max-height:100%;object-fit:contain;display:block;filter:drop-shadow(0 8px 18px rgba(0,0,0,.35))}
+  #bg{position:absolute;inset:0;transition:background .55s ease}
+  #art{position:absolute;inset:0}
+  /* Every finish is rendered and stacked. Switching cross-fades
+     opacity instead of swapping a src, which is what the original
+     did with four <image> nodes inside one pattern. Swapping the
+     source snapped, and showed a blank frame while the next file
+     decoded.
+
+     The padding sits here, not on #art: inset:inherit took the
+     parent's inset:0 rather than its padding box, so the phone
+     ignored the reserved strip and sat on top of the caption and
+     the swatches. */
+  .layer{position:absolute;inset:0;padding:${kind === 'rect' ? '6px 6px 56px' : '8px'};
+         display:flex;align-items:center;justify-content:center;
+         opacity:0;transition:opacity .55s ease;pointer-events:none}
+  .layer[data-on="1"]{opacity:1}
+  .layer svg{max-width:100%;max-height:100%;display:block;filter:drop-shadow(0 8px 18px rgba(0,0,0,.35))}
   #brand{position:absolute;top:6px;left:8px;font-size:10px;font-weight:700;letter-spacing:.5px}
   #pick{position:absolute;left:0;right:0;bottom:0;padding:6px;display:flex;gap:6px;justify-content:center;align-items:center}
   .sw{width:26px;height:26px;min-width:26px;border-radius:50%;border:2px solid rgba(255,255,255,.85);cursor:pointer;padding:0}
   .sw[aria-pressed="true"]{outline:2px solid #fff;outline-offset:2px}
   #cap{position:absolute;bottom:34px;left:0;right:0;text-align:center;font-size:10px;font-weight:700;letter-spacing:1px}
-  @media (prefers-reduced-motion: reduce){#bg{transition:none}}
+  @media (prefers-reduced-motion: reduce){#bg,.layer{transition:none}}
 </style></head><body>
 <div id="bg"></div>
-<div id="art"></div>
+<div id="art">${layers}</div>
 <div id="brand">HUAWEI P30 Pro</div>
 ${kind === 'rect' ? `<div id="cap">KIES JE KLEUR</div><div id="pick">${swatches}</div>` : ''}
 <script>
 (function(){
   var bg = document.getElementById('bg');
-  var art = document.getElementById('art');
   var brand = document.getElementById('brand');
   var cap = document.getElementById('cap');
-  var PHONE = ${JSON.stringify(PHONE_BODY)};
-  var VB = ${JSON.stringify(PHONE_VIEWBOX)};
+  var layers = document.querySelectorAll('.layer');
   var SLOT = ${JSON.stringify(`${kind}-${slotIndex}`)};
   var painted = false;
 
@@ -112,19 +156,18 @@ ${kind === 'rect' ? `<div id="cap">KIES JE KLEUR</div><div id="pick">${swatches}
     var ink = f.ink === 'light' ? '#fff' : '#111';
     brand.style.color = ink;
     if (cap) cap.style.color = ink;
-    if (f.img) {
-      art.innerHTML = '<img alt="" src="/images/huawei/' + f.img + '">';
-    } else {
-      art.innerHTML =
-        '<svg viewBox="' + VB + '" xmlns="http://www.w3.org/2000/svg">' +
-        '<defs><linearGradient id="tw" x1="445" y1="1143" x2="156" y2="65" gradientUnits="userSpaceOnUse">' +
-        '<stop offset="0" stop-color="hsl(212,30%,8%)"/><stop offset=".55" stop-color="hsl(248,38%,16%)"/>' +
-        '<stop offset=".87" stop-color="hsl(240,51%,48%)"/><stop offset="1" stop-color="hsl(197,94%,79%)"/>' +
-        '</linearGradient></defs><path d="' + PHONE + '" fill="url(#tw)"/></svg>';
+
+    // Every finish is already in the document, masked and ready.
+    // Switching is a class flip, so the browser cross-fades two
+    // decoded images instead of tearing one out and loading the
+    // next, which is what made the old version snap and flash.
+    for (var i=0;i<layers.length;i++){
+      layers[i].setAttribute('data-on', layers[i].dataset.f === f.id ? '1' : '0');
     }
+
     var btns = document.querySelectorAll('.sw');
-    for (var i=0;i<btns.length;i++){
-      btns[i].setAttribute('aria-pressed', String(btns[i].dataset.id === f.id));
+    for (var j=0;j<btns.length;j++){
+      btns[j].setAttribute('aria-pressed', String(btns[j].dataset.id === f.id));
     }
   }
 

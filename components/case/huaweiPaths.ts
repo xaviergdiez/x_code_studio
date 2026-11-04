@@ -41,3 +41,25 @@ export const PHONE_PHOTO =
 
 /** 600x1200, matching the viewBox exactly. */
 export const PHONE_PHOTO_SRC = '/images/huawei/phone.jpg';
+
+/**
+ * The device silhouette used to mask the finish photography.
+ *
+ * This is the piece the takeover was missing. The shipped portfolio
+ * does not place the JPEGs as images; it loads them into an SVG
+ * <pattern> and fills this path with that pattern, so the photo is
+ * clipped to the phone outline. Xavi's own note on the technique:
+ * "Making use of SVG's masking properties, I was able to use
+ * optimized jpg images as transparent."
+ *
+ * Drop the mask and every finish arrives in its 400x840 bounding
+ * box, which on a coloured slot reads as a white rectangle around
+ * the phone.
+ *
+ * Coordinates are in the 400x840 space of the back photography, so
+ * the mask and the images line up one to one with no scaling.
+ */
+export const PHONE_BACK_VIEWBOX = '0 0 400 840';
+
+export const PHONE_BACK_MASK =
+  'M9.52,309.19c0-2,.21-3.55,2.87-3.11V272.84c-2.4.27-2.87-1-2.87-3q.08-46.68,0-93.36c0-2,.21-3.55,3-3.09v-2.64c0-36.74,0-69.56,0-106.3,0-5.26.08-10.53.44-15.77.75-10.87,4.83-20.21,13.54-27.11,3.9-3.08,8.12-5.81,13.28-6.14,5.88-.37,11.77-.68,17.66-.68l142.57,0q69,0,137.91,0c7.58,0,15.17.19,22.75.41a17.33,17.33,0,0,1,5.55.93c10.57,4,17.82,11.35,21.34,22.12,2.67,8.15,2.92,16.64,2.92,25.13,0,235.24,0,466.56,0,701.81,0,9.11-.38,18.23-.79,27.34-.38,8.77-3.15,16.74-9,23.42-4.46,5.1-9.81,9.24-16.64,10.22a126.62,126.62,0,0,1-17.86.91Q273.1,827,200,827L56.65,827q-6.85,0-13.69-.46a26.14,26.14,0,0,1-7.61-1.25A33.29,33.29,0,0,1,17.2,809c-3.7-7.14-4.7-14.87-4.7-22.78q0-215.35,0-430.72v-3c-2.4.27-3-.8-3-2.84Q9.61,329.42,9.52,309.19Z';

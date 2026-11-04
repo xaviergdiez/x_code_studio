@@ -141,7 +141,7 @@ export default function FbtoCase() {
           </p>
 
           <h1 data-split className="max-w-4xl text-h1 font-bold tracking-hero text-fg md:text-display">
-            Eleven modules, three formats, one build.
+            Jij kiest. So the ad had to let you.
           </h1>
 
           <p className="mt-6 max-w-2xl text-body text-fg-muted">

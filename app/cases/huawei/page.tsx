@@ -49,13 +49,15 @@ export default function HuaweiCase() {
           </div>
 
           <h1 className="hero-text text-h1 font-bold tracking-hero md:text-display">
-            A phone you can turn over, in under 150KB.
+            Colour takes over.
           </h1>
 
           <p className="hero-text text-body">
-            The P30 Pro launch in the Netherlands, built as a rich media unit
-            that let people explore every finish without leaving the ad.
-            Delivered as part of the team at ThisPageAmsterdam.
+            For the P30 Pro launch Huawei wanted every colourway shown off, and
+            shown off interactively. SVG masking and gradients, running on
+            Weborama&apos;s publishing platform, made a takeover where the
+            visitor picks the finish and the whole page follows. Delivered as
+            part of the team at ThisPageAmsterdam.
           </p>
 
           <dl className="flex flex-col gap-3 pt-2 sm:flex-row sm:gap-4">
@@ -126,44 +128,15 @@ export default function HuaweiCase() {
         </ul>
       </Section>
 
-      {/* The approach, demonstrated rather than described. The two
-          sections above explain that the phone is drawn and not
-          photographed; this is the drawn phone. */}
-      <Section>
-        <SectionHeading
-          eyebrow="The unit"
-          lede="The Mate 20 Pro, drawn as one filled path rather than photographed. Move the pointer across it: the phone's hues shift one way, the backdrop's the other, and the specular highlight follows the cursor. That opposition is what makes the glass read as glass."
-        >
-          Turn it over
-        </SectionHeading>
+      {/* The takeover is the work, so it leads.
 
-        <TwilightPhone />
-
-        <p className="mt-6 max-w-2xl text-small text-fg-subtle">
-          No video, no image sequence, no sprite sheet. All three were ruled out
-          by the weight budget, and this is what was built instead.
-        </p>
-      </Section>
-
-      <Section width="prose">
-        <SectionHeading eyebrow="The outcome">
-          People stayed and turned the phone over
-        </SectionHeading>
-        <div className="space-y-5 text-body text-fg-muted">
-          <p>
-            Engagement rose 52% against the comparable static placement and
-            viewability held at 78%, which for a unit this interactive is the
-            number that matters: it was not just loaded, it stayed on screen.
-          </p>
-          <p>
-            It took the Weborama APTO award for the Dutch market that year.
-          </p>
-        </div>
-      </Section>
-
-      {/* The 2019 follow-up. Same client, different hard problem:
-          not one unit under a weight budget, but four separately
-          served documents that had to agree.
+          An earlier version of this page had it second, after the
+          SVG experiment, framed as a 2019 follow-up to a separate
+          2018 campaign. That framing was invented. The portfolio is
+          explicit: this is one P30 Pro campaign, and the experiment
+          is where the concept came from, not a prior job. The
+          experiment therefore closes the page rather than opening
+          it.
 
           Recorded footage first, then the rebuild. The video is what
           actually ran on nu.nl and is the evidence; the interactive
@@ -172,10 +145,10 @@ export default function HuaweiCase() {
           trust. */}
       <Section tone="raised">
         <SectionHeading
-          eyebrow="The year after"
-          lede="For the P30 Pro the choice moved out of the banner and onto the whole page. Four separately served ad slots, one finish, picked once."
+          eyebrow="The work"
+          lede="Choose your favourite colour from the rectangle and the layout changes across the whole site. Four separately served ad slots, one finish, picked once."
         >
-          One colour, four ad slots
+          A radical takeover
         </SectionHeading>
 
         {/* preload="none" so nothing but the posters downloads until
@@ -252,6 +225,52 @@ export default function HuaweiCase() {
               one insisting on blue.
             </p>
           </Card>
+        </div>
+      </Section>
+
+      <Section width="prose">
+        <SectionHeading eyebrow="The outcome">
+          People stayed and turned the phone over
+        </SectionHeading>
+        <div className="space-y-5 text-body text-fg-muted">
+          <p>
+            Engagement rose 52% against the comparable static placement and
+            viewability held at 78%, which for a unit this interactive is the
+            number that matters: it was not just loaded, it stayed on screen.
+          </p>
+          <p>
+            It took the Weborama APTO award for the Dutch market that year.
+          </p>
+        </div>
+      </Section>
+      {/* Where the concept came from. This closes the page because
+          it is the origin, not a separate campaign: "The whole
+          concept for interactive color started with this little
+          experiment." */}
+      <Section>
+        <SectionHeading
+          eyebrow="Where it started"
+          lede="Before any of it was a campaign, it was a question: how much of a phone's iridescence can SVG actually carry, and at what cost. Move the pointer across it."
+        >
+          The SVG gradient experiment
+        </SectionHeading>
+
+        <TwilightPhone />
+
+        <div className="mt-8 max-w-2xl space-y-4 text-body text-fg-muted">
+          <p>
+            The aim was to capture the iridescent quality of Huawei&apos;s
+            finishes and find out what SVG could do with masking, colour and
+            performance. It turns out quite a lot: optimised JPEGs used as
+            transparent artwork through a mask, gradients with blending modes
+            that shift the colour, and a phone that answers the mouse.
+          </p>
+          <p>
+            Everything the takeover above does grew out of this. The masking
+            that keeps a photograph inside the device outline, the gradients
+            that move a finish rather than swapping an asset, and the proof that
+            colour could be interactive at all rather than baked into a file.
+          </p>
         </div>
       </Section>
 

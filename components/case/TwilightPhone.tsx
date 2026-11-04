@@ -17,14 +17,19 @@ import {
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
 
 /**
- * Candidate 5: the Twilight phone, ported from the 2018 banner.
+ * The SVG gradient experiment, ported from the original banner.
  *
- * This is not a Codrops effect. It is the Huawei Mate 20 Pro unit
- * that shipped at ThisPageAmsterdam, brought forward from GSAP 2 to GSAP 3 and
- * rewired for the site. It earns its place over the borrowed effects
- * because it is the case study rather than an illustration of it:
- * "a phone you can turn over, in under 150KB" is a claim on the
- * homepage, and this is the thing that backs it.
+ * This is where the Huawei work started, in Xavi's own words: "The
+ * whole concept for interactive color started with this little
+ * experiment. I wanted to capture the irdiscence quality of
+ * Huawei's phones, and to see what was possible with SVG in terms
+ * of masking, color and performance."
+ *
+ * So it closes the case page rather than opening it. An earlier
+ * version of this comment called it a 2018 Mate 20 Pro campaign
+ * that preceded the 2019 P30 Pro takeover. That was invented: the
+ * portfolio names no model here and describes one campaign, with
+ * this as the exploration behind it, not a separate job.
  *
  * How the finish is made, which is the whole trick:
  *
