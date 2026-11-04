@@ -111,10 +111,10 @@ function slotDoc(kind: SlotKind, slotIndex: number, finishes: Finish[]): string 
     .map((f) => {
       const art =
         kind === 'masthead'
-          ? `<div class="pair">
-               <span class="tilt tilt-a">${phone(f, 'front')}</span>
-               <span class="tilt tilt-b">${phone(f, 'back')}</span>
-             </div>`
+          ? `<div class="pair"><div class="stack">
+               <span class="face-front">${phone(f, 'front')}</span>
+               <span>${phone(f, 'back')}</span>
+             </div></div>`
           : phone(f, 'back');
       return `<div class="layer" data-f="${f.id}">${art}</div>`;
     })
@@ -144,12 +144,22 @@ function slotDoc(kind: SlotKind, slotIndex: number, finishes: Finish[]): string 
   /* Masthead pair: two phones tilted off vertical, overlapping, and
      allowed to run past the band's top and bottom edges the way a
      billboard crop does. */
-  .pair{display:flex;align-items:center;justify-content:center;gap:0;height:100%}
-  .tilt{display:block;height:230%}
-  .tilt svg{height:100%;width:auto;max-height:none}
-  .tilt-a{transform:rotate(-22deg) translateY(-6%);margin-right:-5%}
-  .tilt-b{transform:rotate(-22deg) translateY(6%)}
-  #brand{position:absolute;top:6px;left:8px;font-size:10px;font-weight:700;letter-spacing:.5px}
+  /* The hero stacks a front and a back vertically, turns the front
+     through 180 so the two face each other, then rotates the pair
+     off vertical. Side by side they just looked like two phones in
+     a row. Same construction here, cropped by the band. */
+  .pair{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .stack{display:flex;flex-direction:column;align-items:center;gap:10px;
+         transform:rotate(22deg);transform-origin:center}
+  .stack span{display:block;height:132px}
+  .stack svg{height:100%;width:auto;max-height:none}
+  .face-front{transform:rotate(180deg)}
+  /* Behind the phone, not in front of it: the wordmark is a
+     surface marking, and a device crossing over it is what
+     makes the slot read as one composition rather than a
+     label stuck on top of a picture. */
+  #brand{position:absolute;top:6px;left:8px;font-size:10px;font-weight:700;letter-spacing:.5px;z-index:0}
+  #art{z-index:1}
   #pick{position:absolute;left:0;right:0;bottom:0;padding:6px;display:flex;gap:6px;justify-content:center;align-items:center}
   .sw{width:26px;height:26px;min-width:26px;border-radius:50%;border:2px solid rgba(255,255,255,.85);cursor:pointer;padding:0}
   .sw[aria-pressed="true"]{outline:2px solid #fff;outline-offset:2px}
@@ -169,9 +179,26 @@ ${kind === 'rect' ? `<div id="cap">KIES JE KLEUR</div><div id="pick">${swatches}
   var SLOT = ${JSON.stringify(`${kind}-${slotIndex}`)};
   var painted = false;
 
-  function apply(f){
+  function apply(f, box){
     painted = true;
-    bg.style.background = 'linear-gradient(160deg,' + f.stops[0] + ',' + f.stops[1] + ',' + f.stops[2] + ')';
+    // One gradient across the whole takeover, not one per slot.
+    //
+    // Each slot used to paint linear-gradient(160deg, ...) into its
+    // own box, so every slot restarted the ramp and each boundary
+    // showed a hard seam: three surfaces of the same colours that
+    // obviously were not the same surface. The page now measures
+    // where each slot sits and sends it those numbers, so the slot
+    // paints the gradient at full page size and shifts it into
+    // place. The slots are still separate documents that know
+    // nothing about each other; they are told where they are, which
+    // is the same thing the real takeover had to do.
+    bg.style.backgroundImage =
+      'linear-gradient(160deg,' + f.stops[0] + ',' + f.stops[1] + ',' + f.stops[2] + ')';
+    if (box) {
+      bg.style.backgroundSize = box.pw + 'px ' + box.ph + 'px';
+      bg.style.backgroundPosition = (-box.x) + 'px ' + (-box.y) + 'px';
+      bg.style.backgroundRepeat = 'no-repeat';
+    }
     var ink = f.ink === 'light' ? '#fff' : '#111';
     brand.style.color = ink;
     if (cap) cap.style.color = ink;
@@ -201,7 +228,7 @@ ${kind === 'rect' ? `<div id="cap">KIES JE KLEUR</div><div id="pick">${swatches}
   addEventListener('message', function(e){
     var d = e.data;
     if (!d || d.ns !== 'hpto' || d.type !== 'finish') return;
-    apply(d.finish);
+    apply(d.finish, d.box);
   });
 
   // Announce until answered. A single shot on load is lost whenever
@@ -224,13 +251,40 @@ export function HuaweiTakeover() {
   const [active, setActive] = useState(0);
   const [synced, setSynced] = useState(0);
   const frames = useRef<(HTMLIFrameElement | null)[]>([]);
+  const pageRef = useRef<HTMLDivElement>(null);
 
-  const broadcast = useCallback((i: number) => {
-    const finish = FINISHES[i];
-    frames.current.forEach((f) =>
-      f?.contentWindow?.postMessage({ ns: 'hpto', type: 'finish', finish }, '*'),
-    );
+  /**
+   * Where a slot sits inside the mock page, so it can paint its
+   * slice of one page-wide gradient instead of its own.
+   */
+  const boxFor = useCallback((el: HTMLIFrameElement | null) => {
+    const page = pageRef.current;
+    if (!page || !el) return null;
+    const p = page.getBoundingClientRect();
+    const r = el.getBoundingClientRect();
+    return {
+      x: Math.round(r.left - p.left),
+      y: Math.round(r.top - p.top),
+      pw: Math.round(p.width),
+      ph: Math.round(p.height),
+    };
   }, []);
+
+  const sendTo = useCallback(
+    (idx: number, finishIndex: number) => {
+      const el = frames.current[idx];
+      el?.contentWindow?.postMessage(
+        { ns: 'hpto', type: 'finish', finish: FINISHES[finishIndex], box: boxFor(el) },
+        '*',
+      );
+    },
+    [boxFor],
+  );
+
+  const broadcast = useCallback(
+    (i: number) => frames.current.forEach((_, idx) => sendTo(idx, i)),
+    [sendTo],
+  );
 
   // `active` is read inside the listener but must not re-subscribe
   // it: the listener has to be attached once, as early as possible,
@@ -241,6 +295,13 @@ export function HuaweiTakeover() {
     activeRef.current = active;
   }, [active]);
   const seen = useRef<Set<string>>(new Set());
+
+  // Same reason: the listener is attached once, so it reaches sendTo
+  // through a ref rather than closing over the first one.
+  const sendToRef = useRef(sendTo);
+  useIsomorphicLayoutEffect(() => {
+    sendToRef.current = sendTo;
+  }, [sendTo]);
 
   useIsomorphicLayoutEffect(() => {
     const onMsg = (e: MessageEvent) => {
@@ -256,12 +317,12 @@ export function HuaweiTakeover() {
         }
         // Answer with the current finish, so a slot that loads late
         // cannot come up on a different colour from the other three.
-        if (e.source) {
-          (e.source as Window).postMessage(
-            { ns: 'hpto', type: 'finish', finish: FINISHES[activeRef.current] },
-            '*',
-          );
-        }
+        // Answered through sendTo rather than straight back at
+        // e.source, because the reply has to carry the slot's own
+        // geometry or it paints the gradient from its own corner and
+        // breaks the seam it was supposed to hide.
+        const idx = frames.current.findIndex((fr) => fr?.contentWindow === e.source);
+        if (idx >= 0) sendToRef.current(idx, activeRef.current);
       }
 
       if (d.type === 'pick') {
@@ -293,6 +354,15 @@ export function HuaweiTakeover() {
     broadcast(active);
   }, [active, broadcast]);
 
+  // The shared gradient is positioned in pixels, so every slot needs
+  // its numbers again whenever the layout moves. Without this the
+  // seams reappear the moment the window is resized.
+  useEffect(() => {
+    const onResize = () => broadcast(activeRef.current);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [broadcast]);
+
   const slot = (kind: SlotKind, idx: number, className: string, title: string) => (
     <iframe
       key={idx}
@@ -310,7 +380,7 @@ export function HuaweiTakeover() {
     <div>
       {/* The mock publisher page. Everything grey is ordinary page
           furniture; the four coloured surfaces are the ad slots. */}
-      <div className="overflow-hidden rounded-card border border-line bg-white">
+      <div ref={pageRef} className="overflow-hidden rounded-card border border-line bg-white">
         <div className="flex items-center gap-1.5 border-b border-neutral-300 bg-neutral-200 px-3 py-2">
           <span className="h-2.5 w-2.5 rounded-full bg-neutral-400" />
           <span className="h-2.5 w-2.5 rounded-full bg-neutral-400" />
@@ -329,7 +399,7 @@ export function HuaweiTakeover() {
             the skins are wide enough to read as surfaces and sit
             right against the content, and the masthead is a billboard
             rather than a bar. */}
-        {slot('masthead', 0, 'block h-[132px] w-full border-0', 'Ad slot: masthead')}
+        {slot('masthead', 0, 'block h-[200px] w-full border-0', 'Ad slot: masthead')}
 
         {/* No padding on this row and the skins flex. A takeover's
             colour runs to the edge of the window; boxing it in a
