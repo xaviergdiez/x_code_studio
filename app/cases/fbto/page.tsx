@@ -28,12 +28,20 @@ import { useScrollReveal } from '@/lib/motion';
  *   "Kies de zorgverzekering die bij jou past"
  *   "Kies uit 11 modules en sluit binnen 2 minuten af"
  *   "Of je nu van spelen of van sporten houdt"
+ *   the "Jij kiest. FBTO" lockup in the Mozaïek
  *   a Campaign of the Year 2019 ribbon, baked into the Mozaïek
  *
  * The ribbon is a nomination, not a win, and it belongs to the
  * Mozaïek rather than to the campaign. An earlier version of
  * this page read "Weborama Campaign of the Year" flat, which
  * claims a prize that was not won. Nominated is the claim.
+ *
+ * The "jij kiest" framing is not an invention either. FBTO's agency
+ * states it as the brand's central principle: "Het centrale
+ * uitgangspunt van FBTO is vrijheid: 'jij kiest'", alongside a
+ * young, digitally confident target audience. That is what ties the
+ * modular product to the formats: the platform promises a choice,
+ * so the placement had to contain one.
  *
  * If real campaign metrics exist, they belong in a NUMBERS band
  * here. They are left out rather than guessed.
@@ -137,10 +145,12 @@ export default function FbtoCase() {
           </h1>
 
           <p className="mt-6 max-w-2xl text-body text-fg-muted">
-            FBTO sells health insurance you assemble yourself. Rich media for
-            the Dutch market that puts the assembling inside the ad, across a
-            native tile unit, a cross-device scroller and a homepage takeover.
-            Delivered as part of the team at Monks.
+            FBTO&apos;s brand platform is <span className="text-fg">jij kiest</span>,
+            you choose, and the product is a health policy you assemble from
+            eleven modules. Rich media for the Dutch market that moved the
+            choosing into the placement: a native tile unit, a cross-device
+            scroller and a homepage takeover. Delivered as part of the team at
+            Monks.
           </p>
         </div>
       </section>
@@ -148,19 +158,22 @@ export default function FbtoCase() {
       {/* ─── PROBLEM ─── */}
       <Section width="prose">
         <SectionHeading eyebrow="The problem">
-          The selling point is also the obstacle
+          A brand about choosing, in a format with nothing to choose
         </SectionHeading>
         <div className="space-y-5 text-body text-fg-muted">
           <p>
-            FBTO&apos;s proposition is modularity: you pick from eleven cover
-            modules and build a policy that matches how you actually live. That
-            is the reason to choose them and it is impossible to put in a
-            banner, because the whole point is the choosing.
+            Freedom is the whole of FBTO&apos;s positioning, and it carries one
+            line: jij kiest. You choose. The product backs it literally, a
+            policy built from eleven cover modules you assemble yourself, and
+            the audience the brand was chasing was young and comfortable doing
+            that online.
           </p>
           <p>
-            Flatten it to one frame and it becomes another insurance ad with a
-            logo. The brief was really a format problem: find placements where
-            the choosing can happen before anyone clicks away.
+            A static banner can state that line and nothing else. It says you
+            choose while offering no choice, which is the one way to make a
+            freedom platform read as a slogan. The brief was a format problem
+            before it was a creative one: find placements where the choosing
+            can actually happen, before anyone clicks away.
           </p>
         </div>
       </Section>
