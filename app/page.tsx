@@ -320,7 +320,7 @@ const CASES = [
     accent: 'fbto',
     headline: 'Eleven modules, three formats, one build',
     body: 'Rich media for a health policy you assemble yourself: a native tile unit, a cross-device scroller and a homepage takeover, sharing one set of parts.',
-    award: 'Weborama Campaign of the Year 2019',
+    award: 'Weborama Campaign of the Year nominee',
     // The three figures that sat here, 12.6s time in frame, 3x CTR
     // and 61% recall lift, had no source in the portfolio, the
     // creative or anywhere else. They are replaced with facts the

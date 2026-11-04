@@ -30,11 +30,28 @@ import { useScrollReveal } from '@/lib/motion';
  *   "Of je nu van spelen of van sporten houdt"
  *   a Campaign of the Year 2019 ribbon, baked into the Mozaïek
  *
+ * The ribbon is a nomination, not a win, and it belongs to the
+ * Mozaïek rather than to the campaign. An earlier version of
+ * this page read "Weborama Campaign of the Year" flat, which
+ * claims a prize that was not won. Nominated is the claim.
+ *
  * If real campaign metrics exist, they belong in a NUMBERS band
  * here. They are left out rather than guessed.
  */
 
-const FORMATS = [
+type Format = {
+  id: string;
+  name: string;
+  kind: string;
+  lede: string;
+  traits: string[];
+  video: string;
+  poster: string;
+  /** Award line, where one belongs to this format specifically. */
+  note?: string;
+};
+
+const FORMATS: Format[] = [
   {
     id: 'mozaiek',
     name: 'Native Mozaïek',
@@ -42,6 +59,7 @@ const FORMATS = [
     lede:
       'A grid of tiles, one per cover module, sitting in the feed as a native placement. The tiles live on separate planes and move independently, so the unit reads as depth rather than as a banner with buttons.',
     traits: ['Native placement', 'Multiple planes', 'Tile per module'],
+    note: 'Nominated for Weborama Campaign of the Year 2019.',
     video: '/video/fbto/mozaiek.mp4',
     poster: '/video/fbto/mozaiek-poster.jpg',
   },
@@ -111,7 +129,7 @@ export default function FbtoCase() {
           </Link>
 
           <p className="mb-4 inline-block rounded-card border border-accent/50 px-3 py-1 text-label uppercase tracking-label text-accent">
-            Weborama Campaign of the Year 2019
+            Mozaïek nominated · Weborama Campaign of the Year 2019
           </p>
 
           <h1 data-split className="max-w-4xl text-h1 font-bold tracking-hero text-fg md:text-display">
@@ -181,6 +199,9 @@ export default function FbtoCase() {
                 </p>
                 <h3 className="mt-2 text-h2 font-bold text-fg">{f.name}</h3>
                 <p className="mt-4 text-body text-fg-muted">{f.lede}</p>
+                {f.note && (
+                  <p className="mt-4 text-small font-bold text-accent">{f.note}</p>
+                )}
                 <ul className="mt-5 flex flex-wrap gap-2">
                   {f.traits.map((t) => (
                     <li
