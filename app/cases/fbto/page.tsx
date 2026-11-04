@@ -6,6 +6,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading, Card } from '@/components/ui/Section';
 import { TimeInFrame } from '@/components/case/TimeInFrame';
+import { NoodleDraw } from '@/components/case/NoodleDraw';
 import { useScrollReveal } from '@/lib/motion';
 import { CountUpStat } from '@/components/case/CountUpStat';
 
@@ -40,6 +41,18 @@ export default function FbtoCase() {
             background:
               'radial-gradient(ellipse at 20% 70%, color-mix(in srgb, var(--color-accent) 14%, transparent) 0%, transparent 60%)',
           }}
+        />
+
+        {/* The noodle, from the 2018 campaign page. Sits behind the
+            copy at low opacity as page identity rather than as a
+            graphic: this was the one case with no shape of its own.
+            --noodle-end points the head of the ribbon at the FBTO
+            accent, so it runs neon into pink instead of into the
+            site's default blue. */}
+        <NoodleDraw
+          className="pointer-events-none absolute -right-[18%] top-0 h-full w-[78%] opacity-30 [--noodle-end:var(--color-signal)] [--noodle-start:var(--color-accent)] sm:-right-[12%] lg:w-[46%]"
+          svgClassName="h-full w-full"
+          preserveAspectRatio="xMidYMid slice"
         />
 
         <div className="relative z-10 mx-auto grid w-full max-w-6xl gap-12 px-5 pb-16 sm:px-8 lg:grid-cols-[1.3fr_1fr] lg:items-end">

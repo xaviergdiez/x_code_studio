@@ -38,7 +38,19 @@ const NOODLE_VIEWBOX = '0 0 802.11 1009.5';
 const NOODLE_D =
   'M47.5,962Q132,881.21,93,775c-38.9-106.28-5.33-165.6,44.45-195.74S263.74,545,320,635.11,434.78,713.18,464,698s48.74-50.23,41.15-91.41c-16.79-91.07-134-76.87-143.35-161.73s89.17-131,164.89-64.39c78.74,69.23,169.56,36.41,203.68-21.54,56.39-95.71,12.7-197.7-113.37-233.82C558.83,109,512.55,81.62,481.11,47.5';
 
-export function NoodleDraw() {
+export function NoodleDraw({
+  className = 'relative',
+  svgClassName = 'mx-auto block h-[clamp(18rem,56vh,28rem)] w-auto overflow-visible',
+  preserveAspectRatio = 'xMidYMid meet',
+}: {
+  /** Wrapper. Also where to set --noodle-start / --noodle-end. */
+  className?: string;
+  /** Sizing for the svg itself, so it can fill a hero instead of
+   *  sitting centred at its own height. */
+  svgClassName?: string;
+  /** 'slice' fills and crops, for use as a full-bleed backdrop. */
+  preserveAspectRatio?: string;
+} = {}) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const gradId = `noodle-${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
@@ -85,10 +97,11 @@ export function NoodleDraw() {
   }, [gradId]);
 
   return (
-    <div ref={wrapRef} className="relative">
+    <div ref={wrapRef} className={className}>
       <svg
         viewBox={NOODLE_VIEWBOX}
-        className="mx-auto block h-[clamp(18rem,56vh,28rem)] w-auto overflow-visible"
+        preserveAspectRatio={preserveAspectRatio}
+        className={svgClassName}
         aria-hidden="true"
         focusable="false"
       >

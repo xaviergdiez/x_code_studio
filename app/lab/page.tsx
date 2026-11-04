@@ -10,7 +10,8 @@ import { GridCrosshair } from '@/components/lab/GridCrosshair';
 import { DistortLinks } from '@/components/lab/DistortLinks';
 import { PixelReveal } from '@/components/lab/PixelReveal';
 import { TwilightPhone } from '@/components/lab/TwilightPhone';
-import { NoodleDraw } from '@/components/lab/NoodleDraw';
+import { NoodleDraw } from '@/components/case/NoodleDraw';
+import { HuaweiTakeover } from '@/components/lab/HuaweiTakeover';
 
 /**
  * Motion lab.
@@ -220,14 +221,23 @@ export default function Lab() {
         </div>
       </Section>
 
-      {/* ─── 05 · TWILIGHT PHONE ─── */}
+      {/* ─── 05 · HUAWEI, ONE CASE IN TWO PIECES ─── */}
       <Section>
         <SectionHeading
           eyebrow="05 · not from Codrops"
-          lede="The Mate 20 Pro unit that shipped at Monks in 2018, ported from GSAP 2 to GSAP 3. Move the pointer across it: the phone's hues shift one way, the backdrop's the other, and the highlight follows your cursor."
+          lede="Two campaigns, one client, two different hard problems. The 2018 Mate 20 Pro banner had to make glass out of almost no bytes. The 2019 P30 Pro takeover had to keep four separately served documents telling the same story. Both are below, because neither one alone is the case."
         >
-          A phone you can turn over
+          Huawei, in two pieces
         </SectionHeading>
+
+        <h3 className="text-h3 font-bold text-fg">
+          2018 · a phone you can turn over
+        </h3>
+        <p className="mb-6 mt-2 max-w-2xl text-small text-fg-muted">
+          Ported from GSAP 2 to GSAP 3. Move the pointer across it: the
+          phone&apos;s hues shift one way, the backdrop&apos;s the other, and the
+          highlight follows your cursor.
+        </p>
 
         <TwilightPhone />
 
@@ -271,6 +281,63 @@ export default function Lab() {
               delivered as part of the team at Monks.
             </p>
           </Card>
+        </div>
+
+        {/* ─── the 2019 half ─── */}
+        <div className="mt-20">
+          <h3 className="text-h3 font-bold text-fg">
+            2019 · a colour you pick once
+          </h3>
+          <p className="mb-6 mt-2 max-w-2xl text-small text-fg-muted">
+            The P30 Pro homepage takeover. Pick a finish in the 300x250 and the
+            masthead and both skins follow. Twilight is in the picker too, drawn
+            rather than photographed, which is the 2018 phone arriving through
+            the 2019 mechanism.
+          </p>
+
+          <HuaweiTakeover />
+
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            <Card highlighted>
+              <h3 className="text-h3 font-bold text-fg">These are real iframes</h3>
+              <p className="mt-2 text-small text-fg-muted">
+                The easy version of this panel is one React tree with four divs
+                and a useState. It would look the same and prove nothing,
+                because the recolouring was never the hard part. Each slot here
+                is a separate document with its own script and no access to the
+                others, and postMessage stands in for Weborama&apos;s screenad
+                API. Same topology as the original, same failure modes.
+              </p>
+            </Card>
+            <Card>
+              <h3 className="text-h3 font-bold text-fg">No slot recolours itself</h3>
+              <p className="mt-2 text-small text-fg-muted">
+                Click a swatch and the rectangle does not change on its own. It
+                reports the pick to the page, the page fans it back to all four,
+                and each slot applies it. That round trip is what keeps four
+                documents in step instead of three plus one that drifted.
+              </p>
+            </Card>
+            <Card>
+              <h3 className="text-h3 font-bold text-fg">Late frames get caught up</h3>
+              <p className="mt-2 text-small text-fg-muted">
+                Every slot announces itself when it loads and is sent the
+                current finish in reply. Without that handshake a skin that
+                finished loading a second after the others would come up on the
+                default colour, which is the classic takeover bug: three
+                surfaces agreeing and one insisting on blue.
+              </p>
+            </Card>
+            <Card>
+              <h3 className="text-h3 font-bold text-fg">Why this belongs on the case</h3>
+              <p className="mt-2 text-small text-fg-muted">
+                The Huawei case page currently runs an automatic colour loop. It
+                shows the finishes and hides the work: the real unit was a
+                choice that propagated across four independently served
+                documents. A loop is decoration, a picker is evidence.
+              </p>
+            </Card>
+          </div>
         </div>
       </Section>
 
