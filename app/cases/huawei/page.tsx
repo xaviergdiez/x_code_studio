@@ -195,9 +195,7 @@ export default function HuaweiCase() {
         <h3 className="mt-16 text-h3 font-bold text-fg">Try the mechanism</h3>
         <p className="mb-6 mt-2 max-w-2xl text-small text-fg-muted">
           A rebuild of the same topology, so you can drive it. Pick a finish in
-          the rectangle and the masthead and both skins follow. Twilight is in
-          the picker too, drawn rather than photographed, which is the phone
-          above arriving through the newer mechanism.
+          the rectangle and the masthead and both skins follow.
         </p>
 
         <HuaweiTakeover />

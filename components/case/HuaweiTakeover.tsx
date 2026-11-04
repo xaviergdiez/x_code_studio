@@ -2,12 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '@/lib/motion';
-import {
-  PHONE_BODY,
-  PHONE_VIEWBOX,
-  PHONE_BACK_MASK,
-  PHONE_BACK_VIEWBOX,
-} from './huaweiPaths';
+import { PHONE_BACK_MASK, PHONE_BACK_VIEWBOX } from './huaweiPaths';
 
 /**
  * Candidate 7: the P30 Pro homepage takeover, rebuilt honestly.
@@ -32,13 +27,17 @@ import {
  * slot, and each slot applies it locally. postMessage stands in for
  * the screenad API. Same topology, same failure modes, no shortcut.
  *
- * ── On the fifth finish ──────────────────────────────────────────
+ * ── Four finishes, not five ──────────────────────────────────────
  *
- * Four finishes are P30 Pro photography. The fifth is Twilight,
- * drawn as the SVG from the 2018 Mate 20 Pro banner rather than
- * photographed. Putting it in the same picker is the point: one
- * client, two campaigns, a drawn phone and a shot phone switching
- * through the same mechanism.
+ * The picker carries the four photographed P30 Pro finishes and
+ * nothing else, because that is what the campaign shipped. The
+ * drawn Twilight phone from the SVG experiment was in here for a
+ * while, as a fifth swatch, which was a mistake twice over: it
+ * belonged to the invented two-campaign framing, and it is a
+ * different silhouette drawn at a different viewBox, so it read
+ * as a flat slab sitting among four photographs. The experiment
+ * has its own section at the end of the case, which is where it
+ * actually belongs.
  *
  * The finish colours below are the device finishes themselves, so
  * they are content rather than theme, which is why they are literal
@@ -50,8 +49,8 @@ type Finish = {
   id: string;
   name: string;
   stops: [string, string, string];
-  /** Back-of-phone photograph, or null for the drawn Twilight. */
-  img: string | null;
+  /** Back-of-phone photograph. Every finish here has one. */
+  img: string;
   /** Whether label text on this finish should be light or dark. */
   ink: 'light' | 'dark';
 };
@@ -61,7 +60,6 @@ const FINISHES: Finish[] = [
   { id: 'amber', name: 'Amber Sunrise', stops: ['#ff8400', '#ff6700', '#ff3602'], img: 'orange_back.jpg', ink: 'dark' },
   { id: 'black', name: 'Black', stops: ['#7c7c7c', '#4a4a4a', '#000000'], img: 'black_back.jpg', ink: 'light' },
   { id: 'crystal', name: 'Breathing Crystal', stops: ['#d8edfc', '#a1daf8', '#4db4e7'], img: 'blue_back.jpg', ink: 'dark' },
-  { id: 'twilight', name: 'Twilight', stops: ['hsl(212,30%,8%)', 'hsl(240,51%,48%)', 'hsl(197,94%,79%)'], img: null, ink: 'light' },
 ];
 
 type SlotKind = 'masthead' | 'skin' | 'rect';
@@ -83,30 +81,21 @@ function slotDoc(kind: SlotKind, slotIndex: number, finishes: Finish[]): string 
       : '';
 
   // One layer per finish, all present from the start so a switch is
-  // a cross-fade rather than a load. The photographed finishes are
-  // clipped to the device silhouette by filling the mask path with
-  // a pattern holding the JPEG, which is how the portfolio did it:
-  // without the mask each photo arrives in its own 400x840 white
-  // box. Twilight has no photograph, so it is the drawn path with
-  // the gradient instead.
+  // a cross-fade rather than a load. Each photograph is clipped to
+  // the device silhouette by filling the mask path with a pattern
+  // holding the JPEG, which is how the portfolio did it: without
+  // the mask each photo arrives in its own 400x840 white box.
   const layers = finishes
-    .map((f) => {
-      const art = f.img
-        ? `<svg viewBox="${PHONE_BACK_VIEWBOX}" xmlns="http://www.w3.org/2000/svg">
-             <defs><pattern id="pat-${f.id}" patternUnits="userSpaceOnUse" width="400" height="840" x="0" y="0">
-               <image href="/images/huawei/${f.img}" width="400" height="840" x="0" y="0"/>
-             </pattern></defs>
-             <path d="${PHONE_BACK_MASK}" fill="url(#pat-${f.id})"/>
-           </svg>`
-        : `<svg viewBox="${PHONE_VIEWBOX}" xmlns="http://www.w3.org/2000/svg">
-             <defs><linearGradient id="grad-${f.id}" x1="445" y1="1143" x2="156" y2="65" gradientUnits="userSpaceOnUse">
-               <stop offset="0" stop-color="hsl(212,30%,8%)"/><stop offset=".55" stop-color="hsl(248,38%,16%)"/>
-               <stop offset=".87" stop-color="hsl(240,51%,48%)"/><stop offset="1" stop-color="hsl(197,94%,79%)"/>
-             </linearGradient></defs>
-             <path d="${PHONE_BODY}" fill="url(#grad-${f.id})"/>
-           </svg>`;
-      return `<div class="layer" data-f="${f.id}">${art}</div>`;
-    })
+    .map(
+      (f) => `<div class="layer" data-f="${f.id}">
+         <svg viewBox="${PHONE_BACK_VIEWBOX}" xmlns="http://www.w3.org/2000/svg">
+           <defs><pattern id="pat-${f.id}" patternUnits="userSpaceOnUse" width="400" height="840" x="0" y="0">
+             <image href="/images/huawei/${f.img}" width="400" height="840" x="0" y="0"/>
+           </pattern></defs>
+           <path d="${PHONE_BACK_MASK}" fill="url(#pat-${f.id})"/>
+         </svg>
+       </div>`,
+    )
     .join('');
 
   return `<!doctype html><html lang="en"><head><meta charset="utf-8">

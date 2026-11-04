@@ -290,9 +290,7 @@ export default function Lab() {
           </h3>
           <p className="mb-6 mt-2 max-w-2xl text-small text-fg-muted">
             The P30 Pro homepage takeover. Pick a finish in the 300x250 and the
-            masthead and both skins follow. Twilight is in the picker too, drawn
-            rather than photographed, which is the 2018 phone arriving through
-            the 2019 mechanism.
+            masthead and both skins follow.
           </p>
 
           <HuaweiTakeover />
