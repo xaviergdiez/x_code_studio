@@ -44,15 +44,23 @@ export default function FbtoCase() {
         />
 
         {/* The noodle, from the 2018 campaign page. Sits behind the
-            copy at low opacity as page identity rather than as a
-            graphic: this was the one case with no shape of its own.
-            --noodle-end points the head of the ribbon at the FBTO
-            accent, so it runs neon into pink instead of into the
-            site's default blue. */}
+            copy as page identity rather than as a graphic: this was
+            the one case with no shape of its own.
+
+            Both stops are overridden. The component defaults to neon
+            into signal, and a green ribbon on a pink-accented page
+            fought the case rather than carrying it, so here it runs
+            accent into signal.
+
+            mode="intro" because this is a hero. Scroll-scrubbing it
+            drew nothing: the trigger opens at 'top 80%' and a hero
+            is already past that on load, so the ribbon painted
+            finished before anyone could scroll. */}
         <NoodleDraw
           className="pointer-events-none absolute -right-[18%] top-0 h-full w-[78%] opacity-30 [--noodle-end:var(--color-signal)] [--noodle-start:var(--color-accent)] sm:-right-[12%] lg:w-[46%]"
           svgClassName="h-full w-full"
           preserveAspectRatio="xMidYMid slice"
+          mode="intro"
         />
 
         <div className="relative z-10 mx-auto grid w-full max-w-6xl gap-12 px-5 pb-16 sm:px-8 lg:grid-cols-[1.3fr_1fr] lg:items-end">

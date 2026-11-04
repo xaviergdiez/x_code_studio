@@ -9,9 +9,9 @@ import { SvgWarpText } from '@/components/lab/SvgWarpText';
 import { GridCrosshair } from '@/components/lab/GridCrosshair';
 import { DistortLinks } from '@/components/lab/DistortLinks';
 import { PixelReveal } from '@/components/lab/PixelReveal';
-import { TwilightPhone } from '@/components/lab/TwilightPhone';
+import { TwilightPhone } from '@/components/case/TwilightPhone';
 import { NoodleDraw } from '@/components/case/NoodleDraw';
-import { HuaweiTakeover } from '@/components/lab/HuaweiTakeover';
+import { HuaweiTakeover } from '@/components/case/HuaweiTakeover';
 
 /**
  * Motion lab.

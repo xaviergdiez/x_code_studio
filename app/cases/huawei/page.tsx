@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading, Card } from '@/components/ui/Section';
 import { useScrollReveal } from '@/lib/motion';
 import { HuaweiPhones } from '@/components/case/HuaweiPhones';
+import { TwilightPhone } from '@/components/case/TwilightPhone';
+import { HuaweiTakeover } from '@/components/case/HuaweiTakeover';
 
 /**
  * Huawei case study. Follows the BMW template.
@@ -124,6 +126,25 @@ export default function HuaweiCase() {
         </ul>
       </Section>
 
+      {/* The approach, demonstrated rather than described. The two
+          sections above explain that the phone is drawn and not
+          photographed; this is the drawn phone. */}
+      <Section>
+        <SectionHeading
+          eyebrow="The unit"
+          lede="The Mate 20 Pro, drawn as one filled path rather than photographed. Move the pointer across it: the phone's hues shift one way, the backdrop's the other, and the specular highlight follows the cursor. That opposition is what makes the glass read as glass."
+        >
+          Turn it over
+        </SectionHeading>
+
+        <TwilightPhone />
+
+        <p className="mt-6 max-w-2xl text-small text-fg-subtle">
+          No video, no image sequence, no sprite sheet. All three were ruled out
+          by the weight budget, and this is what was built instead.
+        </p>
+      </Section>
+
       <Section width="prose">
         <SectionHeading eyebrow="The outcome">
           People stayed and turned the phone over
@@ -137,6 +158,45 @@ export default function HuaweiCase() {
           <p>
             It took the Weborama APTO award for the Dutch market that year.
           </p>
+        </div>
+      </Section>
+
+      {/* The 2019 follow-up. Same client, different hard problem:
+          not one unit under a weight budget, but four separately
+          served documents that had to agree. */}
+      <Section tone="raised">
+        <SectionHeading
+          eyebrow="The year after"
+          lede="For the P30 Pro the choice moved out of the banner and onto the whole page. Pick a finish in the 300x250 and the masthead and both skins follow. Twilight is in the picker too, drawn rather than photographed, which is the phone above arriving through the newer mechanism."
+        >
+          One colour, four ad slots
+        </SectionHeading>
+
+        <HuaweiTakeover />
+
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
+          <Card>
+            <h3 className="text-h3 font-bold text-fg">Four documents, one state</h3>
+            <p className="mt-2 text-small text-fg-muted">
+              Every slot is served separately and none can see the others, so
+              the rectangle never recolours itself. It reports the pick, the
+              page fans it back to all four, and each applies it. That round
+              trip is what keeps them in step instead of three agreeing and one
+              drifting. Weborama&apos;s screenad API carried it on the live
+              campaign; this rebuild uses real iframes and postMessage, which is
+              the same topology.
+            </p>
+          </Card>
+          <Card>
+            <h3 className="text-h3 font-bold text-fg">Late slots get caught up</h3>
+            <p className="mt-2 text-small text-fg-muted">
+              Each slot announces itself on load and is answered with the
+              current finish. Without that handshake, a skin that finished
+              loading a second after the others came up on the default colour,
+              which is the classic takeover failure: three surfaces agreeing and
+              one insisting on blue.
+            </p>
+          </Card>
         </div>
       </Section>
 

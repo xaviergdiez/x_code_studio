@@ -42,6 +42,7 @@ export function NoodleDraw({
   className = 'relative',
   svgClassName = 'mx-auto block h-[clamp(18rem,56vh,28rem)] w-auto overflow-visible',
   preserveAspectRatio = 'xMidYMid meet',
+  mode = 'scroll',
 }: {
   /** Wrapper. Also where to set --noodle-start / --noodle-end. */
   className?: string;
@@ -50,6 +51,10 @@ export function NoodleDraw({
   svgClassName?: string;
   /** 'slice' fills and crops, for use as a full-bleed backdrop. */
   preserveAspectRatio?: string;
+  /** 'scroll' scrubs with scroll position, for a mid-page section.
+   *  'intro' plays once on mount, which is the only one that works
+   *  in a hero. */
+  mode?: 'scroll' | 'intro';
 } = {}) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
@@ -71,20 +76,33 @@ export function NoodleDraw({
       });
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const tw = gsap.fromTo(
-          path,
-          { drawSVG: '0% 0%' },
-          {
-            drawSVG: '0% 100%',
-            ease: 'none',
-            scrollTrigger: {
-              trigger: wrap,
-              start: 'top 80%',
-              end: 'top 25%',
-              scrub: 0.5,
-            },
-          },
-        );
+        // Scroll-scrubbing a hero element does nothing. The trigger
+        // starts at 'top 80%', and a hero's top is already above the
+        // viewport on load, so the scrub is complete before anyone
+        // can scroll and the ribbon simply paints finished. That is
+        // what 'intro' is for: it plays once on its own, at the 2.2s
+        // power1.out the original used.
+        const tw =
+          mode === 'intro'
+            ? gsap.fromTo(
+                path,
+                { drawSVG: '0% 0%' },
+                { drawSVG: '0% 100%', duration: 2.2, ease: 'power1.out', delay: 0.15 },
+              )
+            : gsap.fromTo(
+                path,
+                { drawSVG: '0% 0%' },
+                {
+                  drawSVG: '0% 100%',
+                  ease: 'none',
+                  scrollTrigger: {
+                    trigger: wrap,
+                    start: 'top 80%',
+                    end: 'top 25%',
+                    scrub: 0.5,
+                  },
+                },
+              );
         return () => {
           tw.scrollTrigger?.kill();
           tw.kill();
@@ -94,7 +112,7 @@ export function NoodleDraw({
     }, wrap);
 
     return () => ctx.revert();
-  }, [gradId]);
+  }, [gradId, mode]);
 
   return (
     <div ref={wrapRef} className={className}>
