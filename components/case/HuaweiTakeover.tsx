@@ -301,10 +301,14 @@ export function HuaweiTakeover() {
             rather than a bar. */}
         {slot('masthead', 0, 'block h-[132px] w-full border-0', 'Ad slot: masthead')}
 
-        <div className="flex justify-center gap-1.5 bg-neutral-100 p-1.5">
-          {slot('skin', 1, 'hidden h-[430px] w-[150px] shrink-0 border-0 sm:block md:w-[200px]', 'Ad slot: left skin')}
+        {/* No padding on this row and the skins flex. A takeover's
+            colour runs to the edge of the window; boxing it in a
+            grey gutter turns the skins into two banners sitting on a
+            page, which is the opposite of what the format does. */}
+        <div className="flex gap-1.5 bg-neutral-100">
+          {slot('skin', 1, 'hidden h-[430px] min-w-0 flex-1 border-0 sm:block', 'Ad slot: left skin')}
 
-          <div className="min-w-0 w-full max-w-[460px] rounded bg-white p-4">
+          <div className="w-full min-w-0 max-w-[460px] shrink-0 bg-white p-4">
             <div className="mb-3 h-2.5 w-2/5 rounded bg-neutral-300" />
             <div className="space-y-1.5">
               {[1, 0.95, 0.88].map((w, i) => (
@@ -321,7 +325,7 @@ export function HuaweiTakeover() {
             </div>
           </div>
 
-          {slot('skin', 3, 'hidden h-[430px] w-[150px] shrink-0 border-0 sm:block md:w-[200px]', 'Ad slot: right skin')}
+          {slot('skin', 3, 'hidden h-[430px] min-w-0 flex-1 border-0 sm:block', 'Ad slot: right skin')}
         </div>
       </div>
 
