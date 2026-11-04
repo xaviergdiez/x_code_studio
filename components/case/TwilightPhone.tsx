@@ -5,7 +5,14 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
 import { useIsomorphicLayoutEffect } from '@/lib/motion';
-import { PHONE_VIEWBOX, PHONE_BODY, PHONE_OUTER, PHONE_INNER } from './huaweiPaths';
+import {
+  PHONE_VIEWBOX,
+  PHONE_BODY,
+  PHONE_OUTER,
+  PHONE_INNER,
+  PHONE_PHOTO,
+  PHONE_PHOTO_SRC,
+} from './huaweiPaths';
 
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
 
@@ -92,6 +99,7 @@ export function TwilightPhone() {
   const gBack = `tw-back-${uid}`;
   const fLight = `tw-light-${uid}`;
   const fShadow = `tw-shadow-${uid}`;
+  const pPhoto = `tw-photo-${uid}`;
 
   useIsomorphicLayoutEffect(() => {
     const wrap = wrapRef.current;
@@ -107,7 +115,7 @@ export function TwilightPhone() {
 
       // ── Reduced motion: paint the finished state, animate nothing.
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set('[data-tw-body]', { autoAlpha: 1 });
+        gsap.set('[data-tw-body], [data-tw-photo]', { autoAlpha: 1 });
         gsap.set('[data-tw-outline]', { autoAlpha: 0 });
         phoneStops().forEach((s, i) =>
           gsap.set(s, { stopColor: stopColor(i, 0, 0, 1) }),
@@ -120,7 +128,7 @@ export function TwilightPhone() {
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         // ── Build state. The body is hidden and both ramps are flat
         //    dark, so the reveal starts from an unlit slab.
-        gsap.set('[data-tw-body]', { autoAlpha: 0 });
+        gsap.set('[data-tw-body], [data-tw-photo]', { autoAlpha: 0 });
         gsap.set(['[data-tw-outer]', '[data-tw-inner]'], { drawSVG: '0% 0%' });
         gsap.set([...phoneStops(), ...backStops()], { stopColor: DARK });
 
@@ -134,7 +142,7 @@ export function TwilightPhone() {
           ease: 'none',
           stagger: 0.25,
         })
-          .to('[data-tw-body]', { autoAlpha: 1, duration: 1, ease: 'sine.inOut' }, '-=0.5')
+          .to('[data-tw-body], [data-tw-photo]', { autoAlpha: 1, duration: 1, ease: 'sine.inOut' }, '-=0.5')
           // The ramp travels up the body: stop 0 moves first, stop 7
           // last. A single tween on all eight would cross-fade and
           // lose the travel, which is the whole effect.
@@ -256,7 +264,7 @@ export function TwilightPhone() {
     }, wrap);
 
     return () => ctx.revert();
-  }, [gPhone, gBack, fLight]);
+  }, [gPhone, gBack, fLight, pPhoto]);
 
   return (
     <div
@@ -338,6 +346,19 @@ export function TwilightPhone() {
             <feGaussianBlur stdDeviation="26" />
           </filter>
 
+          {/* The device photograph, at exactly the viewBox size, so
+              the pattern lines up one to one with the geometry. */}
+          <pattern
+            id={pPhoto}
+            patternUnits="userSpaceOnUse"
+            width="600"
+            height="1200"
+            x="0"
+            y="0"
+          >
+            <image href={PHONE_PHOTO_SRC} width="600" height="1200" x="0" y="0" />
+          </pattern>
+
           {/* Blur, then a specular highlight from a movable point
               light, composited back over the source. This is what
               makes a flat fill read as curved glass. */}
@@ -376,7 +397,13 @@ export function TwilightPhone() {
           transform="translate(6 26)"
         />
 
-        {/* The phone itself. */}
+        {/* The photograph, under the gradient. PHONE_BODY above
+            has the camera module cut out of it, so the lenses, the
+            Leica text and the side buttons come from here while the
+            gradient paints the glass around them. */}
+        <path data-tw-photo d={PHONE_PHOTO} fill={`url(#${pPhoto})`} />
+
+        {/* The Twilight finish, painted over the photograph. */}
         <path data-tw-body d={PHONE_BODY} fill={`url(#${gPhone})`} filter={`url(#${fLight})`} />
 
         {/* Stroke-only outline, drawn on first and retired once the

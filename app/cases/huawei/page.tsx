@@ -163,14 +163,69 @@ export default function HuaweiCase() {
 
       {/* The 2019 follow-up. Same client, different hard problem:
           not one unit under a weight budget, but four separately
-          served documents that had to agree. */}
+          served documents that had to agree.
+
+          Recorded footage first, then the rebuild. The video is what
+          actually ran on nu.nl and is the evidence; the interactive
+          version below it explains the mechanism. Showing only the
+          rebuild would be asking the reader to take the campaign on
+          trust. */}
       <Section tone="raised">
         <SectionHeading
           eyebrow="The year after"
-          lede="For the P30 Pro the choice moved out of the banner and onto the whole page. Pick a finish in the 300x250 and the masthead and both skins follow. Twilight is in the picker too, drawn rather than photographed, which is the phone above arriving through the newer mechanism."
+          lede="For the P30 Pro the choice moved out of the banner and onto the whole page. Four separately served ad slots, one finish, picked once."
         >
           One colour, four ad slots
         </SectionHeading>
+
+        {/* preload="none" so nothing but the posters downloads until
+            a visitor asks for it. The two clips are 442KB and 261KB,
+            down from 6.1MB and 432KB of source: a case page arguing
+            for a weight budget should not be the heaviest page on
+            the site. */}
+        <div className="grid gap-4 lg:grid-cols-[1.6fr_1fr] lg:items-start">
+          <figure className="m-0">
+            <video
+              className="w-full rounded-card border border-line bg-ink-900"
+              src="/video/huawei/hpto.mp4"
+              poster="/video/huawei/hpto-poster.jpg"
+              preload="none"
+              controls
+              muted
+              loop
+              playsInline
+            />
+            <figcaption className="mt-3 text-small text-fg-subtle">
+              The live takeover on nu.nl. Masthead, both skins and the in-page
+              rectangle moving together as the finish changes.
+            </figcaption>
+          </figure>
+
+          <figure className="m-0">
+            <video
+              className="w-full rounded-card border border-line bg-ink-900"
+              src="/video/huawei/picker.mp4"
+              poster="/video/huawei/picker-poster.jpg"
+              preload="none"
+              controls
+              muted
+              loop
+              playsInline
+            />
+            <figcaption className="mt-3 text-small text-fg-subtle">
+              The 300x250 up close. Kies je kleur: the phone scales up and the
+              whole surface takes its finish.
+            </figcaption>
+          </figure>
+        </div>
+
+        <h3 className="mt-16 text-h3 font-bold text-fg">Try the mechanism</h3>
+        <p className="mb-6 mt-2 max-w-2xl text-small text-fg-muted">
+          A rebuild of the same topology, so you can drive it. Pick a finish in
+          the rectangle and the masthead and both skins follow. Twilight is in
+          the picker too, drawn rather than photographed, which is the phone
+          above arriving through the newer mechanism.
+        </p>
 
         <HuaweiTakeover />
 
