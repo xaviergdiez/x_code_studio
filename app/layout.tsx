@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.x-code.studio"),
   title: "x-code.studio · Ad-tech production tooling",
-  description: "Scripts, templates and pipelines that turn manual ad production into an automated one. Built on 18 years shipping campaigns for BMW, Google and Huawei at Monks.",
+  description: "Scripts, templates and pipelines that turn manual ad production into an automated one. Built on 18 years shipping campaigns for BMW and Google at Monks, Huawei and FBTO at This Page.",
   icons: {
     icon: [
       {
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
   title: "x-code.studio · Ad-tech production tooling",
-    description: "Scripts, templates and pipelines that turn manual ad production into an automated one. Built on 18 years shipping campaigns for BMW, Google and Huawei at Monks.",
+    description: "Scripts, templates and pipelines that turn manual ad production into an automated one. Built on 18 years shipping campaigns for BMW and Google at Monks, Huawei and FBTO at This Page.",
     url: "https://www.x-code.studio",
     siteName: "x-code.studio",
     type: "website",

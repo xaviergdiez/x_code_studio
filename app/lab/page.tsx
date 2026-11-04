@@ -278,7 +278,7 @@ export default function Lab() {
               extracted from the original file rather than retyped. The Huawei
               wordmark, the client CTA and the Dutch copy are all left out: the
               technique transfers, the client&apos;s ad does not. The work was
-              delivered as part of the team at Monks.
+              delivered as part of the team at This Page.
             </p>
           </Card>
         </div>

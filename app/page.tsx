@@ -590,7 +590,7 @@ export default function Home() {
               <p className="enter enter-3 mt-6 max-w-xl text-body text-fg-muted max-lg:order-4 max-lg:mt-0 md:text-h3">
                 I build the pipelines that turn one master creative into every size and
                 every market, then teach your team to run them. Eighteen years shipping
-                campaigns for BMW, Google and Huawei at Monks.
+                campaigns for BMW and Google at Monks, Huawei and FBTO at This Page.
               </p>
 
               <div className="enter enter-4 mt-10 flex flex-col gap-4 max-lg:order-5 max-lg:mt-2 sm:flex-row sm:flex-wrap">
@@ -713,7 +713,7 @@ export default function Home() {
         {/* ─── WORK ─── */}
         <Section id="work">
           <div className="contents">
-            <SectionHeading lede="Four campaigns, delivered as part of the team at Monks. The pipelines I build now came out of this work.">
+            <SectionHeading lede="Four campaigns, delivered as part of the teams at Monks and This Page. The pipelines I build now came out of this work.">
               The work behind it
             </SectionHeading>
 

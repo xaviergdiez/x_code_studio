@@ -19,8 +19,8 @@ Every offer is a tier of that sentence. If a new section cannot be traced
 back to it, it does not belong on the homepage.
 
 The differentiator is that Xavi is a practitioner who also teaches. Lead
-with the shipped work at Monks (BMW, Google, Huawei), not with the tooling
-and definitely not with the aesthetic.
+with the shipped client work (BMW, Google, Huawei, FBTO), not with the
+tooling and definitely not with the aesthetic.
 
 ## Copy rules
 
@@ -51,10 +51,25 @@ Short, direct, warm. Second person. Specific over impressive.
 - **Two or three numbers on a page, maximum.** Nine consecutive
   superlatives train the reader to discount all of them. Every number
   kept must survive the question "and how would you know that."
-- **Attribute the client work to Monks.** The BMW, GTECH, FBTO and Huawei
-  work was delivered as part of the team at Monks. Saying so costs nothing,
-  because Monks is the credential. Implying otherwise is the kind of gap a
-  buyer notices and then stops trusting the rest of the page.
+- **Attribute each case to the right agency.** This is per client, not
+  one blanket line, and getting it wrong is the kind of gap a buyer
+  notices and then stops trusting the rest of the page.
+
+  | Case | Delivered at |
+  |---|---|
+  | BMW / MINI | Monks |
+  | GTECH (Google) | Monks |
+  | Huawei | This Page |
+  | FBTO | This Page |
+
+  Say so plainly: both agencies are the credential, and claiming sole
+  credit for team work is the failure to avoid. The testimonial section
+  is labelled as colleagues from Monks, so check that holds if quotes
+  are ever added or swapped.
+
+- **Never upgrade a nomination to a win.** The FBTO Mozaïek was
+  *nominated* for Weborama Campaign of the Year 2019. It did not win it.
+  Any award line states exactly what happened.
 - **Do not reference NEOLAND.** Xavi no longer teaches there. Teaching can
   still be described generically ("teach your team to run it") but no
   institution is named and nothing is described as "certified."
