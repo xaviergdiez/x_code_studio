@@ -10,6 +10,7 @@ import { GridCrosshair } from '@/components/lab/GridCrosshair';
 import { DistortLinks } from '@/components/lab/DistortLinks';
 import { PixelReveal } from '@/components/lab/PixelReveal';
 import { TwilightPhone } from '@/components/lab/TwilightPhone';
+import { NoodleDraw } from '@/components/lab/NoodleDraw';
 
 /**
  * Motion lab.
@@ -268,6 +269,57 @@ export default function Lab() {
               wordmark, the client CTA and the Dutch copy are all left out: the
               technique transfers, the client&apos;s ad does not. The work was
               delivered as part of the team at Monks.
+            </p>
+          </Card>
+        </div>
+      </Section>
+
+      {/* ─── 06 · NOODLE ─── */}
+      <Section tone="raised">
+        <SectionHeading
+          eyebrow="06 · also not from Codrops"
+          lede="One path from the 2018 FBTO page, stroked at 95 units with round caps so it reads as a ribbon rather than a line. Scroll to push it into frame."
+        >
+          Three hundred bytes of shape
+        </SectionHeading>
+
+        <NoodleDraw />
+
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
+          <Card highlighted>
+            <h3 className="text-h3 font-bold text-fg">Why it is worth reviving</h3>
+            <p className="mt-2 text-small text-fg-muted">
+              The FBTO case is the one case page with no shape of its own. It
+              runs on a time chart and three counters, which is the same
+              furniture every other page has. This gives it a silhouette, and
+              it costs 303 bytes of path data plus a plugin already loaded for
+              the hero.
+            </p>
+          </Card>
+          <Card>
+            <h3 className="text-h3 font-bold text-fg">The gradient was already yours</h3>
+            <p className="mt-2 text-small text-fg-muted">
+              The original stroke ran green into blue. That is close enough to
+              neon into signal that nothing needed inventing, so the stops
+              point at the tokens instead of at FBTO&apos;s brand colours. A page
+              that wants its own accent on the ribbon overrides one variable.
+            </p>
+          </Card>
+          <Card>
+            <h3 className="text-h3 font-bold text-fg">Scrubbed, not looped</h3>
+            <p className="mt-2 text-small text-fg-muted">
+              The original ran a 2.2 second yoyo forever. A ribbon cycling in
+              the corner of a page competes with reading, so this is tied to
+              scroll position: the reader pushes it in and can stop it halfway.
+            </p>
+          </Card>
+          <Card>
+            <h3 className="text-h3 font-bold text-fg">Where it goes next</h3>
+            <p className="mt-2 text-small text-fg-muted">
+              Behind the FBTO case hero at low opacity, with the copy on top.
+              At full strength beside a section it is a graphic; behind the
+              headline it is a page identity, which is the thing that case is
+              missing.
             </p>
           </Card>
         </div>
