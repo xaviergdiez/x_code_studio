@@ -5,25 +5,67 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading, Card } from '@/components/ui/Section';
-import { TimeInFrame } from '@/components/case/TimeInFrame';
 import { NoodleDraw } from '@/components/case/NoodleDraw';
 import { useScrollReveal } from '@/lib/motion';
-import { CountUpStat } from '@/components/case/CountUpStat';
 
 /**
- * FBTO case study. Follows the BMW template.
+ * FBTO.
  *
- * Figures are the portfolio's, per the reconciliation: 3x CTR
- * against static, 12.6s time-in-frame, 61% brand recall lift. The
- * old x-code.studio page claimed 250% engagement and an 85%
- * conversion bump, neither of which appears anywhere in the
- * portfolio and both of which read as round numbers with no method.
- * They are gone.
+ * Rewritten against the original campaign pages, because the first
+ * version of this page described work that did not happen. It
+ * claimed "interactive video segments, each answering one question",
+ * a 12.6 second average time in frame, a 3x click-through and a 61%
+ * recall lift. None of that is in the portfolio, the creative or any
+ * source I could find, and the house rule is that every number has
+ * to survive "and how would you know that". So the invented numbers
+ * are gone rather than restated.
  *
- * Time-in-frame is the strongest number here and the least
- * fashionable, which is exactly why it leads. 12.6 seconds is a
- * measurement, not a multiple.
+ * What the work actually was: three rich media formats for FBTO's
+ * modular health insurance, where the product is a set of eleven
+ * modules you assemble yourself. Everything stated below is visible
+ * in the creative itself:
+ *
+ *   "Kies de zorgverzekering die bij jou past"
+ *   "Kies uit 11 modules en sluit binnen 2 minuten af"
+ *   "Of je nu van spelen of van sporten houdt"
+ *   a Campaign of the Year 2019 ribbon, baked into the Mozaïek
+ *
+ * If real campaign metrics exist, they belong in a NUMBERS band
+ * here. They are left out rather than guessed.
  */
+
+const FORMATS = [
+  {
+    id: 'mozaiek',
+    name: 'Native Mozaïek',
+    kind: 'Native · 3D tile creative',
+    lede:
+      'A grid of tiles, one per cover module, sitting in the feed as a native placement. The tiles live on separate planes and move independently, so the unit reads as depth rather than as a banner with buttons.',
+    traits: ['Native placement', 'Multiple planes', 'Tile per module'],
+    video: '/video/fbto/mozaiek.mp4',
+    poster: '/video/fbto/mozaiek-poster.jpg',
+  },
+  {
+    id: 'interscroller',
+    name: 'Interactive Scroller',
+    kind: 'Interscroller · cross-device',
+    lede:
+      'One creative that runs from a phone to a desktop monitor. It detects orientation and reflows, so the same build fills a portrait handset and a landscape display without a second set of assets.',
+    traits: ['Phone to desktop', 'Detects orientation', 'One build'],
+    video: '/video/fbto/interscroller.mp4',
+    poster: '/video/fbto/interscroller-poster.jpg',
+  },
+  {
+    id: 'hpto',
+    name: 'Homepage takeover',
+    kind: 'HPTO · full page',
+    lede:
+      'Skins down both sides of a publisher homepage carrying video, with the in-page placement between them. The whole page becomes the unit for the length of the visit.',
+    traits: ['Both skins', 'Video in the skin', 'Publisher homepage'],
+    video: '/video/fbto/hpto.mp4',
+    poster: '/video/fbto/hpto-poster.jpg',
+  },
+];
 
 export default function FbtoCase() {
   const rootRef = useRef<HTMLElement>(null);
@@ -43,19 +85,15 @@ export default function FbtoCase() {
           }}
         />
 
-        {/* The noodle, from the 2018 campaign page. Sits behind the
-            copy as page identity rather than as a graphic: this was
-            the one case with no shape of its own.
-
-            Both stops are overridden. The component defaults to neon
-            into signal, and a green ribbon on a pink-accented page
-            fought the case rather than carrying it, so here it runs
-            accent into signal.
+        {/* The noodle, lifted from the Mozaïek creative where it is
+            the animated element travelling across the tiles. Both
+            gradient stops are overridden: the component defaults to
+            neon into signal, and a green ribbon on a pink-accented
+            page fought the case rather than carrying it.
 
             mode="intro" because this is a hero. Scroll-scrubbing it
-            drew nothing: the trigger opens at 'top 80%' and a hero
-            is already past that on load, so the ribbon painted
-            finished before anyone could scroll. */}
+            drew nothing, since a hero's top is already past the
+            trigger on load. */}
         <NoodleDraw
           className="pointer-events-none absolute -right-[18%] top-0 h-full w-[78%] opacity-30 [--noodle-end:var(--color-signal)] [--noodle-start:var(--color-accent)] sm:-right-[12%] lg:w-[46%]"
           svgClassName="h-full w-full"
@@ -63,8 +101,7 @@ export default function FbtoCase() {
           mode="intro"
         />
 
-        <div className="relative z-10 mx-auto grid w-full max-w-6xl gap-12 px-5 pb-16 sm:px-8 lg:grid-cols-[1.3fr_1fr] lg:items-end">
-          <div>
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-16 sm:px-8">
           <Link
             href="/#work"
             className="terminal mb-8 flex w-fit items-center gap-2 text-label uppercase tracking-label text-fg-subtle hover:text-accent"
@@ -74,100 +111,117 @@ export default function FbtoCase() {
           </Link>
 
           <p className="mb-4 inline-block rounded-card border border-accent/50 px-3 py-1 text-label uppercase tracking-label text-accent">
-            Weborama Campaign of the Year
+            Weborama Campaign of the Year 2019
           </p>
 
           <h1 data-split className="max-w-4xl text-h1 font-bold tracking-hero text-fg md:text-display">
-            Twelve seconds inside an insurance ad.
+            Eleven modules, three formats, one build.
           </h1>
 
           <p className="mt-6 max-w-2xl text-body text-fg-muted">
-            Rich media for FBTO in the Netherlands, built to explain a product
-            nobody wants to read about. Delivered as part of the team at Monks.
+            FBTO sells health insurance you assemble yourself. Rich media for
+            the Dutch market that puts the assembling inside the ad, across a
+            native tile unit, a cross-device scroller and a homepage takeover.
+            Delivered as part of the team at Monks.
           </p>
-          </div>
-          <div className="hidden lg:block">
-            <TimeInFrame />
-          </div>
         </div>
       </section>
-
-      {/* ─── NUMBERS ─── */}
-      <Section tone="raised">
-        <ul className="grid gap-10 sm:grid-cols-3">
-          <li>
-            <CountUpStat
-              value={12.6}
-              suffix="s"
-              decimals={1}
-              label="Average time in frame"
-              method="Measured against the campaign's served impressions."
-            />
-          </li>
-          <li>
-            <CountUpStat
-              value={3}
-              suffix="x"
-              label="Click-through against static"
-              method="Compared with the static placement in the same flight."
-            />
-          </li>
-          <li>
-            <CountUpStat
-              value={61}
-              suffix="%"
-              label="Brand recall lift"
-              method="Post-campaign recall study against a control group."
-            />
-          </li>
-        </ul>
-      </Section>
 
       {/* ─── PROBLEM ─── */}
       <Section width="prose">
         <SectionHeading eyebrow="The problem">
-          Nobody wants to learn about health insurance
+          The selling point is also the obstacle
         </SectionHeading>
         <div className="space-y-5 text-body text-fg-muted">
           <p>
-            FBTO sells a product that is genuinely complicated and genuinely
-            boring to the person seeing the ad. The things that differentiate it
-            are the details of what is covered, and details do not fit in a
-            banner.
+            FBTO&apos;s proposition is modularity: you pick from eleven cover
+            modules and build a policy that matches how you actually live. That
+            is the reason to choose them and it is impossible to put in a
+            banner, because the whole point is the choosing.
           </p>
           <p>
-            The usual response is to stop trying: show a smiling family, show the
-            logo, hope the brand does the work. That tests fine and explains
-            nothing, so the actual proposition never lands.
+            Flatten it to one frame and it becomes another insurance ad with a
+            logo. The brief was really a format problem: find placements where
+            the choosing can happen before anyone clicks away.
           </p>
         </div>
       </Section>
 
-      {/* ─── APPROACH ─── */}
-      <Section tone="raised" width="prose">
+      {/* ─── THE FORMATS ─── */}
+      <Section tone="raised">
+        <SectionHeading
+          eyebrow="The work"
+          lede="Three placements, each solving the same problem in the shape its environment allows. All three carry the same copy line: kies de zorgverzekering die bij jou past."
+        >
+          Three rich media formats
+        </SectionHeading>
+
+        <div className="space-y-16">
+          {FORMATS.map((f, i) => (
+            <article key={f.id} className="grid gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-start">
+              <figure className="m-0">
+                {/* preload="none" behind a poster: a case page about
+                    rich media should not itself ship megabytes
+                    before anyone asks. */}
+                <video
+                  className="w-full rounded-card border border-line bg-ink-900"
+                  src={f.video}
+                  poster={f.poster}
+                  preload="none"
+                  controls
+                  muted
+                  loop
+                  playsInline
+                />
+              </figure>
+
+              <div>
+                <p className="terminal text-label uppercase tracking-label text-eyebrow">
+                  {String(i + 1).padStart(2, '0')} · {f.kind}
+                </p>
+                <h3 className="mt-2 text-h2 font-bold text-fg">{f.name}</h3>
+                <p className="mt-4 text-body text-fg-muted">{f.lede}</p>
+                <ul className="mt-5 flex flex-wrap gap-2">
+                  {f.traits.map((t) => (
+                    <li
+                      key={t}
+                      className="rounded-card border border-line bg-ink-600 px-3 py-1.5 text-small text-fg-muted"
+                    >
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          ))}
+        </div>
+      </Section>
+
+      {/* ─── HOW IT HOLDS TOGETHER ─── */}
+      <Section width="prose">
         <SectionHeading eyebrow="The approach">
-          Make the explanation the interaction
+          One creative, three environments
         </SectionHeading>
         <div className="space-y-5 text-body text-fg-muted">
           <p>
-            Rather than compressing the proposition into one frame, the unit let
-            people walk through it. Interactive video segments, each answering one
-            question, with the viewer choosing which to open rather than sitting
-            through a sequence.
+            A native tile unit, a full-bleed scroller and a pair of page skins
+            have almost nothing in common as placements. What they share is the
+            parts: the module tiles, the copy line, the logo lockup, the call to
+            action, and the ribbon that travels across the composition.
           </p>
           <p>
-            That changes what you are optimising for. A static banner wants the
-            fastest possible click. This wanted the opposite: time spent, because
-            time spent is the only way the product gets explained.
+            Building those once and arranging them per format is what makes
+            three placements affordable. It is the same argument as every other
+            case here, applied to rich media rather than to display sizes.
           </p>
         </div>
 
         <ul className="mt-10 grid gap-4 sm:grid-cols-2">
           {[
-            ['Viewer picks the path', 'Segments open on demand, not in sequence.'],
-            ['One question per segment', 'Each answers a single thing clearly.'],
-            ['Video inside the unit', 'No click-out, no landing page needed first.'],
-            ['Built for dwell, not clicks', 'Success measured in seconds held.'],
+            ['Shared parts', 'Tiles, copy, lockup and CTA built once and rearranged.'],
+            ['Orientation aware', 'The scroller reflows rather than shipping a second build.'],
+            ['Motion carries across', 'The same ribbon runs through every placement.'],
+            ['Native where it sits', 'The Mozaïek reads as feed content, not as a banner.'],
           ].map(([title, body]) => (
             <li key={title}>
               <Card>
@@ -179,30 +233,11 @@ export default function FbtoCase() {
         </ul>
       </Section>
 
-      {/* ─── OUTCOME ─── */}
-      <Section width="prose">
-        <SectionHeading eyebrow="The outcome">
-          People stayed twelve seconds
-        </SectionHeading>
-        <div className="space-y-5 text-body text-fg-muted">
-          <p>
-            12.6 seconds of average time in frame is a long while for display.
-            Click-through still came in at three times the static placement in the
-            same flight, which was the part nobody expected: optimising for dwell
-            did not cost clicks, it produced them.
-          </p>
-          <p>
-            Recall lifted 61% against control, and the campaign took Weborama
-            Campaign of the Year.
-          </p>
-        </div>
-      </Section>
-
       {/* ─── BUILT WITH ─── */}
       <Section tone="raised" width="prose">
         <SectionHeading eyebrow="Built with">Stack</SectionHeading>
         <ul className="flex flex-wrap gap-2">
-          {['HTML5 Canvas', 'GSAP', 'SVG', 'Interactive video', 'Rich media'].map((t) => (
+          {['HTML5', 'GSAP', 'SVG', 'Responsive video', 'Weborama rich media'].map((t) => (
             <li
               key={t}
               className="rounded-card border border-line bg-ink-600 px-3 py-1.5 text-small text-fg-muted"

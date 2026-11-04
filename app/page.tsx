@@ -318,13 +318,17 @@ const CASES = [
     slug: 'fbto',
     client: 'FBTO',
     accent: 'fbto',
-    headline: 'Twelve seconds inside an insurance ad',
-    body: 'Rich media that explained a complicated product by letting people walk through it, optimised for dwell rather than clicks.',
-    award: 'Weborama Campaign of the Year',
+    headline: 'Eleven modules, three formats, one build',
+    body: 'Rich media for a health policy you assemble yourself: a native tile unit, a cross-device scroller and a homepage takeover, sharing one set of parts.',
+    award: 'Weborama Campaign of the Year 2019',
+    // The three figures that sat here, 12.6s time in frame, 3x CTR
+    // and 61% recall lift, had no source in the portfolio, the
+    // creative or anywhere else. They are replaced with facts the
+    // creative itself states rather than restated as if measured.
     figures: [
-      { value: '12.6s', label: 'Time in frame' },
-      { value: '3x', label: 'CTR vs static' },
-      { value: '61%', label: 'Recall lift' },
+      { value: '11', label: 'Cover modules' },
+      { value: '3', label: 'Rich media formats' },
+      { value: '2 min', label: 'To complete a policy' },
     ],
   },
   {
