@@ -1,12 +1,27 @@
 'use client';
 
-import { useEffect, type RefObject } from 'react';
+import { useEffect, useLayoutEffect, type RefObject } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import type Lenis from 'lenis';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
+
+/**
+ * useLayoutEffect on the client, useEffect on the server.
+ *
+ * Anything that sets a starting visual state has to run before the
+ * browser paints, or the element paints in its finished state and
+ * then snaps back, which is the flash. useLayoutEffect does that;
+ * it also warns when React renders on the server, where it does
+ * nothing, so the import is swapped there.
+ *
+ * This was defined inline in app/page.tsx. It is needed in more
+ * than one place now, so it lives here.
+ */
+export const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 /**
  * Shared scroll motion.

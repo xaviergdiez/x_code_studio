@@ -19,7 +19,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/leads', '/offerings/director', '/new'],
+      disallow: ['/leads', '/offerings/director', '/new', '/lab'],
     },
     sitemap: `${SITE}/sitemap.xml`,
     host: SITE,
